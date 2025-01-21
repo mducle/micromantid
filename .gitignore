@@ -1,9 +1,8 @@
 node_modules
 package-lock.json
-python-overrides.tgz
-python-overrides.whl
 *.swp
 *.swo
 *-v0
 __pycache__
-.pyodide-xbuildenv
+.pyodide-xbuildenv*
+dist
