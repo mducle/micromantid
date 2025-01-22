@@ -32,6 +32,8 @@ endif()
 find_package(pybind11 CONFIG)
 find_package(Boost)
 find_package(Poco REQUIRED Foundation)
+find_package(ZLIB)
+find_package(HDF5)
 
 if (EMSCRIPTEN)
     # We can't use the provided Poco::Foundation label as it uses dynamic linking
@@ -55,7 +57,11 @@ set(MICROMANTID_PYTHON_SOURCES
     ${MICROMANTID_KERNEL_BINDINGS}
 )
 target_sources(${MICROMANTID_PYTHON_MODULE} PRIVATE ${MICROMANTID_PYTHON_SOURCES})
-target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC ${MICROMANTID_CXX_LIBRARIES} ${POCOLIB})
+target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC 
+    ${MICROMANTID_CXX_LIBRARIES} 
+    ${POCOLIB}
+    ${HDF5_LIBRARIES}
+)
 
 # Destination name must match name of project in pyproject.toml
 install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PYTHON_MODULE})

@@ -8,7 +8,7 @@
 #include "MantidKernel/Atom.h"
 #include "MantidKernel/AttenuationProfile.h"
 #include "MantidKernel/StringTokenizer.h"
-//#include "MantidNexusCpp/NeXusFile.hpp"
+#include "MantidNexusCpp/NeXusFile.hpp"
 #include <boost/lexical_cast.hpp>
 #include <memory>
 #include <numeric>
@@ -486,7 +486,6 @@ double Material::totalScatterLengthSqrd(const double lambda) const {
  * @param file :: open NeXus file
  * @param group :: name of the group to create
  */
-/*
 void Material::saveNexus(::NeXus::File *file, const std::string &group) const {
   file->makeGroup(group, "NXdata", true);
   file->putAttr("version", 2);
@@ -537,13 +536,11 @@ void Material::saveNexus(::NeXus::File *file, const std::string &group) const {
   file->writeData("pressure", m_pressure);
   file->closeGroup();
 }
-*/
 
 /** Load the object from an open NeXus file.
  * @param file :: open NeXus file
  * @param group :: name of the group to open
  */
-/*
 void Material::loadNexus(::NeXus::File *file, const std::string &group) {
   file->openGroup(group, "NXdata");
   file->getAttr("name", m_name);
@@ -562,7 +559,7 @@ void Material::loadNexus(::NeXus::File *file, const std::string &group) {
       } else {
         m_chemicalFormula.emplace_back(Mantid::PhysicalConstants::getNeutronAtom(element_Z, element_A), 1);
       }
-    } catch (std::runtime_error &) { / * ignore and use the default * /
+    } catch (std::runtime_error &) { /* ignore and use the default */
     }
   } else if (version == 2) {
     std::string style;
@@ -607,7 +604,6 @@ void Material::loadNexus(::NeXus::File *file, const std::string &group) {
   file->readData("pressure", m_pressure);
   file->closeGroup();
 }
-*/
 
 namespace {                                   // anonymous namespace to hide the function
 str_pair getAtomName(const std::string &text) // TODO change to get number after letters

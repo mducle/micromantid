@@ -20,6 +20,7 @@ add_library(Kernel OBJECT ${SRC_FILES})
 target_include_directories(Kernel PRIVATE
     inc
     ../Types/inc
+    ../NexusCpp/inc
     ${Boost_INCLUDE_DIRS}
 )
 set_property(TARGET Kernel PROPERTY POSITION_INDEPENDENT_CODE ON)

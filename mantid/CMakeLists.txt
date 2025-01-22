@@ -1,9 +1,11 @@
 add_subdirectory(Kernel)
+add_subdirectory(NexusCpp)
 
 target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC Kernel/inc Types/inc)
 
 set(MICROMANTID_CXX_LIBRARIES
     Kernel
+    NexusCpp
 CACHE INTERNAL "")
 
 set(MICROMANTID_KERNEL_BINDINGS
