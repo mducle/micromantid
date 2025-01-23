@@ -1,6 +1,7 @@
 set(SRC_FILES
     src/Atom.cpp
     src/AttenuationProfile.cpp
+    src/DataItem.cpp
     src/Exception.cpp
     src/Interpolation.cpp
     src/Logger.cpp

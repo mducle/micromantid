@@ -11,7 +11,7 @@ cmake_policy(SET CMP0148 OLD)  # New policy gives error when cannot find shared 
 set(MICROMANTID_PYTHON_MODULE micromantid)
 
 if (DEFINED ENV{CONDA_PREFIX})
-    message(STATUS "Searching $ENV{CONDA_PREFIX} for Pybind11 and Boost")
+    message(STATUS "Searching $ENV{CONDA_PREFIX} for Pybind11, Boost and Eigen")
     file(GLOB pybind11_search $ENV{CONDA_PREFIX}/share/cmake/pybind11/pybind11Config.cmake)
     if (DEFINED pybind11_search)
         cmake_path(GET pybind11_search PARENT_PATH pybind11_DIR)
@@ -21,6 +21,10 @@ if (DEFINED ENV{CONDA_PREFIX})
         cmake_path(GET boost_search PARENT_PATH Boost_DIR)
         string(REGEX MATCH "-[0-9]\.[0-9\.]*" boost_version ${Boost_DIR})
         string(CONCAT boost_headers_DIR "$ENV{CONDA_PREFIX}/lib/cmake/boost_headers" ${boost_version})
+    endif()
+    file(GLOB eigen_search $ENV{CONDA_PREFIX}/share/eigen3/cmake/Eigen3Config.cmake)
+    if (DEFINED eigen_search)
+        cmake_path(GET eigen_search PARENT_PATH Eigen3_DIR)
     endif()
 endif()
 
@@ -34,6 +38,7 @@ find_package(Boost)
 find_package(Poco REQUIRED Foundation)
 find_package(ZLIB)
 find_package(HDF5)
+find_package(Eigen3)
 
 if (EMSCRIPTEN)
     # We can't use the provided Poco::Foundation label as it uses dynamic linking
