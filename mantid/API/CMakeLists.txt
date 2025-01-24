@@ -1,16 +1,43 @@
 set(SRC_FILES
+    src/ADSValidator.cpp
     src/Algorithm.cpp
     src/AlgorithmExecuteProfile.cpp
     src/AlgorithmFactory.cpp
+    src/AlgorithmHistory.cpp
+    src/AlgorithmManager.cpp
+    src/AlgoTimeRegister.cpp
     src/AnalysisDataService.cpp
+    src/Axis.cpp
+    src/BinEdgeAxis.cpp
     src/DeprecatedAlias.cpp
+    src/DeprecatedAlgorithm.cpp
     src/ExperimentInfo.cpp
     src/FileLoaderRegistry.cpp
+    src/HistoryItem.cpp
+    src/HistoryView.cpp
+    src/InstrumentDataService.cpp
+    src/InstrumentFileFinder.cpp
+    src/IMDIterator.cpp
+    src/IMDWorkspace.cpp
     src/IPeaksWorkspace.cpp
     src/ITableWorkspace.cpp
+    src/ISpectrum.cpp
+    src/LogManager.cpp
     src/MatrixWorkspace.cpp
+    src/MatrixWorkspaceMDIterator.cpp
+    src/MDGeometry.cpp
+    src/NexusFileLoader.cpp
+    src/NumericAxis.cpp
+    src/ResizeRectangularDetectorHelper.cpp
+    src/Run.cpp
+    src/Sample.cpp
+    src/SpectraAxis.cpp
+    src/SpectrumDetectorMapping.cpp
+    src/SpectrumInfo.cpp
+    src/WorkspaceHistory.cpp
     src/Workspace.cpp
     src/WorkspaceGroup.cpp
+    src/WorkspacePropertyUtils.cpp
 )
 
 add_library(MantidAPI OBJECT ${SRC_FILES})

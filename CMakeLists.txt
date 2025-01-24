@@ -35,19 +35,25 @@ endif()
 
 find_package(pybind11 CONFIG)
 find_package(Boost)
-find_package(Poco REQUIRED Foundation)
+find_package(Poco REQUIRED Foundation XML Net Util)
+find_package(jsoncpp)
 find_package(ZLIB)
-find_package(HDF5)
+find_package(HDF5 COMPONENTS C CXX)
 find_package(Eigen3)
+find_package(muparser)
 
 if (EMSCRIPTEN)
     # We can't use the provided Poco::Foundation label as it uses dynamic linking
-    file(GLOB POCOLIB ${Poco_DIR}/../../libPocoFoundation.a)
-    if (NOT POCOLIB)
+    file(GLOB poco_search ${Poco_DIR}/../../libPocoFoundation.a)
+    if (NOT poco_search)
         message(FATAL_ERROR "libPocoFoundation.a not found - please build and install Poco")
     endif()
+    set(POCOLIBS
+        ${Poco_DIR}/../../libPocoFoundation.a
+        ${Poco_DIR}/../../libPocoXML.a
+    )
 else()
-    set(POCOLIB "Poco::Foundation")
+    set(POCOLIBS Poco::Foundation Poco::XML Poco::Net Poco::Util)
 endif()
 
 # Add the Pybind11 bindings
@@ -64,8 +70,11 @@ set(MICROMANTID_PYTHON_SOURCES
 target_sources(${MICROMANTID_PYTHON_MODULE} PRIVATE ${MICROMANTID_PYTHON_SOURCES})
 target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC 
     ${MICROMANTID_CXX_LIBRARIES} 
-    ${POCOLIB}
+    ${POCOLIBS}
     ${HDF5_LIBRARIES}
+    jsoncpp
+    muparser
+    gsl
 )
 
 # Destination name must match name of project in pyproject.toml
