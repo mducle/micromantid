@@ -72,7 +72,7 @@ void DllOpen::closeDll(void *handle) { FreeLibrary((HINSTANCE)handle); }
 #else
 
 const std::string LIB_PREFIX = "lib";
-#ifdef __linux__
+#if defined __linux__ || defined __EMSCRIPTEN__
 const std::string LIB_SUFFIX = ".so";
 #elif defined __APPLE__
 const std::string LIB_SUFFIX = ".dylib";

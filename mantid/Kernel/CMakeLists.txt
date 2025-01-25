@@ -10,6 +10,7 @@ set(SRC_FILES
     src/DateAndTime.cpp
     src/DeltaEMode.cpp
     src/DllOpen.cpp
+    src/EnvironmentHistory.cpp
     src/Exception.cpp
     src/FacilityInfo.cpp
     src/FileDescriptor.cpp
@@ -19,7 +20,6 @@ set(SRC_FILES
     src/ICatalogInfo.cpp
     src/InstrumentInfo.cpp
     src/Interpolation.cpp
-    src/InternetHelper.cpp
     src/IPropertyManager.cpp
     src/LibraryManager.cpp
     src/LibraryWrapper.cpp
@@ -37,7 +37,6 @@ set(SRC_FILES
     src/MersenneTwister.cpp
     src/Memory.cpp
     src/NDRandomNumberGenerator.cpp
-    src/NetworkProxyLinux.cpp
     src/NeutronAtom.cpp
     src/NexusDescriptor.cpp
     src/NexusHDF5Descriptor.cpp
@@ -53,13 +52,13 @@ set(SRC_FILES
     src/PropertyNexus.cpp
     src/PropertyWithValue.cpp
     src/PropertyWithValueJSON.cpp
-    src/ProxyInfo.cpp
     src/PseudoRandomNumberGenerator.cpp
     src/Quat.cpp
     src/RegexStrings.cpp
     src/SingletonHolder.cpp
     src/SplittingInterval.cpp
     src/Statistics.cpp
+    src/StdoutChannel.cpp
     src/Strings.cpp
     src/StringTokenizer.cpp
     src/ThreadSafeLogStream.cpp
@@ -70,7 +69,6 @@ set(SRC_FILES
     src/Unit.cpp
     src/UnitLabel.cpp
     src/UnitLabelTypes.cpp
-    src/UsageService.cpp
     src/V3D.cpp
     src/VectorHelper.cpp
     src/VMD.cpp

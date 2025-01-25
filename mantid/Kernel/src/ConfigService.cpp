@@ -15,7 +15,7 @@
 #include "MantidKernel/Glob.h"
 #include "MantidKernel/Logger.h"
 #include "MantidKernel/MantidVersion.h"
-#include "MantidKernel/NetworkProxy.h"
+//#include "MantidKernel/NetworkProxy.h"
 #include "MantidKernel/StdoutChannel.h"
 #include "MantidKernel/StringTokenizer.h"
 #include "MantidKernel/Strings.h"
@@ -34,7 +34,6 @@
 #include <Poco/Logger.h>
 #include <Poco/LoggingFactory.h>
 #include <Poco/LoggingRegistry.h>
-#include <Poco/NullChannel.h>
 #include <Poco/Path.h>
 #include <Poco/Pipe.h>
 #include <Poco/PipeStream.h>
@@ -122,11 +121,11 @@ const std::string LOG_LEVEL_KEY("logging.loggers.root.level");
 ConfigServiceImpl::ConfigServiceImpl()
     : m_pConf(nullptr), m_pSysConfig(new Poco::Util::SystemConfiguration()), m_changed_keys(), m_strBaseDir(""),
       m_propertyString(""), m_properties_file_name("Mantid.properties"),
-      m_user_properties_file_name("Mantid.user.properties"), m_dataSearchDirs(), m_instrumentDirs(), m_proxyInfo(),
-      m_isProxySet(false) {
+      m_user_properties_file_name("Mantid.user.properties"), m_dataSearchDirs(), m_instrumentDirs() { //, m_proxyInfo(),
+//    m_isProxySet(false) {
   // Register StdChannel with Poco
   Poco::LoggingFactory::defaultFactory().registerChannelClass(
-      "StdoutChannel", new Poco::Instantiator<Poco::NullChannel, Poco::Channel>);
+      "StdoutChannel", new Poco::Instantiator<Poco::StdoutChannel, Poco::Channel>);
 
   setBaseDirectory();
 
@@ -1277,6 +1276,10 @@ std::string ConfigServiceImpl::getPathToExecutable() const {
   const int success = _NSGetExecutablePath(pBuf, &bytes);
   if (success < 0)
     bytes = 1025;
+#elif defined __EMSCRIPTEN__
+  // Can't get this info inside Javascript, just return something
+  ssize_t bytes = 1025;
+  execpath = "/usr/bin/python";
 #endif
 
   if (bytes > 0 && bytes < 1024) {
@@ -1833,6 +1836,7 @@ Gets the system proxy information
 @url A url to match the proxy to
 @return the proxy information.
 */
+/*
 Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
   if (!m_isProxySet) {
     // set the proxy
@@ -1853,6 +1857,7 @@ Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
   }
   return m_proxyInfo;
 }
+*/
 
 std::string ConfigServiceImpl::getFullPath(const std::string &filename, const bool ignoreDirs,
                                            const int options) const {

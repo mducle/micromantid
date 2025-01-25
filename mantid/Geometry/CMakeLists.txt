@@ -32,6 +32,7 @@ set(SRC_FILES
     src/Instrument/DetectorInfo.cpp
     src/Instrument/DetectorGroup.cpp
     src/Instrument/Detector.cpp
+    src/Instrument/FitParameter.cpp
     src/Instrument/GridDetector.cpp
     src/Instrument/GridDetectorPixel.cpp
     src/Instrument/Goniometer.cpp

@@ -10,7 +10,7 @@
 #include <cstdio>
 #include <sstream>
 
-#ifdef __linux__
+#if defined __linux__ || __EMSCRIPTEN__
 #include <fstream>
 #include <malloc.h>
 #include <sys/resource.h>

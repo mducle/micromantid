@@ -24,7 +24,7 @@
 #include "MantidKernel/PropertyWithValue.h"
 #include "MantidKernel/Strings.h"
 #include "MantidKernel/Timer.h"
-#include "MantidKernel/UsageService.h"
+//#include "MantidKernel/UsageService.h"
 
 #include "MantidKernel/StringTokenizer.h"
 #include <Poco/ActiveMethod.h>
@@ -1743,11 +1743,13 @@ void Algorithm::reportCompleted(const double &duration, const bool groupProcessi
 /** Registers the usage of the algorithm with the UsageService
  */
 void Algorithm::registerFeatureUsage() const {
+/*
   if (UsageService::Instance().isEnabled()) {
     std::ostringstream oss;
     oss << this->name() << ".v" << this->version();
     UsageService::Instance().registerFeatureUsage(FeatureType::Algorithm, oss.str(), isChild());
   }
+*/
 }
 
 /** Enable or disable Logging of start and end messages

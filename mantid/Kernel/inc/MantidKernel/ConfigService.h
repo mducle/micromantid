@@ -10,7 +10,7 @@
 // Includes
 //----------------------------------------------------------------------
 #include "MantidKernel/DllConfig.h"
-#include "MantidKernel/ProxyInfo.h"
+//#include "MantidKernel/ProxyInfo.h"
 #include "MantidKernel/SingletonHolder.h"
 #include <optional>
 
@@ -223,7 +223,7 @@ public:
   void configureLogging();
 
   /// Gets the proxy for the system
-  Kernel::ProxyInfo &getProxy(const std::string &url);
+//Kernel::ProxyInfo &getProxy(const std::string &url);
 
   std::string getFullPath(const std::string &filename, const bool ignoreDirs, const int options) const;
 
@@ -293,9 +293,9 @@ private:
   std::set<std::string> m_configPaths;
 
   /// local cache of proxy details
-  Kernel::ProxyInfo m_proxyInfo;
+//Kernel::ProxyInfo m_proxyInfo;
   /// whether the proxy has been populated yet
-  bool m_isProxySet;
+//bool m_isProxySet;
 };
 
 EXTERN_MANTID_KERNEL template class MANTID_KERNEL_DLL Mantid::Kernel::SingletonHolder<ConfigServiceImpl>;

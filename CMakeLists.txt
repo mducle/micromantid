@@ -35,7 +35,7 @@ endif()
 
 find_package(pybind11 CONFIG)
 find_package(Boost)
-find_package(Poco REQUIRED Foundation XML Net Util)
+find_package(Poco REQUIRED Foundation XML Util)
 find_package(jsoncpp)
 find_package(ZLIB)
 find_package(HDF5 COMPONENTS C CXX)
@@ -51,9 +51,18 @@ if (EMSCRIPTEN)
     set(POCOLIBS
         ${Poco_DIR}/../../libPocoFoundation.a
         ${Poco_DIR}/../../libPocoXML.a
+        ${Poco_DIR}/../../libPocoUtil.a
     )
+    set(JSON_LIBS $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libjsoncpp.a)
+    set(MUPARSER_LIBS $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libmuparser.a)
+    set(GSL_LIBS
+        $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgsl.a
+        $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgslcblas.a)
 else()
-    set(POCOLIBS Poco::Foundation Poco::XML Poco::Net Poco::Util)
+    set(POCOLIBS Poco::Foundation Poco::XML Poco::Util)
+    set(JSON_LIBS jsoncpp)
+    set(MUPARSER_LIBS muparser)
+    set(GSL_LIBS gsl)
 endif()
 
 # Add the Pybind11 bindings
@@ -72,9 +81,9 @@ target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC
     ${MICROMANTID_CXX_LIBRARIES} 
     ${POCOLIBS}
     ${HDF5_LIBRARIES}
-    jsoncpp
-    muparser
-    gsl
+    ${JSON_LIBS}
+    ${MUPARSER_LIBS}
+    ${GSL_LIBS}
 )
 
 # Destination name must match name of project in pyproject.toml
