@@ -12,3 +12,24 @@ The [Mantid project](https://www.mantidproject.org) provides a framework that su
 computing and visualisation of scientific data. Mantid has been created to manipulate and analyse Neutron
 and Muon scattering data, but could be applied to many other techniques.
 The framework is open source and is supported on multiple target platforms (Windows, Linux, macOS).
+
+## Building and testing
+
+Note that only Linux builds are currently used and tested.
+Emscripten does support Windows and MacOS if you want to try it yourself on those platform.
+
+You need to install conda or mamba, and then you can run the script to install and set up the environment
+and then use `pyodide` to build the project:
+
+```
+source ./setup_emsdk_env.sh
+pyodide build
+```
+
+The wheel will be put in the `dist` folder and can be uploaded to the website.
+To test the wheel you need to install `node.js`, then you can run:
+
+```
+npm install
+npm test
+```

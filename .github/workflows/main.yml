@@ -23,8 +23,6 @@ jobs:
         with:
           submodules: true
       - uses: mamba-org/setup-micromamba@v1
-        with:
-          cache-downloads: true
       - name: Patch mantid
         run: |
           cd mantid

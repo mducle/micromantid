@@ -5,7 +5,7 @@ set -e
 export SYSROOT=`pwd`/sysroot
 
 $MAMBA_EXE create -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build
-eval "$($MAMBA_EXE shell activate ems)"
+eval "$($MAMBA_EXE shell activate ems --shell=bash)"
 mkdir build_env && cd build_env
 wd=$(pwd)
 mkdir -p $SYSROOT
