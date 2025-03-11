@@ -1,0 +1,3 @@
+[submodule "mantid"]
+	path = mantid
+	url = https://github.com/mantidproject/mantid
