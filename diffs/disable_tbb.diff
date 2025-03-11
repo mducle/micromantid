@@ -1,0 +1,98 @@
+diff --git a/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h b/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
+index 1f00c813276..bb6bb49d439 100644
+--- a/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
++++ b/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
+@@ -12,11 +12,10 @@
+ #include "MantidGeometry/IDetector.h"
+ #include "MantidGeometry/Instrument/Parameter.h"
+ 
+-#include "tbb/concurrent_unordered_map.h"
+-
+ #include <memory>
+ #include <typeinfo>
+ #include <vector>
++#include <unordered_map>
+ 
+ namespace Mantid {
+ namespace Kernel {
+@@ -37,17 +36,17 @@ class Instrument;
+   @date 2/12/2008
+ */
+ /// Parameter map iterator typedef
+-using component_map_it = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
+-using component_map_cit = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
++using component_map_it = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
++using component_map_cit = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
+ 
+ class MANTID_GEOMETRY_DLL ParameterMap {
+ public:
+   /// Parameter map typedef
+-  using pmap = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>;
++  using pmap = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>;
+   /// Parameter map iterator typedef
+-  using pmap_it = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
++  using pmap_it = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
+   /// Parameter map iterator typedef
+-  using pmap_cit = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
++  using pmap_cit = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
+   /// Default constructor
+   ParameterMap();
+   /// Const constructor
+diff --git a/Framework/Geometry/src/Instrument/ParameterMap.cpp b/Framework/Geometry/src/Instrument/ParameterMap.cpp
+index 030bf314eff..994d2475713 100644
+--- a/Framework/Geometry/src/Instrument/ParameterMap.cpp
++++ b/Framework/Geometry/src/Instrument/ParameterMap.cpp
+@@ -298,7 +298,8 @@ void ParameterMap::clearParametersByName(const std::string &name) {
+   // Key is component ID so have to search through whole lot
+   for (auto itr = m_map.begin(); itr != m_map.end();) {
+     if (itr->second->name() == name) {
+-      PARALLEL_CRITICAL(unsafe_erase) { itr = m_map.unsafe_erase(itr); }
++      //PARALLEL_CRITICAL(unsafe_erase) { itr = m_map.unsafe_erase(itr); }
++      itr = m_map.erase(itr);
+     } else {
+       ++itr;
+     }
+@@ -320,7 +321,8 @@ void ParameterMap::clearParametersByName(const std::string &name, const ICompone
+     auto itrs = m_map.equal_range(id);
+     for (auto it = itrs.first; it != itrs.second;) {
+       if (it->second->name() == name) {
+-        PARALLEL_CRITICAL(unsafe_erase) { it = m_map.unsafe_erase(it); }
++        //PARALLEL_CRITICAL(unsafe_erase) { it = m_map.unsafe_erase(it); }
++        it = m_map.erase(it);
+       } else {
+         ++it;
+       }
+diff --git a/Framework/Kernel/inc/MantidKernel/Unit.h b/Framework/Kernel/inc/MantidKernel/Unit.h
+index 88f6947b44c..68217fabda2 100644
+--- a/Framework/Kernel/inc/MantidKernel/Unit.h
++++ b/Framework/Kernel/inc/MantidKernel/Unit.h
+@@ -11,6 +11,7 @@
+ //----------------------------------------------------------------------
+ #include "MantidKernel/UnitLabel.h"
+ #include <utility>
++#include <algorithm>
+ 
+ #include <unordered_map>
+ #include <vector>
+@@ -18,8 +19,6 @@
+ #include <memory>
+ #endif
+ 
+-#include "tbb/concurrent_unordered_map.h"
+-
+ namespace Mantid {
+ namespace Kernel {
+ 
+@@ -182,10 +181,10 @@ private:
+   using ConstantAndPower = std::pair<double, double>;
+   /// Lists, for a given starting unit, the units to which a 'quick conversion'
+   /// can be made
+-  using UnitConversions = tbb::concurrent_unordered_map<std::string, ConstantAndPower>;
++  using UnitConversions = std::unordered_map<std::string, ConstantAndPower>;
+   /// The possible 'quick conversions' are held in a map with the starting unit
+   /// as the key
+-  using ConversionsMap = tbb::concurrent_unordered_map<std::string, UnitConversions>;
++  using ConversionsMap = std::unordered_map<std::string, UnitConversions>;
+   /// The table of possible 'quick conversions'
+   static ConversionsMap s_conversionFactors;
+ };
