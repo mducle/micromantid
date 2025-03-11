@@ -11,7 +11,7 @@ cmake_policy(SET CMP0148 OLD)  # New policy gives error when cannot find shared 
 set(MICROMANTID_PYTHON_MODULE micromantid)
 
 if (DEFINED ENV{CONDA_PREFIX})
-    message(STATUS "Searching $ENV{CONDA_PREFIX} for Pybind11 and Boost")
+    message(STATUS "Searching $ENV{CONDA_PREFIX} for Pybind11, Boost and Eigen")
     file(GLOB pybind11_search $ENV{CONDA_PREFIX}/share/cmake/pybind11/pybind11Config.cmake)
     if (DEFINED pybind11_search)
         cmake_path(GET pybind11_search PARENT_PATH pybind11_DIR)
@@ -22,6 +22,10 @@ if (DEFINED ENV{CONDA_PREFIX})
         string(REGEX MATCH "-[0-9]\.[0-9\.]*" boost_version ${Boost_DIR})
         string(CONCAT boost_headers_DIR "$ENV{CONDA_PREFIX}/lib/cmake/boost_headers" ${boost_version})
     endif()
+    file(GLOB eigen_search $ENV{CONDA_PREFIX}/share/eigen3/cmake/Eigen3Config.cmake)
+    if (DEFINED eigen_search)
+        cmake_path(GET eigen_search PARENT_PATH Eigen3_DIR)
+    endif()
 endif()
 
 if (EMSCRIPTEN)
@@ -31,16 +35,34 @@ endif()
 
 find_package(pybind11 CONFIG)
 find_package(Boost)
-find_package(Poco REQUIRED Foundation)
+find_package(Poco REQUIRED Foundation XML Util)
+find_package(jsoncpp)
+find_package(ZLIB)
+find_package(HDF5 COMPONENTS C CXX)
+find_package(Eigen3)
+find_package(muparser)
 
 if (EMSCRIPTEN)
     # We can't use the provided Poco::Foundation label as it uses dynamic linking
-    file(GLOB POCOLIB ${Poco_DIR}/../../libPocoFoundation.a)
-    if (NOT POCOLIB)
+    file(GLOB poco_search ${Poco_DIR}/../../libPocoFoundation.a)
+    if (NOT poco_search)
         message(FATAL_ERROR "libPocoFoundation.a not found - please build and install Poco")
     endif()
+    set(POCOLIBS
+        ${Poco_DIR}/../../libPocoFoundation.a
+        ${Poco_DIR}/../../libPocoXML.a
+        ${Poco_DIR}/../../libPocoUtil.a
+    )
+    set(JSON_LIBS $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libjsoncpp.a)
+    set(MUPARSER_LIBS $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libmuparser.a)
+    set(GSL_LIBS
+        $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgsl.a
+        $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgslcblas.a)
 else()
-    set(POCOLIB "Poco::Foundation")
+    set(POCOLIBS Poco::Foundation Poco::XML Poco::Util)
+    set(JSON_LIBS jsoncpp)
+    set(MUPARSER_LIBS muparser)
+    set(GSL_LIBS gsl)
 endif()
 
 # Add the Pybind11 bindings
@@ -55,7 +77,14 @@ set(MICROMANTID_PYTHON_SOURCES
     ${MICROMANTID_KERNEL_BINDINGS}
 )
 target_sources(${MICROMANTID_PYTHON_MODULE} PRIVATE ${MICROMANTID_PYTHON_SOURCES})
-target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC ${MICROMANTID_CXX_LIBRARIES} ${POCOLIB})
+target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC 
+    ${MICROMANTID_CXX_LIBRARIES} 
+    ${POCOLIBS}
+    ${HDF5_LIBRARIES}
+    ${JSON_LIBS}
+    ${MUPARSER_LIBS}
+    ${GSL_LIBS}
+)
 
 # Destination name must match name of project in pyproject.toml
 install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PYTHON_MODULE})

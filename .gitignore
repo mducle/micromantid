@@ -6,3 +6,5 @@ package-lock.json
 __pycache__
 .pyodide-xbuildenv*
 dist
+bld
+build
