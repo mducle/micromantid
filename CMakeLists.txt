@@ -13,17 +13,17 @@ set(MICROMANTID_PYTHON_MODULE micromantid)
 if (DEFINED ENV{CONDA_PREFIX})
     message(STATUS "Searching $ENV{CONDA_PREFIX} for Pybind11, Boost and Eigen")
     file(GLOB pybind11_search $ENV{CONDA_PREFIX}/share/cmake/pybind11/pybind11Config.cmake)
-    if (DEFINED pybind11_search)
+    if (NOT pybind11_search STREQUAL "")
         cmake_path(GET pybind11_search PARENT_PATH pybind11_DIR)
     endif()
     file(GLOB boost_search $ENV{CONDA_PREFIX}/lib/cmake/Boost-*/BoostConfig.cmake)
-    if (DEFINED boost_search)
+    if (NOT boost_search STREQUAL "")
         cmake_path(GET boost_search PARENT_PATH Boost_DIR)
         string(REGEX MATCH "-[0-9]\.[0-9\.]*" boost_version ${Boost_DIR})
         string(CONCAT boost_headers_DIR "$ENV{CONDA_PREFIX}/lib/cmake/boost_headers" ${boost_version})
     endif()
     file(GLOB eigen_search $ENV{CONDA_PREFIX}/share/eigen3/cmake/Eigen3Config.cmake)
-    if (DEFINED eigen_search)
+    if (NOT eigen_search STREQUAL "")
         cmake_path(GET eigen_search PARENT_PATH Eigen3_DIR)
     endif()
 endif()
@@ -45,7 +45,7 @@ find_package(muparser)
 if (EMSCRIPTEN)
     # We can't use the provided Poco::Foundation label as it uses dynamic linking
     file(GLOB poco_search ${Poco_DIR}/../../libPocoFoundation.a)
-    if (NOT poco_search)
+    if (poco_search STREQUAL "")
         message(FATAL_ERROR "libPocoFoundation.a not found - please build and install Poco")
     endif()
     set(POCOLIBS
@@ -70,13 +70,16 @@ pybind11_add_module(${MICROMANTID_PYTHON_MODULE} MODULE)
 target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC ${Boost_INCLUDE_DIRS} ${pybind11_INCLUDE_DIRS})
 
 # Add the raw Mantid source files
-add_subdirectory(mantid)
+add_subdirectory(src)
 
 set(MICROMANTID_PYTHON_SOURCES
     micromantid.cpp   # This must be first
     ${MICROMANTID_KERNEL_BINDINGS}
 )
 target_sources(${MICROMANTID_PYTHON_MODULE} PRIVATE ${MICROMANTID_PYTHON_SOURCES})
+target_include_directories(${MICROMANTID_PYTHON_MODULE} PRIVATE
+    inc
+)
 target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC 
     ${MICROMANTID_CXX_LIBRARIES} 
     ${POCOLIBS}

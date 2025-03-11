@@ -1,0 +1,224 @@
+diff --git a/Framework/API/src/AlgoTimeRegister.cpp b/Framework/API/src/AlgoTimeRegister.cpp
+index 6eedf204133..3ed17ce6b09 100644
+--- a/Framework/API/src/AlgoTimeRegister.cpp
++++ b/Framework/API/src/AlgoTimeRegister.cpp
+@@ -19,7 +19,7 @@ Kernel::Logger &LOGGER() {
+ }
+ } // namespace
+ 
+-using Kernel::ConfigService;
++//using Kernel::ConfigService;
+ using Kernel::time_point_ns;
+ 
+ AlgoTimeRegisterImpl::Dump::Dump(const std::string &nm)
+@@ -38,6 +38,7 @@ void AlgoTimeRegisterImpl::addTime(const std::string &name, const Kernel::time_p
+ }
+ 
+ bool AlgoTimeRegisterImpl::writeToFile() {
++  return false; /*
+   auto writeEnable = Kernel::ConfigService::Instance().getValue<bool>("performancelog.write").value();
+   if (!writeEnable) {
+     LOGGER().debug() << "performancelog.write is disabled (off/0/false)\n";
+@@ -69,6 +70,7 @@ bool AlgoTimeRegisterImpl::writeToFile() {
+     return false;
+   }
+   return true;
++*/
+ }
+ 
+ void AlgoTimeRegisterImpl::addTime(const std::string &name, const std::thread::id thread_id,
+diff --git a/Framework/API/src/Algorithm.cpp b/Framework/API/src/Algorithm.cpp
+index d2dfcb7730e..fa75cdf5547 100644
+--- a/Framework/API/src/Algorithm.cpp
++++ b/Framework/API/src/Algorithm.cpp
+@@ -24,7 +24,7 @@
+ #include "MantidKernel/PropertyWithValue.h"
+ #include "MantidKernel/Strings.h"
+ #include "MantidKernel/Timer.h"
+-#include "MantidKernel/UsageService.h"
++//#include "MantidKernel/UsageService.h"
+ 
+ #include "MantidKernel/StringTokenizer.h"
+ #include <Poco/ActiveMethod.h>
+@@ -1743,11 +1743,13 @@ void Algorithm::reportCompleted(const double &duration, const bool groupProcessi
+ /** Registers the usage of the algorithm with the UsageService
+  */
+ void Algorithm::registerFeatureUsage() const {
++/*
+   if (UsageService::Instance().isEnabled()) {
+     std::ostringstream oss;
+     oss << this->name() << ".v" << this->version();
+     UsageService::Instance().registerFeatureUsage(FeatureType::Algorithm, oss.str(), isChild());
+   }
++*/
+ }
+ 
+ /** Enable or disable Logging of start and end messages
+diff --git a/Framework/API/src/MatrixWorkspace.cpp b/Framework/API/src/MatrixWorkspace.cpp
+index 4d7b064ab2f..a1a22ce87aa 100644
+--- a/Framework/API/src/MatrixWorkspace.cpp
++++ b/Framework/API/src/MatrixWorkspace.cpp
+@@ -382,9 +382,9 @@ void MatrixWorkspace::setMarkerStyle(const std::string &markerType) {
+  * @return std::string :: the marker type
+  */
+ std::string MatrixWorkspace::getMarkerStyle() const {
+-  if (m_marker.empty())
+-    return Kernel::ConfigService::Instance().getString("plots.markerworkspace.MarkerStyle");
+-  else
++//if (m_marker.empty())
++//  return Kernel::ConfigService::Instance().getString("plots.markerworkspace.MarkerStyle");
++//else
+     return m_marker;
+ }
+ 
+diff --git a/Framework/Kernel/inc/MantidKernel/ConfigService.h b/Framework/Kernel/inc/MantidKernel/ConfigService.h
+index d66e1ba8daa..c89c2fc2bf2 100644
+--- a/Framework/Kernel/inc/MantidKernel/ConfigService.h
++++ b/Framework/Kernel/inc/MantidKernel/ConfigService.h
+@@ -10,7 +10,7 @@
+ // Includes
+ //----------------------------------------------------------------------
+ #include "MantidKernel/DllConfig.h"
+-#include "MantidKernel/ProxyInfo.h"
++//#include "MantidKernel/ProxyInfo.h"
+ #include "MantidKernel/SingletonHolder.h"
+ #include <optional>
+ 
+@@ -223,7 +223,7 @@ public:
+   void configureLogging();
+ 
+   /// Gets the proxy for the system
+-  Kernel::ProxyInfo &getProxy(const std::string &url);
++//Kernel::ProxyInfo &getProxy(const std::string &url);
+ 
+   std::string getFullPath(const std::string &filename, const bool ignoreDirs, const int options) const;
+ 
+@@ -293,9 +293,9 @@ private:
+   std::set<std::string> m_configPaths;
+ 
+   /// local cache of proxy details
+-  Kernel::ProxyInfo m_proxyInfo;
++//Kernel::ProxyInfo m_proxyInfo;
+   /// whether the proxy has been populated yet
+-  bool m_isProxySet;
++//bool m_isProxySet;
+ };
+ 
+ EXTERN_MANTID_KERNEL template class MANTID_KERNEL_DLL Mantid::Kernel::SingletonHolder<ConfigServiceImpl>;
+diff --git a/Framework/Kernel/src/AttenuationProfile.cpp b/Framework/Kernel/src/AttenuationProfile.cpp
+index 4273e8811f9..02fafcf451e 100644
+--- a/Framework/Kernel/src/AttenuationProfile.cpp
++++ b/Framework/Kernel/src/AttenuationProfile.cpp
+@@ -5,13 +5,14 @@
+ //     Institut Laue - Langevin & CSNS, Institute of High Energy Physics, CAS
+ // SPDX - License - Identifier: GPL - 3.0 +
+ #include "MantidKernel/AttenuationProfile.h"
+-#include "MantidKernel/ConfigService.h"
++//#include "MantidKernel/ConfigService.h"
+ #include "MantidKernel/Exception.h"
+ #include "MantidKernel/Material.h"
+-#include <Poco/Path.h>
+ #include <filesystem>
+ #include <fstream>
+ 
++namespace fs = std::filesystem;
++
+ namespace Mantid::Kernel {
+ 
+ /**
+@@ -26,34 +27,34 @@ namespace Mantid::Kernel {
+  */
+ AttenuationProfile::AttenuationProfile(const std::string &inputFileName, const std::string &searchPath,
+                                        Material *extrapolationMaterial, double extrapolationMaxX) {
+-  Poco::Path suppliedFileName(inputFileName);
+-  Poco::Path inputFilePath;
+-  std::string fileExt = suppliedFileName.getExtension();
++  fs::path suppliedFileName(inputFileName);
++  fs::path inputFilePath;
++  std::string fileExt = suppliedFileName.extension().string();
+   std::transform(fileExt.begin(), fileExt.end(), fileExt.begin(), toupper);
+ 
+   if (fileExt == "DAT") {
+-    if (suppliedFileName.isRelative()) {
++    if (suppliedFileName.is_relative()) {
+       bool useSearchDirectories = true;
+ 
+       if (!searchPath.empty()) {
+-        inputFilePath = Poco::Path(Poco::Path(searchPath).parent(), inputFileName);
+-        if (std::filesystem::exists(inputFilePath.toString())) {
++        inputFilePath = fs::path(searchPath).parent_path() / suppliedFileName;
++        if (std::filesystem::exists(inputFilePath)) {
+           useSearchDirectories = false;
+         }
+       }
+       if (useSearchDirectories) {
+         // ... and if that doesn't work look in the search directories
+-        std::string foundFile = Mantid::Kernel::ConfigService::Instance().getFullPath(inputFileName, false, 0);
++/*      std::string foundFile = Mantid::Kernel::ConfigService::Instance().getFullPath(inputFileName, false, 0);
+         if (!foundFile.empty()) {
+           inputFilePath = Poco::Path(foundFile);
+-        } else {
++        } else {*/
+           inputFilePath = suppliedFileName;
+-        }
++        //}
+       }
+     } else {
+       inputFilePath = suppliedFileName;
+     }
+-    std::ifstream input(inputFilePath.toString(), std::ios_base::in);
++    std::ifstream input(inputFilePath.string(), std::ios_base::in);
+     if (input) {
+       std::string line;
+       double minX = std::numeric_limits<double>::max();
+diff --git a/Framework/Kernel/src/ConfigService.cpp b/Framework/Kernel/src/ConfigService.cpp
+index 035071998e4..b5271a1f909 100644
+--- a/Framework/Kernel/src/ConfigService.cpp
++++ b/Framework/Kernel/src/ConfigService.cpp
+@@ -15,7 +15,7 @@
+ #include "MantidKernel/Glob.h"
+ #include "MantidKernel/Logger.h"
+ #include "MantidKernel/MantidVersion.h"
+-#include "MantidKernel/NetworkProxy.h"
++//#include "MantidKernel/NetworkProxy.h"
+ #include "MantidKernel/StdoutChannel.h"
+ #include "MantidKernel/StringTokenizer.h"
+ #include "MantidKernel/Strings.h"
+@@ -121,8 +121,8 @@ const std::string LOG_LEVEL_KEY("logging.loggers.root.level");
+ ConfigServiceImpl::ConfigServiceImpl()
+     : m_pConf(nullptr), m_pSysConfig(new Poco::Util::SystemConfiguration()), m_changed_keys(), m_strBaseDir(""),
+       m_propertyString(""), m_properties_file_name("Mantid.properties"),
+-      m_user_properties_file_name("Mantid.user.properties"), m_dataSearchDirs(), m_instrumentDirs(), m_proxyInfo(),
+-      m_isProxySet(false) {
++      m_user_properties_file_name("Mantid.user.properties"), m_dataSearchDirs(), m_instrumentDirs() { //, m_proxyInfo(),
++//    m_isProxySet(false) {
+   // Register StdChannel with Poco
+   Poco::LoggingFactory::defaultFactory().registerChannelClass(
+       "StdoutChannel", new Poco::Instantiator<Poco::StdoutChannel, Poco::Channel>);
+@@ -1276,6 +1276,10 @@ std::string ConfigServiceImpl::getPathToExecutable() const {
+   const int success = _NSGetExecutablePath(pBuf, &bytes);
+   if (success < 0)
+     bytes = 1025;
++#elif defined __EMSCRIPTEN__
++  // Can't get this info inside Javascript, just return something
++  ssize_t bytes = 1025;
++  execpath = "/usr/bin/python";
+ #endif
+ 
+   if (bytes > 0 && bytes < 1024) {
+@@ -1832,6 +1836,7 @@ Gets the system proxy information
+ @url A url to match the proxy to
+ @return the proxy information.
+ */
++/*
+ Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
+   if (!m_isProxySet) {
+     // set the proxy
+@@ -1852,6 +1857,7 @@ Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
+   }
+   return m_proxyInfo;
+ }
++*/
+ 
+ std::string ConfigServiceImpl::getFullPath(const std::string &filename, const bool ignoreDirs,
+                                            const int options) const {

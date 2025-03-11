@@ -1,0 +1,63 @@
+name: micromantid
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+    types: [opened, reopened, synchronize]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash -l {0}
+
+jobs:
+  build_and_test:
+    name: Builds and test Pyodide wheel
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: mamba-org/setup-micromamba@v1
+      - name: Patch mantid
+        run: |
+          cd mantid
+          for dd in ../diffs/*; do
+            patch -p1 < $dd
+          done
+          cd ..
+      - name: Cache environment
+        id: cache-build-env
+        uses: actions/cache@v4
+        with:
+          path: build_env
+          key: build_env_cache
+      - name: Set up environment
+        if: ${{ steps.cache-build-env.outputs.cache-hit != 'true' }}
+        run: |
+          ./setup_emsdk_env.sh
+      - name: Build
+        run: |
+          if [[ $($MAMBA_EXE env list | grep ems) -eq "" ]]; then
+            $MAMBA_EXE create -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build
+          fi
+          eval "$($MAMBA_EXE shell activate ems)"
+          export PYODIDE_EMSCRIPTEN_VERSION=$(pyodide config get emscripten_version)
+          export SIDE_MODULE_CXXFLAGS=$(pyodide config get cxxflags)
+          export SIDE_MODULE_CFLAGS=$(pyodide config get cflags)
+          export SIDE_MODULE_LDFLAGS=$(pyodide config get ldflags)
+          export PLATFORM_TRIPLET=wasm32-emscripten
+          source build_env/emsdk/emsdk_env.sh
+          pyodide build
+      - name: Test
+        run: |
+          eval "$($MAMBA_EXE shell activate ems)"
+          npm install
+          npm test
+      #- name: Setup tmate
+      #  if: ${{ failure() }}
+      #  uses: mxschmitt/action-tmate@v3
