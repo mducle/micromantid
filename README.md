@@ -33,3 +33,28 @@ To test the wheel you need to install `node.js`, then you can run:
 npm install
 npm test
 ```
+
+If you want to build for the native architecture rather the for WebAssembly, you can run:
+
+```
+mamba create -n native python=3.12 pybind11 boost-cpp gxx poco jsoncpp zlib hdf5 pytest eigen muparser gsl
+mamba activate native
+mkdir build
+cd build
+cmake ..
+cmake --build .
+```
+
+This will build the module file in the `build` folder. You can also use:
+
+```
+python -m pip wheel
+``` 
+
+to build a wheel instead. After installing the wheel you can run
+
+```
+python -m unittest
+```
+
+To run the tests.

@@ -55,6 +55,6 @@ jobs:
           eval "$($MAMBA_EXE shell activate ems)"
           npm install
           npm test
-      - name: Setup tmate
-        if: ${{ failure() }}
-        uses: mxschmitt/action-tmate@v3
+      #- name: Setup tmate
+      #  if: ${{ failure() }}
+      #  uses: mxschmitt/action-tmate@v3
