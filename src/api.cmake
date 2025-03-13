@@ -1,0 +1,57 @@
+set(API_SRC_FILES
+    ../mantid/Framework/API/src/ADSValidator.cpp
+    ../mantid/Framework/API/src/Algorithm.cpp
+    ../mantid/Framework/API/src/AlgorithmExecuteProfile.cpp
+    ../mantid/Framework/API/src/AlgorithmFactory.cpp
+    ../mantid/Framework/API/src/AlgorithmHistory.cpp
+    ../mantid/Framework/API/src/AlgorithmManager.cpp
+    ../mantid/Framework/API/src/AlgoTimeRegister.cpp
+    ../mantid/Framework/API/src/AnalysisDataService.cpp
+    ../mantid/Framework/API/src/Axis.cpp
+    ../mantid/Framework/API/src/BinEdgeAxis.cpp
+    ../mantid/Framework/API/src/DeprecatedAlias.cpp
+    ../mantid/Framework/API/src/DeprecatedAlgorithm.cpp
+    ../mantid/Framework/API/src/ExperimentInfo.cpp
+    ../mantid/Framework/API/src/FileLoaderRegistry.cpp
+    ../mantid/Framework/API/src/HistoryItem.cpp
+    ../mantid/Framework/API/src/HistoryView.cpp
+    ../mantid/Framework/API/src/InstrumentDataService.cpp
+    ../mantid/Framework/API/src/InstrumentFileFinder.cpp
+    ../mantid/Framework/API/src/IMDIterator.cpp
+    ../mantid/Framework/API/src/IMDWorkspace.cpp
+    ../mantid/Framework/API/src/IPeaksWorkspace.cpp
+    ../mantid/Framework/API/src/ITableWorkspace.cpp
+    ../mantid/Framework/API/src/ISpectrum.cpp
+    ../mantid/Framework/API/src/LogManager.cpp
+    ../mantid/Framework/API/src/MatrixWorkspace.cpp
+    ../mantid/Framework/API/src/MatrixWorkspaceMDIterator.cpp
+    ../mantid/Framework/API/src/MDGeometry.cpp
+    ../mantid/Framework/API/src/NexusFileLoader.cpp
+    ../mantid/Framework/API/src/NumericAxis.cpp
+    ../mantid/Framework/API/src/ResizeRectangularDetectorHelper.cpp
+    ../mantid/Framework/API/src/Run.cpp
+    ../mantid/Framework/API/src/Sample.cpp
+    ../mantid/Framework/API/src/SpectraAxis.cpp
+    ../mantid/Framework/API/src/SpectrumDetectorMapping.cpp
+    ../mantid/Framework/API/src/SpectrumInfo.cpp
+    ../mantid/Framework/API/src/WorkspaceHistory.cpp
+    ../mantid/Framework/API/src/Workspace.cpp
+    ../mantid/Framework/API/src/WorkspaceGroup.cpp
+    ../mantid/Framework/API/src/WorkspacePropertyUtils.cpp
+)
+add_library(MantidAPI OBJECT ${API_SRC_FILES})
+target_include_directories(MantidAPI PRIVATE
+    ../inc
+    ../mantid/Framework/API/inc
+    ../mantid/Framework/Beamline/inc
+    ../mantid/Framework/Geometry/inc
+    ../mantid/Framework/HistogramData/inc
+    ../mantid/Framework/Indexing/inc
+    ../mantid/Framework/Json/inc
+    ../mantid/Framework/Kernel/inc
+    ../mantid/Framework/Types/inc
+    ../mantid/Framework/NexusCpp/inc
+    ${Boost_INCLUDE_DIRS}
+    ${EIGEN3_INCLUDE_DIR}
+)
+set_property(TARGET MantidAPI PROPERTY POSITION_INDEPENDENT_CODE ON)
