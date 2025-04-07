@@ -8,10 +8,13 @@ include(kernel.cmake)
 include(nexus.cmake)
 include(types.cmake)
 
-target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC
-    ../mantid/Framework/Kernel/inc
-    ../mantid/Framework/Types/inc
-)
+include(pythoncore.cmake)
+include(pythonkernel.cmake)
+
+#target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC
+#    ../mantid/Framework/Kernel/inc
+#    ../mantid/Framework/Types/inc
+#)
 
 set(MICROMANTID_CXX_LIBRARIES
     MantidAPI

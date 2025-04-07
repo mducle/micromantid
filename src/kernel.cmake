@@ -2,14 +2,20 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/Atom.cpp
     ../mantid/Framework/Kernel/src/AttenuationProfile.cpp
     ../mantid/Framework/Kernel/src/ArrayProperty.cpp
+    ../mantid/Framework/Kernel/src/ArrayBoundedValidator.cpp
+    ../mantid/Framework/Kernel/src/ArrayLengthValidator.cpp
+    ../mantid/Framework/Kernel/src/ArrayOrderedPairsValidator.cpp
     ../mantid/Framework/Kernel/src/CatalogInfo.cpp
     ../mantid/Framework/Kernel/src/ChecksumHelper.cpp
     ../mantid/Framework/Kernel/src/ConfigService.cpp
+    ../mantid/Framework/Kernel/src/ConfigObserver.cpp
+    ../mantid/Framework/Kernel/src/ConfigPropertyObserver.cpp
     ../mantid/Framework/Kernel/src/CompositeValidator.cpp
     ../mantid/Framework/Kernel/src/DataItem.cpp
     ../mantid/Framework/Kernel/src/DateAndTime.cpp
     ../mantid/Framework/Kernel/src/DeltaEMode.cpp
     ../mantid/Framework/Kernel/src/DllOpen.cpp
+    ../mantid/Framework/Kernel/src/EnabledWhenProperty.cpp
     ../mantid/Framework/Kernel/src/EnvironmentHistory.cpp
     ../mantid/Framework/Kernel/src/Exception.cpp
     ../mantid/Framework/Kernel/src/FacilityInfo.cpp
@@ -54,12 +60,14 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/PropertyWithValueJSON.cpp
     ../mantid/Framework/Kernel/src/PseudoRandomNumberGenerator.cpp
     ../mantid/Framework/Kernel/src/Quat.cpp
+    ../mantid/Framework/Kernel/src/RebinParamsValidator.cpp
     ../mantid/Framework/Kernel/src/RegexStrings.cpp
     ../mantid/Framework/Kernel/src/SingletonHolder.cpp
     ../mantid/Framework/Kernel/src/SplittingInterval.cpp
     ../mantid/Framework/Kernel/src/Statistics.cpp
     ../mantid/Framework/Kernel/src/StdoutChannel.cpp
     ../mantid/Framework/Kernel/src/Strings.cpp
+    ../mantid/Framework/Kernel/src/StringContainsValidator.cpp
     ../mantid/Framework/Kernel/src/StringTokenizer.cpp
     ../mantid/Framework/Kernel/src/ThreadSafeLogStream.cpp
     ../mantid/Framework/Kernel/src/TimeROI.cpp
@@ -67,10 +75,12 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/TimeSeriesProperty.cpp
     ../mantid/Framework/Kernel/src/TopicInfo.cpp
     ../mantid/Framework/Kernel/src/Unit.cpp
+    ../mantid/Framework/Kernel/src/UnitConversion.cpp
     ../mantid/Framework/Kernel/src/UnitLabel.cpp
     ../mantid/Framework/Kernel/src/UnitLabelTypes.cpp
     ../mantid/Framework/Kernel/src/V3D.cpp
     ../mantid/Framework/Kernel/src/VectorHelper.cpp
+    ../mantid/Framework/Kernel/src/VisibleWhenProperty.cpp
     ../mantid/Framework/Kernel/src/VMD.cpp
 )
 add_library(Kernel OBJECT ${KERNEL_SRC_FILES})

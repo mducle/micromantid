@@ -13,6 +13,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/DeprecatedAlgorithm.cpp
     ../mantid/Framework/API/src/ExperimentInfo.cpp
     ../mantid/Framework/API/src/FileLoaderRegistry.cpp
+    ../mantid/Framework/API/src/FrameworkManager.cpp
     ../mantid/Framework/API/src/HistoryItem.cpp
     ../mantid/Framework/API/src/HistoryView.cpp
     ../mantid/Framework/API/src/InstrumentDataService.cpp

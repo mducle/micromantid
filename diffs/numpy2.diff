@@ -1,0 +1,18 @@
+diff --git a/Framework/PythonInterface/core/inc/MantidPythonInterface/core/Converters/NumpyFunctions.h b/Framework/PythonInterface/core/inc/MantidPythonInterface/core/Converters/NumpyFunctions.h
+index 910b5657388..df796b73fe3 100644
+--- a/Framework/PythonInterface/core/inc/MantidPythonInterface/core/Converters/NumpyFunctions.h
++++ b/Framework/PythonInterface/core/inc/MantidPythonInterface/core/Converters/NumpyFunctions.h
+@@ -12,10 +12,11 @@
+
+ #include "MantidPythonInterface/core/DllConfig.h"
+ #include <boost/python/detail/wrap_python.hpp>
++#include <numpy/ndarraytypes.h>
+
+ // Forward declare the numpy array types
+-struct tagPyArrayObject;
+-using PyArrayObject = tagPyArrayObject;
++//struct tagPyArrayObject;
++//using PyArrayObject = tagPyArrayObject;
+ struct _PyArray_Descr;
+ using PyArray_Descr = _PyArray_Descr;
+
