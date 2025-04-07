@@ -74,29 +74,5 @@ else()
     set(BOOSTPYTHON Boost::python)
 endif()
 
-# Add the Pybind11 bindings
-#pybind11_add_module(${MICROMANTID_PYTHON_MODULE} MODULE)
-#target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC ${Boost_INCLUDE_DIRS} ${pybind11_INCLUDE_DIRS})
-
-# Add the raw Mantid source files
+# Add the Mantid source files
 add_subdirectory(src)
-
-#set(MICROMANTID_PYTHON_SOURCES
-#    micromantid.cpp   # This must be first
-#    ${MICROMANTID_KERNEL_BINDINGS}
-#)
-#target_sources(${MICROMANTID_PYTHON_MODULE} PRIVATE ${MICROMANTID_PYTHON_SOURCES})
-#target_include_directories(${MICROMANTID_PYTHON_MODULE} PRIVATE
-#    inc
-#)
-#target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC 
-#    ${MICROMANTID_CXX_LIBRARIES} 
-#    ${POCOLIBS}
-#    ${HDF5_LIBRARIES}
-#    ${JSON_LIBS}
-#    ${MUPARSER_LIBS}
-#    ${GSL_LIBS}
-#)
-#
-## Destination name must match name of project in pyproject.toml
-#install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PYTHON_MODULE})
