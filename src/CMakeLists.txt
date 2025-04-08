@@ -10,3 +10,5 @@ include(types.cmake)
 
 include(pythoncore.cmake)
 include(pythonkernel.cmake)
+include(pythongeometry.cmake)
+include(pythonapi.cmake)

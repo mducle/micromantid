@@ -14,12 +14,15 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/DataItem.cpp
     ../mantid/Framework/Kernel/src/DateAndTime.cpp
     ../mantid/Framework/Kernel/src/DeltaEMode.cpp
+    ../mantid/Framework/Kernel/src/DirectoryValidator.cpp
+    ../mantid/Framework/Kernel/src/DiskBuffer.cpp
     ../mantid/Framework/Kernel/src/DllOpen.cpp
     ../mantid/Framework/Kernel/src/EnabledWhenProperty.cpp
     ../mantid/Framework/Kernel/src/EnvironmentHistory.cpp
     ../mantid/Framework/Kernel/src/Exception.cpp
     ../mantid/Framework/Kernel/src/FacilityInfo.cpp
     ../mantid/Framework/Kernel/src/FileDescriptor.cpp
+    ../mantid/Framework/Kernel/src/FileValidator.cpp
     ../mantid/Framework/Kernel/src/FilteredTimeSeriesProperty.cpp
     ../mantid/Framework/Kernel/src/FloatingPointComparison.cpp
     ../mantid/Framework/Kernel/src/Glob.cpp
@@ -27,6 +30,7 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/InstrumentInfo.cpp
     ../mantid/Framework/Kernel/src/Interpolation.cpp
     ../mantid/Framework/Kernel/src/IPropertyManager.cpp
+    ../mantid/Framework/Kernel/src/ISaveable.cpp
     ../mantid/Framework/Kernel/src/LibraryManager.cpp
     ../mantid/Framework/Kernel/src/LibraryWrapper.cpp
     ../mantid/Framework/Kernel/src/LiveListenerInfo.cpp
@@ -42,6 +46,8 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/MDUnitFactory.cpp
     ../mantid/Framework/Kernel/src/MersenneTwister.cpp
     ../mantid/Framework/Kernel/src/Memory.cpp
+    ../mantid/Framework/Kernel/src/MultiFileNameParser.cpp
+    ../mantid/Framework/Kernel/src/MultiFileValidator.cpp
     ../mantid/Framework/Kernel/src/NDRandomNumberGenerator.cpp
     ../mantid/Framework/Kernel/src/NeutronAtom.cpp
     ../mantid/Framework/Kernel/src/NexusDescriptor.cpp

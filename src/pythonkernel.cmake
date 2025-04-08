@@ -91,7 +91,7 @@ set(INC_FILES
 )
 
 # Create the target for this directory
-add_library(PythonKernelModule MODULE ${EXPORT_FILES} ${SRC_FILES} ${MODULE_DEFINITION} ${INC_FILES})
+add_library(PythonKernelModule SHARED ${EXPORT_FILES} ${SRC_FILES} ${MODULE_DEFINITION} ${INC_FILES})
 
 set_target_properties(PythonKernelModule PROPERTIES
   PREFIX ""

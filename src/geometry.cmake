@@ -1,4 +1,5 @@
 set(GEOMETRY_SRC_FILES
+    ../mantid/Framework/Geometry/src/Crystal/BasicHKLFilters.cpp
     ../mantid/Framework/Geometry/src/Crystal/BraggScatterer.cpp
     ../mantid/Framework/Geometry/src/Crystal/BraggScattererFactory.cpp
     ../mantid/Framework/Geometry/src/Crystal/BraggScattererInCrystalStructure.cpp
@@ -8,14 +9,19 @@ set(GEOMETRY_SRC_FILES
     ../mantid/Framework/Geometry/src/Crystal/CyclicGroup.cpp
     ../mantid/Framework/Geometry/src/Crystal/Group.cpp
     ../mantid/Framework/Geometry/src/Crystal/GroupTransformation.cpp
+    ../mantid/Framework/Geometry/src/Crystal/HKLFilter.cpp
+    ../mantid/Framework/Geometry/src/Crystal/HKLGenerator.cpp
     ../mantid/Framework/Geometry/src/Crystal/IsotropicAtomBraggScatterer.cpp
     ../mantid/Framework/Geometry/src/Crystal/OrientedLattice.cpp
     ../mantid/Framework/Geometry/src/Crystal/PointGroup.cpp
     ../mantid/Framework/Geometry/src/Crystal/PointGroupFactory.cpp
     ../mantid/Framework/Geometry/src/Crystal/ProductOfCyclicGroups.cpp
     ../mantid/Framework/Geometry/src/Crystal/ReflectionCondition.cpp
+    ../mantid/Framework/Geometry/src/Crystal/ReflectionGenerator.cpp
     ../mantid/Framework/Geometry/src/Crystal/SpaceGroup.cpp
     ../mantid/Framework/Geometry/src/Crystal/SpaceGroupFactory.cpp
+    ../mantid/Framework/Geometry/src/Crystal/StructureFactorCalculator.cpp
+    ../mantid/Framework/Geometry/src/Crystal/StructureFactorCalculatorSummation.cpp
     ../mantid/Framework/Geometry/src/Crystal/SymmetryElement.cpp
     ../mantid/Framework/Geometry/src/Crystal/SymmetryElementFactory.cpp
     ../mantid/Framework/Geometry/src/Crystal/SymmetryOperation.cpp
@@ -29,6 +35,7 @@ set(GEOMETRY_SRC_FILES
     ../mantid/Framework/Geometry/src/Instrument/ComponentInfo.cpp
     ../mantid/Framework/Geometry/src/Instrument/ComponentInfoBankHelpers.cpp
     ../mantid/Framework/Geometry/src/Instrument/CompAssembly.cpp
+    ../mantid/Framework/Geometry/src/Instrument/Container.cpp
     ../mantid/Framework/Geometry/src/Instrument/DetectorInfo.cpp
     ../mantid/Framework/Geometry/src/Instrument/DetectorGroup.cpp
     ../mantid/Framework/Geometry/src/Instrument/Detector.cpp
@@ -46,6 +53,7 @@ set(GEOMETRY_SRC_FILES
     ../mantid/Framework/Geometry/src/Instrument/ParComponentFactory.cpp
     ../mantid/Framework/Geometry/src/Instrument/RectangularDetector.cpp
     ../mantid/Framework/Geometry/src/Instrument/ReferenceFrame.cpp
+    ../mantid/Framework/Geometry/src/Instrument/SampleEnvironment.cpp
     ../mantid/Framework/Geometry/src/Instrument/StructuredDetector.cpp
     ../mantid/Framework/Geometry/src/Instrument/XMLInstrumentParameter.cpp
     ../mantid/Framework/Geometry/src/MDGeometry/GeneralFrame.cpp
