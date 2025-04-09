@@ -59,7 +59,7 @@ set(INC_FILES
 )
 
 # Create the target for this directory
-add_library(PythonGeometryModule MODULE ${EXPORT_FILES} ${MODULE_DEFINITION} ${INC_FILES})
+add_library(PythonGeometryModule OBJECT ${EXPORT_FILES} ${MODULE_DEFINITION} ${INC_FILES})
 
 set_target_properties(PythonGeometryModule PROPERTIES
   PREFIX ""
@@ -67,26 +67,16 @@ set_target_properties(PythonGeometryModule PROPERTIES
   POSITION_INDEPENDENT_CODE ON
 )
 
-target_include_directories(PythonGeometryModule PUBLIC
+target_include_directories(PythonGeometryModule PRIVATE
   ${MTDSRCDIR}/inc
   ../inc
   ../mantid/Framework/Geometry/inc
+  ../mantid/Framework/Kernel/inc
   ../mantid/Framework/Beamline/inc
   ../mantid/Framework/NexusCpp/inc
+  ../mantid/Framework/Types/inc
+  ../mantid/Framework/PythonInterface/core/inc
   ${Boost_INCLUDE_DIRS}
+  ${Python_INCLUDE_DIRS}
+  ${Python_NumPy_INCLUDE_DIRS}
 )
-
-# Add the required dependencies
-target_link_libraries(PythonGeometryModule PUBLIC
-  Geometry
-  Beamline
-  Types
-  PythonInterfaceCore 
-  PythonKernelModule
-  ${BOOSTPYTHON}
-  ${MUPARSER_LIBS}
-  ${GSL_LIBS}
-)
-
-# Installation settings
-install(TARGETS PythonGeometryModule DESTINATION micromantid)

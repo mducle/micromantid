@@ -91,7 +91,7 @@ set(INC_FILES
 )
 
 # Create the target for this directory
-add_library(PythonKernelModule SHARED ${EXPORT_FILES} ${SRC_FILES} ${MODULE_DEFINITION} ${INC_FILES})
+add_library(PythonKernelModule OBJECT ${EXPORT_FILES} ${SRC_FILES} ${MODULE_DEFINITION} ${INC_FILES})
 
 set_target_properties(PythonKernelModule PROPERTIES
   PREFIX ""
@@ -99,24 +99,13 @@ set_target_properties(PythonKernelModule PROPERTIES
   POSITION_INDEPENDENT_CODE ON
 )
 
-target_include_directories(PythonKernelModule PUBLIC
+target_include_directories(PythonKernelModule PRIVATE
   ${MTDSRCDIR}/inc
+  ../inc
   ../mantid/Framework/Kernel/inc
-  ${PYTHON_INCLUDE_DIRS}
+  ../mantid/Framework/Types/inc
+  ../mantid/Framework/PythonInterface/core/inc
+  ${Boost_INCLUDE_DIRS}
+  ${Python_INCLUDE_DIRS}
+  ${Python_NumPy_INCLUDE_DIRS}
 )
-
-# Add the required dependencies
-target_link_libraries(PythonKernelModule PUBLIC
-  PythonInterfaceCore 
-  Kernel
-  Json
-  NexusCpp
-  Types
-  ${BOOSTPYTHON}
-  ${POCOLIBS}
-  ${HDF5_LIBRARIES}
-  ${JSON_LIBS}
-)
-
-# Installation settings
-install(TARGETS PythonKernelModule DESTINATION micromantid)

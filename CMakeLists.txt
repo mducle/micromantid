@@ -76,3 +76,27 @@ endif()
 
 # Add the Mantid source files
 add_subdirectory(src)
+
+# Adds the bindings library module
+add_library(${MICROMANTID_PYTHON_MODULE} MODULE micromantid.cpp)
+set_target_properties(${MICROMANTID_PYTHON_MODULE} PROPERTIES
+  PREFIX ""
+  POSITION_INDEPENDENT_CODE ON
+)
+target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC
+  ${Boost_INCLUDE_DIRS}
+  ${Python_INCLUDE_DIRS}
+  ${Python_NumPy_INCLUDE_DIRS}
+)
+target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC
+  ${MICROMANTID_CXX_LIBRARIES}
+  ${BOOSTPYTHON}
+  ${POCOLIBS}
+  ${HDF5_LIBRARIES}
+  ${JSON_LIBS}
+  ${MUPARSER_LIBS}
+  ${GSL_LIBS}
+)
+
+# Destination name must match name of project in pyproject.toml
+install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PYTHON_MODULE})

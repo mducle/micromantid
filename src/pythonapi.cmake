@@ -128,7 +128,7 @@ set(INC_FILES
 
 
 # Create the target for this directory
-add_library(PythonAPIModule MODULE ${EXPORT_FILES} ${SRC_FILES} ${MODULE_DEFINITION} ${INC_FILES})
+add_library(PythonAPIModule OBJECT ${EXPORT_FILES} ${SRC_FILES} ${MODULE_DEFINITION} ${INC_FILES})
 
 set_target_properties(PythonAPIModule PROPERTIES
   PREFIX ""
@@ -136,7 +136,7 @@ set_target_properties(PythonAPIModule PROPERTIES
   POSITION_INDEPENDENT_CODE ON
 )
 
-target_include_directories(PythonAPIModule PUBLIC
+target_include_directories(PythonAPIModule PRIVATE
   ${MTDSRCDIR}/inc
   ../inc
   ../mantid/Framework/API/inc
@@ -154,27 +154,3 @@ target_include_directories(PythonAPIModule PUBLIC
   ${Python_INCLUDE_DIRS}
   ${Python_NumPy_INCLUDE_DIRS}
 )
-
-# Add the required dependencies
-target_link_libraries(PythonAPIModule PUBLIC
-  PythonInterfaceCore
-  PythonKernelModule
-  MantidAPI
-  Beamline
-  Geometry
-  HistogramData
-  Indexing
-  Json
-  Kernel
-  NexusCpp
-  Types
-  ${BOOSTPYTHON}
-  ${POCOLIBS}
-  ${HDF5_LIBRARIES}
-  ${JSON_LIBS}
-  ${MUPARSER_LIBS}
-  ${GSL_LIBS}
-)
-
-# Installation settings
-install(TARGETS PythonAPIModule DESTINATION micromantid)
