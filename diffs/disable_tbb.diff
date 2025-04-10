@@ -96,3 +96,94 @@ index 88f6947b44c..68217fabda2 100644
    /// The table of possible 'quick conversions'
    static ConversionsMap s_conversionFactors;
  };
+diff --git a/Framework/DataObjects/src/EventList.cpp b/Framework/DataObjects/src/EventList.cpp
+index 229e3732618..111da590353 100644
+--- a/Framework/DataObjects/src/EventList.cpp
++++ b/Framework/DataObjects/src/EventList.cpp
+@@ -18,7 +18,7 @@
+ // qualifier applied to function type has no meaning; ignored
+ #pragma warning(disable : 4180)
+ #endif
+-#include "tbb/parallel_sort.h"
++//#include "tbb/parallel_sort.h"
+ #ifdef _MSC_VER
+ #pragma warning(default : 4180)
+ #endif
+@@ -1086,20 +1086,20 @@ template <class RandomIt> void switchable_sort(RandomIt first, RandomIt last) {
+   const auto vec_size = static_cast<size_t>(std::distance(first, last));
+   if (vec_size < 2)
+     return;
+-  else if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
++  else //if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
+     std::sort(first, last);
+-  else
+-    tbb::parallel_sort(first, last);
++  //else
++  //  tbb::parallel_sort(first, last);
+ }
+ 
+ template <class RandomIt, class Compare> void switchable_sort(RandomIt first, RandomIt last, Compare comp) {
+   const auto vec_size = static_cast<size_t>(std::distance(first, last));
+   if (vec_size < 2)
+     return;
+-  else if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
++  else //if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
+     std::sort(first, last, std::move(comp));
+-  else
+-    tbb::parallel_sort(first, last, comp);
++  //else
++  //  tbb::parallel_sort(first, last, comp);
+ }
+ } // anonymous namespace
+ 
+diff --git a/Framework/DataObjects/src/EventWorkspace.cpp b/Framework/DataObjects/src/EventWorkspace.cpp
+index ea571d63db1..36c53928a26 100644
+--- a/Framework/DataObjects/src/EventWorkspace.cpp
++++ b/Framework/DataObjects/src/EventWorkspace.cpp
+@@ -24,7 +24,7 @@
+ #include "MantidKernel/MultiThreaded.h"
+ #include "MantidKernel/TimeSeriesProperty.h"
+ 
+-#include "tbb/parallel_for.h"
++//#include "tbb/parallel_for.h"
+ #include <algorithm>
+ #include <limits>
+ #include <numeric>
+@@ -623,6 +623,7 @@ void EventWorkspace::resetAllXToSingleBin() {
+ }
+ 
+ /** Task for sorting an event list */
++/*
+ class EventSortingTask {
+ public:
+   /// ctor
+@@ -653,6 +654,7 @@ private:
+   /// Optional Progress dialog.
+   Mantid::API::Progress *prog;
+ };
++*/
+ 
+ /*
+  * Review each event list to get the sort type
+@@ -680,12 +682,20 @@ void EventWorkspace::sortAll(EventSortType sortType, Mantid::API::Progress *prog
+     }
+     return;
+   }
+-
++/*
+   // Create the thread pool using tbb
+   EventSortingTask task(this, sortType, prog);
+   constexpr size_t GRAINSIZE_DEFAULT{100}; // somewhat arbitrary
+   const size_t grainsize = std::min<size_t>(GRAINSIZE_DEFAULT, (this->getNumberHistograms() / GRAINSIZE_DEFAULT) + 1);
+   tbb::parallel_for(tbb::blocked_range<size_t>(0, data.size(), grainsize), task);
++*/
++  for (size_t wi = 0; wi < data.size(); ++wi) {
++    const auto &spectrum = this->getSpectrum(wi); // follow the method signature
++    spectrum.sort(sortType);
++  }
++  // Report progress
++  if (prog != nullptr)
++    prog->report("Sorting");
+ }
+ 
+ /** Integrate all the spectra in the matrix workspace within the range given.

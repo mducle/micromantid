@@ -13,6 +13,7 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/CompositeValidator.cpp
     ../mantid/Framework/Kernel/src/DataItem.cpp
     ../mantid/Framework/Kernel/src/DateAndTime.cpp
+    ../mantid/Framework/Kernel/src/DateAndTimeHelpers.cpp
     ../mantid/Framework/Kernel/src/DeltaEMode.cpp
     ../mantid/Framework/Kernel/src/DirectoryValidator.cpp
     ../mantid/Framework/Kernel/src/DiskBuffer.cpp

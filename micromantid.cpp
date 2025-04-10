@@ -9,6 +9,7 @@
 void init_kernel();
 void init_geometry();
 void init_api();
+void init_dataobjects();
 
 BOOST_PYTHON_MODULE(micromantid)
 {
@@ -23,4 +24,5 @@ BOOST_PYTHON_MODULE(micromantid)
   init_kernel();
   init_geometry();
   init_api();
+  init_dataobjects();
 }

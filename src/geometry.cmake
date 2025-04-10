@@ -59,11 +59,14 @@ set(GEOMETRY_SRC_FILES
     ../mantid/Framework/Geometry/src/MDGeometry/GeneralFrame.cpp
     ../mantid/Framework/Geometry/src/MDGeometry/MDGeometryXMLBuilder.cpp
     ../mantid/Framework/Geometry/src/MDGeometry/MDHistoDimension.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/MDPlane.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/UnknownFrame.cpp
     ../mantid/Framework/Geometry/src/Math/PolyBase.cpp
     ../mantid/Framework/Geometry/src/Math/Triple.cpp
     ../mantid/Framework/Geometry/src/Math/mathSupport.cpp
     ../mantid/Framework/Geometry/src/Objects/BoundingBox.cpp
     ../mantid/Framework/Geometry/src/Objects/CSGObject.cpp
+    ../mantid/Framework/Geometry/src/Objects/InstrumentRayTracer.cpp
     ../mantid/Framework/Geometry/src/Objects/MeshObject.cpp
     ../mantid/Framework/Geometry/src/Objects/MeshObject2D.cpp
     ../mantid/Framework/Geometry/src/Objects/MeshObjectCommon.cpp

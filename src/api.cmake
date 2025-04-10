@@ -16,6 +16,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/BoxController.cpp
     ../mantid/Framework/API/src/Citation.cpp
     ../mantid/Framework/API/src/Column.cpp
+    ../mantid/Framework/API/src/ColumnFactory.cpp
     ../mantid/Framework/API/src/CompositeFunction.cpp
     ../mantid/Framework/API/src/CommonBinsValidator.cpp
     ../mantid/Framework/API/src/ConstraintFactory.cpp
@@ -75,11 +76,13 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/ResizeRectangularDetectorHelper.cpp
     ../mantid/Framework/API/src/RegionSelectorObserver.cpp
     ../mantid/Framework/API/src/Run.cpp
+    ../mantid/Framework/API/src/RefAxis.cpp
     ../mantid/Framework/API/src/Sample.cpp
     ../mantid/Framework/API/src/SpectraAxis.cpp
     ../mantid/Framework/API/src/SpectraAxisValidator.cpp
     ../mantid/Framework/API/src/SpectrumDetectorMapping.cpp
     ../mantid/Framework/API/src/SpectrumInfo.cpp
+    ../mantid/Framework/API/src/TableRow.cpp
     ../mantid/Framework/API/src/TextAxis.cpp
     ../mantid/Framework/API/src/WorkspaceHistory.cpp
     ../mantid/Framework/API/src/Workspace.cpp
