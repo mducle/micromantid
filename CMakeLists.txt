@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.30)
 project(micromantid)
 #set(CMAKE_VERBOSE_MAKEFILE ON)
+#set(CMAKE_BUILD_TYPE Debug)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(CMAKE_MACOSX_RPATH TRUE)
@@ -80,22 +81,22 @@ add_subdirectory(src)
 # Adds the bindings library module
 add_library(${MICROMANTID_PYTHON_MODULE} MODULE micromantid.cpp)
 set_target_properties(${MICROMANTID_PYTHON_MODULE} PROPERTIES
-  PREFIX ""
-  POSITION_INDEPENDENT_CODE ON
+    PREFIX ""
+    POSITION_INDEPENDENT_CODE ON
 )
 target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC
-  ${Boost_INCLUDE_DIRS}
-  ${Python_INCLUDE_DIRS}
-  ${Python_NumPy_INCLUDE_DIRS}
+    ${Boost_INCLUDE_DIRS}
+    ${Python_INCLUDE_DIRS}
+    ${Python_NumPy_INCLUDE_DIRS}
 )
 target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC
-  ${MICROMANTID_CXX_LIBRARIES}
-  ${BOOSTPYTHON}
-  ${POCOLIBS}
-  ${HDF5_LIBRARIES}
-  ${JSON_LIBS}
-  ${MUPARSER_LIBS}
-  ${GSL_LIBS}
+    ${MICROMANTID_CXX_LIBRARIES}
+    ${BOOSTPYTHON}
+    ${POCOLIBS}
+    ${HDF5_LIBRARIES}
+    ${JSON_LIBS}
+    ${MUPARSER_LIBS}
+    ${GSL_LIBS}
 )
 
 # Destination name must match name of project in pyproject.toml
