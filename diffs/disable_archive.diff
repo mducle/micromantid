@@ -1,0 +1,92 @@
+diff --git a/Framework/API/src/FileFinder.cpp b/Framework/API/src/FileFinder.cpp
+index 1b436e098c4..119d17bd86f 100644
+--- a/Framework/API/src/FileFinder.cpp
++++ b/Framework/API/src/FileFinder.cpp
+@@ -8,10 +8,10 @@
+ // Includes
+ //----------------------------------------------------------------------
+ #include "MantidAPI/FileFinder.h"
+-#include "MantidAPI/ArchiveSearchFactory.h"
++//#include "MantidAPI/ArchiveSearchFactory.h"
+ #include "MantidAPI/FrameworkManager.h"
+-#include "MantidAPI/IArchiveSearch.h"
+-#include "MantidAPI/ISISInstrumentDataCache.h"
++//#include "MantidAPI/IArchiveSearch.h"
++//#include "MantidAPI/ISISInstrumentDataCache.h"
+ #include "MantidKernel/ConfigService.h"
+ #include "MantidKernel/Exception.h"
+ #include "MantidKernel/FacilityInfo.h"
+@@ -323,7 +323,7 @@ std::string FileFinderImpl::getExtension(const std::string &filename, const std:
+   // couldn't find an extension
+   return "";
+ }
+-
++/*
+ std::vector<IArchiveSearch_sptr> FileFinderImpl::getArchiveSearch(const Kernel::FacilityInfo &facility) {
+   std::vector<IArchiveSearch_sptr> archs;
+ 
+@@ -362,7 +362,7 @@ std::vector<IArchiveSearch_sptr> FileFinderImpl::getArchiveSearch(const Kernel::
+   }
+   return archs;
+ }
+-
++*/
+ /**
+  * Find a path to a single file from a hint.
+  * @param hintstr :: hint string to look for filename.
+@@ -468,7 +468,7 @@ const API::Result<std::string> FileFinderImpl::findRun(const std::string &hintst
+   }
+ 
+   // determine which archive search facilities to use
+-  std::vector<IArchiveSearch_sptr> archs = getArchiveSearch(facility);
++/*std::vector<IArchiveSearch_sptr> archs = getArchiveSearch(facility);
+ 
+   auto path = getPath(archs, filenames, extensionsToSearch);
+   if (path) {
+@@ -493,8 +493,10 @@ const API::Result<std::string> FileFinderImpl::findRun(const std::string &hintst
+       return path;
+     }
+   }
++*/
+   g_log.information() << "Unable to find run with hint " << hint << "\n";
+-  return API::Result<std::string>("", path.errors());
++//return API::Result<std::string>("", path.errors());
++  return API::Result<std::string>("", "Unable to find run");
+ }
+ 
+ /**
+@@ -669,6 +671,7 @@ std::vector<std::string> FileFinderImpl::findRuns(const std::string &hintstr,
+   return res;
+ }
+ 
++/*
+ const API::Result<std::string>
+ FileFinderImpl::getISISInstrumentDataCachePath(const std::string &cachePathToSearch,
+                                                const std::set<std::string> &filenames,
+@@ -714,7 +717,7 @@ FileFinderImpl::getISISInstrumentDataCachePath(const std::string &cachePathToSea
+   }
+   return API::Result<std::string>("", errors);
+ }
+-
++*/
+ /**
+  * Return the path to the file found in archive
+  * @param archs :: A list of archives to search
+@@ -810,7 +813,8 @@ const API::Result<std::string> FileFinderImpl::getPath(const std::vector<IArchiv
+       }
+     }
+   }
+-
++  return API::Result<std::string>("", "Cannot find file");
++/*
+   // Search data cache
+   string errors;
+   std::filesystem::path cachePathToSearch(Kernel::ConfigService::Instance().getString("datacachesearch.directory"));
+@@ -847,6 +851,7 @@ const API::Result<std::string> FileFinderImpl::getPath(const std::vector<IArchiv
+ 
+   } // archs
+   return API::Result<std::string>("", errors);
++*/
+ }
+ 
+ std::string FileFinderImpl::toUpper(const std::string &src) const {

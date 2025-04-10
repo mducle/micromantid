@@ -1,5 +1,7 @@
 cmake_minimum_required (VERSION 3.30)
 project(micromantid)
+#set(CMAKE_VERBOSE_MAKEFILE ON)
+#set(CMAKE_BUILD_TYPE Debug)
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 set(CMAKE_MACOSX_RPATH TRUE)
@@ -31,10 +33,13 @@ endif()
 if (EMSCRIPTEN)
     message(STATUS "Emscripten detected - setting Pybind to use cross-compiler")
     set(PYBIND11_USE_CROSSCOMPILING TRUE)
+    set(Boost_USE_STATIC_LIBS ON)
+    set(Boost_USE_MULTITHREADED OFF)
 endif()
 
+find_package(Python COMPONENTS NumPy)
 find_package(pybind11 CONFIG)
-find_package(Boost)
+find_package(Boost COMPONENTS python REQUIRED)
 find_package(Poco REQUIRED Foundation XML Util)
 find_package(jsoncpp)
 find_package(ZLIB)
@@ -58,30 +63,35 @@ if (EMSCRIPTEN)
     set(GSL_LIBS
         $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgsl.a
         $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgslcblas.a)
+    file(GLOB BOOSTPYTHON $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libboost_python*.a)
+    if (BOOSTPYTHON STREQUAL "")
+        message(FATAL_ERROR "libboost_python.a not found - please build and install Boost::Python")
+    endif()
 else()
     set(POCOLIBS Poco::Foundation Poco::XML Poco::Util)
     set(JSON_LIBS jsoncpp)
     set(MUPARSER_LIBS muparser)
     set(GSL_LIBS gsl)
+    set(BOOSTPYTHON Boost::python)
 endif()
 
-# Add the Pybind11 bindings
-pybind11_add_module(${MICROMANTID_PYTHON_MODULE} MODULE)
-target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC ${Boost_INCLUDE_DIRS} ${pybind11_INCLUDE_DIRS})
-
-# Add the raw Mantid source files
+# Add the Mantid source files
 add_subdirectory(src)
 
-set(MICROMANTID_PYTHON_SOURCES
-    micromantid.cpp   # This must be first
-    ${MICROMANTID_KERNEL_BINDINGS}
+# Adds the bindings library module
+add_library(${MICROMANTID_PYTHON_MODULE} MODULE micromantid.cpp)
+set_target_properties(${MICROMANTID_PYTHON_MODULE} PROPERTIES
+    PREFIX ""
+    POSITION_INDEPENDENT_CODE ON
 )
-target_sources(${MICROMANTID_PYTHON_MODULE} PRIVATE ${MICROMANTID_PYTHON_SOURCES})
-target_include_directories(${MICROMANTID_PYTHON_MODULE} PRIVATE
-    inc
+target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC
+    ${Boost_INCLUDE_DIRS}
+    ${Python_INCLUDE_DIRS}
+    ${Python_NumPy_INCLUDE_DIRS}
 )
-target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC 
-    ${MICROMANTID_CXX_LIBRARIES} 
+target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC
+    ${MICROMANTID_CXX_LIBRARIES}
+    ${BOOSTPYTHON}
     ${POCOLIBS}
     ${HDF5_LIBRARIES}
     ${JSON_LIBS}

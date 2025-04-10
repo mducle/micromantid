@@ -1,8 +1,7 @@
 # microMantid
 
 microMantid is a fork of [Mantid 6.12](https://github.com/mantidproject/mantid/releases/tag/v6.12.0) 
-containing only a subset of the core Framework without the Workbench or GUI interfaces, and refactored
-to use [pybind11](https://github.com/pybind/pybind11) instead of [boost::python](https://github.com/boostorg/python)
+containing only a subset of the core Framework without the Workbench or GUI interfaces
 targetted at the [WebAssembly](https://webassembly.org/) platform so that it can run client-side-only
 within a web-browser.
 
@@ -37,7 +36,7 @@ npm test
 If you want to build for the native architecture rather the for WebAssembly, you can run:
 
 ```
-mamba create -n native python=3.12 pybind11 boost-cpp gxx poco jsoncpp zlib hdf5 pytest eigen muparser gsl
+mamba create -n native python=3.12 pybind11 libboost-python-devel libboost-devel gxx poco jsoncpp zlib hdf5 pytest eigen muparser gsl
 mamba activate native
 mkdir build
 cd build

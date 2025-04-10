@@ -222,3 +222,32 @@ index 035071998e4..b5271a1f909 100644
  
  std::string ConfigServiceImpl::getFullPath(const std::string &filename, const bool ignoreDirs,
                                             const int options) const {
+diff --git a/Framework/API/src/IFunction.cpp b/Framework/API/src/IFunction.cpp
+index fc3e35e5d1a..24f21726d4b 100644
+--- a/Framework/API/src/IFunction.cpp
++++ b/Framework/API/src/IFunction.cpp
+@@ -30,7 +30,7 @@
+ #include "MantidKernel/ProgressBase.h"
+ #include "MantidKernel/Strings.h"
+ #include "MantidKernel/UnitFactory.h"
+-#include "MantidKernel/UsageService.h"
++//#include "MantidKernel/UsageService.h"
+ 
+ #include <boost/lexical_cast.hpp>
+ 
+@@ -95,6 +95,7 @@ IFunction::~IFunction() { m_attrs.clear(); }
+ Registers the usage of the function with the UsageService
+  */
+ void IFunction::registerFunctionUsage(bool internal) {
++/*
+   if (!Kernel::UsageService::Instance().isEnabled()) {
+     return;
+   }
+@@ -102,6 +103,7 @@ void IFunction::registerFunctionUsage(bool internal) {
+     m_isRegistered = true;
+     Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, name(), internal);
+   }
++*/
+ }
+ /**
+  * Virtual copy constructor

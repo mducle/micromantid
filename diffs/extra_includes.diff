@@ -83,3 +83,28 @@ index c79fdc73d42..a0922158e1e 100644
  
  #define HAVE_HDF5
  #define WITH_HDF5
+diff --git a/Framework/DataObjects/inc/MantidDataObjects/EventList.h b/Framework/DataObjects/inc/MantidDataObjects/EventList.h
+index 20c9c9a6827..71f6189c0f4 100644
+--- a/Framework/DataObjects/inc/MantidDataObjects/EventList.h
++++ b/Framework/DataObjects/inc/MantidDataObjects/EventList.h
+@@ -14,6 +14,7 @@
+ 
+ #include <iosfwd>
+ #include <vector>
++#include <optional>
+ 
+ namespace Mantid {
+ namespace Types {
+diff --git a/Framework/PythonInterface/mantid/dataobjects/src/Exports/WorkspaceValidators.cpp b/Framework/PythonInterface/mantid/dataobjects/src/Exports/WorkspaceValidators.cpp
+index 193daa3bb7d..0ac26cca2ba 100644
+--- a/Framework/PythonInterface/mantid/dataobjects/src/Exports/WorkspaceValidators.cpp
++++ b/Framework/PythonInterface/mantid/dataobjects/src/Exports/WorkspaceValidators.cpp
+@@ -45,7 +45,7 @@ void export_TableWorkspaceValidator() {
+   class_<ValidatorType, bases<TableWorkspaceValidator>, boost::noncopyable>(                                           \
+       #ValidatorType, init<ArgType>(arg(ArgName) = DefaultValue, DocString));
+ 
+-void export_WorkspaceValidators() {
++void export_WorkspaceValidators_DataObjects() {
+   using namespace Mantid::DataObjects;
+ 
+   EXPORT_WKSP_VALIDATOR_NO_ARG(TableWorkspaceNotEmptyValidator, "Checks that the workspace is not empty");

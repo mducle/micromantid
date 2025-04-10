@@ -6,6 +6,7 @@ module.exports = async () => {
     indexURL: "node_modules/pyodide",
   });
   await pyodide.loadPackage("pytest")
+  await pyodide.loadPackage("numpy")
   const wheels = await glob("dist/*whl");
   for (const wheel of wheels) {
     await pyodide.loadPackage(wheel);

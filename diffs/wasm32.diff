@@ -1,0 +1,31 @@
+diff --git a/Framework/PythonInterface/mantid/kernel/src/Exports/ArrayProperty.cpp b/Framework/PythonInterface/mantid/kernel/src/Exports/ArrayProperty.cpp
+index c923238084e..ed8ca777618 100644
+--- a/Framework/PythonInterface/mantid/kernel/src/Exports/ArrayProperty.cpp
++++ b/Framework/PythonInterface/mantid/kernel/src/Exports/ArrayProperty.cpp
+@@ -129,5 +129,5 @@ void export_ArrayProperty() {
+   // Needs these declarations also to ensure that properties not created in
+   // Python can be seen also. Users shouldn't need this
+   EXPORT_ARRAY_PROP(int, CInt);
+-  EXPORT_ARRAY_PROP(size_t, UnsignedInt);
++//EXPORT_ARRAY_PROP(size_t, UnsignedInt);
+ }
+diff --git a/Framework/PythonInterface/mantid/kernel/src/Exports/PropertyWithValue.cpp b/Framework/PythonInterface/mantid/kernel/src/Exports/PropertyWithValue.cpp
+index 132fae96ab5..7e73b495228 100644
+--- a/Framework/PythonInterface/mantid/kernel/src/Exports/PropertyWithValue.cpp
++++ b/Framework/PythonInterface/mantid/kernel/src/Exports/PropertyWithValue.cpp
+@@ -16,13 +16,13 @@ void export_BasicPropertyWithValueTypes() {
+   PropertyWithValueExporter<std::vector<int>>::define("VectorIntPropertyWithValue");
+   PropertyWithValueExporter<unsigned int>::define("UIntPropertyWithValue");
+   PropertyWithValueExporter<std::vector<unsigned int>>::define("VectorUIntPropertyWithValue");
+-
++/*
+   // longs & vectors
+   PropertyWithValueExporter<long>::define("LongPropertyWithValue");
+   PropertyWithValueExporter<std::vector<long>>::define("VectorLongPropertyWithValue");
+   PropertyWithValueExporter<unsigned long>::define("ULongPropertyWithValue");
+   PropertyWithValueExporter<std::vector<unsigned long>>::define("VectorULongPropertyWithValue");
+-
++*/
+   // long long long longs & vectors
+   PropertyWithValueExporter<long long>::define("LongLongPropertyWithValue");
+   PropertyWithValueExporter<std::vector<long long>>::define("VectorLongLongPropertyWithValue");

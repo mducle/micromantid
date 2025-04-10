@@ -1,0 +1,89 @@
+diff --git a/Framework/API/src/FrameworkManager.cpp b/Framework/API/src/FrameworkManager.cpp
+index 7c08dbb6c58..f7e46a3d62f 100644
+--- a/Framework/API/src/FrameworkManager.cpp
++++ b/Framework/API/src/FrameworkManager.cpp
+@@ -15,7 +15,7 @@
+ #include "MantidKernel/Memory.h"
+ #include "MantidKernel/MultiThreaded.h"
+ #include "MantidKernel/PropertyManagerDataService.h"
+-#include "MantidKernel/UsageService.h"
++//#include "MantidKernel/UsageService.h"
+ #include "MantidNexusCpp/NeXusFile.hpp"
+
+ #include <boost/algorithm/string/classification.hpp>
+@@ -27,7 +27,7 @@
+ #include <cstdarg>
+ #include <memory>
+
+-#include "tbb/global_control.h"
++//#include "tbb/global_control.h"
+
+ #ifdef _WIN32
+ #include <winsock2.h>
+@@ -46,14 +46,14 @@ namespace {
+ // We have technically introduced a leak by not deleting this object in the situation where
+ // `FrameworkManager::shutdown` is not called but the memory cannot be used again by the program since
+ // it survives for the duration of the program. It will ultimately be reclaimed by the OS.
+-tbb::global_control *GLOBAL_TBB_CONTROL = nullptr;
++//tbb::global_control *GLOBAL_TBB_CONTROL = nullptr;
+ } // namespace
+
+ namespace Mantid {
+ using Kernel::ConfigService;
+ using Kernel::LibraryManager;
+ using Kernel::LibraryManagerImpl;
+-using Kernel::UsageService;
++//using Kernel::UsageService;
+ namespace API {
+ namespace {
+ /// static logger
+@@ -162,6 +162,7 @@ void FrameworkManagerImpl::setNumOMPThreadsToConfigValue() {
+  * @param nthreads :: The maximum number of threads to use
+  */
+ void FrameworkManagerImpl::setNumOMPThreads(const int nthreads) {
++/*
+   g_log.debug() << "Setting maximum number of threads to " << nthreads << "\n";
+   PARALLEL_SET_NUM_THREADS(nthreads);
+   if (GLOBAL_TBB_CONTROL) {
+@@ -169,6 +170,7 @@ void FrameworkManagerImpl::setNumOMPThreads(const int nthreads) {
+   }
+
+   GLOBAL_TBB_CONTROL = new tbb::global_control(tbb::global_control::max_allowed_parallelism, nthreads);
++*/
+ }
+
+ /**
+@@ -190,9 +192,9 @@ void FrameworkManagerImpl::clear() {
+ }
+
+ void FrameworkManagerImpl::shutdown() {
+-  Kernel::UsageService::Instance().shutdown();
++//Kernel::UsageService::Instance().shutdown();
+   // Ensure we don't run into static init ordering issues with TBB
+-  delete GLOBAL_TBB_CONTROL;
++//delete GLOBAL_TBB_CONTROL;
+   clear();
+ }
+
+@@ -360,9 +362,9 @@ void FrameworkManagerImpl::asynchronousStartupTasks() {
+     g_log.information() << "Version check disabled.\n";
+   }
+
+-  setupUsageReporting();
++//setupUsageReporting();
+ }
+-
++/*
+ void FrameworkManagerImpl::setupUsageReporting() {
+   auto &configSvc = ConfigService::Instance();
+   auto interval = configSvc.getValue<int>("Usage.BufferCheckInterval");
+@@ -374,7 +376,7 @@ void FrameworkManagerImpl::setupUsageReporting() {
+   usageSvc.setEnabled(enabled.value_or(false));
+   usageSvc.registerStartup();
+ }
+-
++*/
+ /// Update instrument definitions from github
+ void FrameworkManagerImpl::updateInstrumentDefinitions() {
+   try {
+

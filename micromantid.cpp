@@ -1,11 +1,28 @@
-#include <pybind11/pybind11.h>
+#include <boost/python/module.hpp>
+#include <boost/python/scope.hpp>
+#include <boost/python/docstring_options.hpp>
 
-namespace py = pybind11;
+// See http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+#include <numpy/arrayobject.h>
 
-void wrap_kernel(py::module &);
+void init_kernel();
+void init_geometry();
+void init_api();
+void init_dataobjects();
 
-PYBIND11_MODULE(micromantid, m) {
-    m.doc() = "Python bindings for microMantid";
-    wrap_kernel(m);
+BOOST_PYTHON_MODULE(micromantid)
+{
+  // Doc string options - User defined, python arguments, C++ call signatures
+  boost::python::docstring_options docstrings(true, true, false);
+  // Import numpy
+  _import_array();
+
+  // https://linuxtut.com/en/038bf30933d56cb845af/
+  boost::python::object package = boost::python::scope();
+  package.attr("__path__") = "micromantid";
+  init_kernel();
+  init_geometry();
+  init_api();
+  init_dataobjects();
 }
-

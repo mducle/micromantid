@@ -1,0 +1,282 @@
+diff --git a/Framework/PythonInterface/mantid/api/src/CloneMatrixWorkspace.cpp b/Framework/PythonInterface/mantid/api/src/CloneMatrixWorkspace.cpp
+index 2175f7bb26a..22a192bf605 100644
+--- a/Framework/PythonInterface/mantid/api/src/CloneMatrixWorkspace.cpp
++++ b/Framework/PythonInterface/mantid/api/src/CloneMatrixWorkspace.cpp
+@@ -15,7 +15,7 @@
+ 
+ // See
+ // http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/api/src/Exports/Axis.cpp b/Framework/PythonInterface/mantid/api/src/Exports/Axis.cpp
+index c14f3028de2..e26acbf11fe 100644
+--- a/Framework/PythonInterface/mantid/api/src/Exports/Axis.cpp
++++ b/Framework/PythonInterface/mantid/api/src/Exports/Axis.cpp
+@@ -21,7 +21,7 @@
+ 
+ // See
+ // http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/api/src/Exports/IMDHistoWorkspace.cpp b/Framework/PythonInterface/mantid/api/src/Exports/IMDHistoWorkspace.cpp
+index c3eea994db0..f25ac35198c 100644
+--- a/Framework/PythonInterface/mantid/api/src/Exports/IMDHistoWorkspace.cpp
++++ b/Framework/PythonInterface/mantid/api/src/Exports/IMDHistoWorkspace.cpp
+@@ -13,7 +13,7 @@
+ 
+ #include <boost/python/class.hpp>
+ #include <boost/python/copy_non_const_reference.hpp>
+-#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/api/src/Exports/ITableWorkspace.cpp b/Framework/PythonInterface/mantid/api/src/Exports/ITableWorkspace.cpp
+index b1dddec1940..27ac61f4b4d 100644
+--- a/Framework/PythonInterface/mantid/api/src/Exports/ITableWorkspace.cpp
++++ b/Framework/PythonInterface/mantid/api/src/Exports/ITableWorkspace.cpp
+@@ -35,7 +35,7 @@
+ 
+ // See
+ // http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp b/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
+index d0076a0c95f..1f96f4dd692 100644
+--- a/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
++++ b/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
+@@ -32,7 +32,7 @@
+ #include <boost/python/suite/indexing/map_indexing_suite.hpp>
+ #include <boost/python/tuple.hpp>
+ 
+-#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/api/src/FitFunctions/IFunction1DAdapter.cpp b/Framework/PythonInterface/mantid/api/src/FitFunctions/IFunction1DAdapter.cpp
+index 866645e2e53..f77332a25d0 100644
+--- a/Framework/PythonInterface/mantid/api/src/FitFunctions/IFunction1DAdapter.cpp
++++ b/Framework/PythonInterface/mantid/api/src/FitFunctions/IFunction1DAdapter.cpp
+@@ -7,7 +7,7 @@
+ #include "MantidPythonInterface/api/FitFunctions/IFunction1DAdapter.h"
+ #include "MantidPythonInterface/core/CallMethod.h"
+ 
+-#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/api/src/FitFunctions/IFunctionAdapter.cpp b/Framework/PythonInterface/mantid/api/src/FitFunctions/IFunctionAdapter.cpp
+index 65bc1613a8c..d9fcf3443f2 100644
+--- a/Framework/PythonInterface/mantid/api/src/FitFunctions/IFunctionAdapter.cpp
++++ b/Framework/PythonInterface/mantid/api/src/FitFunctions/IFunctionAdapter.cpp
+@@ -16,7 +16,7 @@
+ #include <boost/variant/apply_visitor.hpp>
+ #include <utility>
+ 
+-#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/api/src/api.cpp.in b/Framework/PythonInterface/mantid/api/src/api.cpp.in
+index 7653f701b24..6dcc341bcde 100644
+--- a/Framework/PythonInterface/mantid/api/src/api.cpp.in
++++ b/Framework/PythonInterface/mantid/api/src/api.cpp.in
+@@ -15,8 +15,8 @@
+ 
+ 
+ // See http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
+-#include <numpy/arrayobject.h>
++//#define PY_ARRAY_UNIQUE_SYMBOL API_ARRAY_API
++//#include <numpy/arrayobject.h>
+ 
+ #include "MantidAPI/AlgorithmFactory.h"
+ #include "MantidAPI/Workspace.h"
+@@ -37,12 +37,18 @@ namespace
+ // Forward declare
+ @EXPORT_DECLARE@
+ 
+-BOOST_PYTHON_MODULE(_api)
++//BOOST_PYTHON_MODULE(_api)
++void init_api()
+ {
++  // https://linuxtut.com/en/038bf30933d56cb845af/
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("micromantid.api"))));
++  boost::python::scope().attr("api") = module;
++  boost::python::scope scope1 = module;
++
+   // Doc string options - User defined, python arguments, C++ call signatures
+   boost::python::docstring_options docstrings(true, true, false);
+   // Import numpy
+-  _import_array();
++//_import_array();
+ 
+   // Workspace address comparison
+   boost::python::def("isSameWorkspaceObject",
+diff --git a/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp b/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
+index 39c0bd5a6e4..3601b144121 100644
+--- a/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
++++ b/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
+@@ -18,7 +18,7 @@
+ 
+ #include <numpy/arrayobject.h>
+ 
+-#define PY_ARRAY_UNIQUE_SYMBOL GEOMETRY_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ 
+ using Mantid::Geometry::IObject;
+diff --git a/Framework/PythonInterface/mantid/geometry/src/Exports/MeshObject.cpp b/Framework/PythonInterface/mantid/geometry/src/Exports/MeshObject.cpp
+index 8ca68573e99..1ce74e5f3fe 100644
+--- a/Framework/PythonInterface/mantid/geometry/src/Exports/MeshObject.cpp
++++ b/Framework/PythonInterface/mantid/geometry/src/Exports/MeshObject.cpp
+@@ -15,7 +15,7 @@
+ #include <boost/python/register_ptr_to_python.hpp>
+ #include <boost/python/self.hpp>
+ #include <boost/python/suite/indexing/vector_indexing_suite.hpp>
+-#define PY_ARRAY_UNIQUE_SYMBOL GEOMETRY_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/geometry/src/geometry.cpp.in b/Framework/PythonInterface/mantid/geometry/src/geometry.cpp.in
+index 7a20d061d34..3a64982ffd3 100644
+--- a/Framework/PythonInterface/mantid/geometry/src/geometry.cpp.in
++++ b/Framework/PythonInterface/mantid/geometry/src/geometry.cpp.in
+@@ -13,18 +13,24 @@
+ #include <boost/python/def.hpp>
+ 
+ // See http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL GEOMETRY_ARRAY_API
+-#include <numpy/arrayobject.h>
++//#define PY_ARRAY_UNIQUE_SYMBOL GEOMETRY_ARRAY_API
++//#include <numpy/arrayobject.h>
+ 
+ // Forward declare
+ @EXPORT_DECLARE@
+ 
+-BOOST_PYTHON_MODULE(_geometry)
++//BOOST_PYTHON_MODULE(_geometry)
++void init_geometry()
+ {
++  // https://linuxtut.com/en/038bf30933d56cb845af/
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("micromantid.geometry"))));
++  boost::python::scope().attr("geometry") = module;
++  boost::python::scope scope1 = module;
++
+   // Doc string options - User defined, python arguments, C++ call signatures
+   boost::python::docstring_options docstrings(true, true, false);
+   // Import numpy
+-  _import_array();
++//_import_array();
+ 
+ @EXPORT_FUNCTIONS@
+ }
+diff --git a/Framework/PythonInterface/mantid/kernel/src/Exports/Statistics.cpp b/Framework/PythonInterface/mantid/kernel/src/Exports/Statistics.cpp
+index c7240ef6ad5..e9fecf3dc37 100644
+--- a/Framework/PythonInterface/mantid/kernel/src/Exports/Statistics.cpp
++++ b/Framework/PythonInterface/mantid/kernel/src/Exports/Statistics.cpp
+@@ -18,7 +18,7 @@
+ 
+ // See
+ // http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL KERNEL_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/kernel/src/Registry/SequenceTypeHandler.cpp b/Framework/PythonInterface/mantid/kernel/src/Registry/SequenceTypeHandler.cpp
+index 92bd888dc51..b11c4cd120c 100644
+--- a/Framework/PythonInterface/mantid/kernel/src/Registry/SequenceTypeHandler.cpp
++++ b/Framework/PythonInterface/mantid/kernel/src/Registry/SequenceTypeHandler.cpp
+@@ -14,7 +14,7 @@
+ 
+ // See
+ // http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL KERNEL_ARRAY_API
++#define PY_ARRAY_UNIQUE_SYMBOL MICROMANTID_ARRAY_API
+ #define NO_IMPORT_ARRAY
+ #include <numpy/arrayobject.h>
+ 
+diff --git a/Framework/PythonInterface/mantid/kernel/src/kernel.cpp.in b/Framework/PythonInterface/mantid/kernel/src/kernel.cpp.in
+index 7128996f6ed..222513a8147 100644
+--- a/Framework/PythonInterface/mantid/kernel/src/kernel.cpp.in
++++ b/Framework/PythonInterface/mantid/kernel/src/kernel.cpp.in
+@@ -23,8 +23,8 @@
+ 
+ // See
+ // http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL KERNEL_ARRAY_API
+-#include <numpy/arrayobject.h>
++//#define PY_ARRAY_UNIQUE_SYMBOL KERNEL_ARRAY_API
++//#include <numpy/arrayobject.h>
+ 
+ // See comment in kernel.h
+ #ifdef _WIN32
+@@ -38,13 +38,19 @@ namespace converter = boost::python::converter;
+ // Forward declare
+ @EXPORT_DECLARE@
+ 
+-BOOST_PYTHON_MODULE(_kernel) {
++//BOOST_PYTHON_MODULE(_kernel) {
++void init_kernel() {
++  // https://linuxtut.com/en/038bf30933d56cb845af/
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("micromantid.kernel"))));
++  boost::python::scope().attr("kernel") = module;
++  boost::python::scope scope1 = module;
++
+   // Doc string options - User defined, python arguments, C++ call signatures
+   boost::python::docstring_options docstrings(true, true, false);
+   // Import numpy for the core DLL
+   Mantid::PythonInterface::importNumpy();
+   // Import numpy for this DLL
+-  _import_array();
++//_import_array();
+   // register the python logger with poco
+   Poco::LoggingFactory::defaultFactory().registerChannelClass(
+     "PythonLoggingChannel",
+diff --git a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
+index 7d1f31fcc30..7ee27f12ebd 100644
+--- a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
++++ b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
+@@ -13,18 +13,24 @@
+ #include <boost/python/docstring_options.hpp>
+ 
+ // See http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
+-#include <numpy/arrayobject.h>
++//#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
++//#include <numpy/arrayobject.h>
+ 
+ // Forward declare
+ @EXPORT_DECLARE@
+ 
+-BOOST_PYTHON_MODULE(_dataobjects)
++//BOOST_PYTHON_MODULE(_dataobjects)
++void init_dataobjects()
+ {
++  // https://linuxtut.com/en/038bf30933d56cb845af/
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("micromantid.dataobjects"))));
++  boost::python::scope().attr("dataobjects") = module;
++  boost::python::scope scope1 = module;
++
+   // Doc string options - User defined, python arguments, C++ call signatures
+   boost::python::docstring_options docstrings(true, true, false);
+   // Import numpy
+-  _import_array();
++//_import_array();
+ 
+ @EXPORT_FUNCTIONS@
+ }

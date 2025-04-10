@@ -1,0 +1,28 @@
+diff --git a/Framework/PythonInterface/mantid/api/src/Exports/WorkspaceFactory.cpp b/Framework/PythonInterface/mantid/api/src/Exports/WorkspaceFactory.cpp
+index 0deb98ded92..a24c507f3e1 100644
+--- a/Framework/PythonInterface/mantid/api/src/Exports/WorkspaceFactory.cpp
++++ b/Framework/PythonInterface/mantid/api/src/Exports/WorkspaceFactory.cpp
+@@ -57,7 +57,7 @@ GNU_DIAG_OFF("conversion")
+ 
+ BOOST_PYTHON_FUNCTION_OVERLOADS(createFromParent_Overload, createFromParentPtr, 2, 5)
+ BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(createTable_Overload, createTable, 0, 1)
+-BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(createPeaks_Overload, createPeaks, 0, 1)
++//BOOST_PYTHON_MEMBER_FUNCTION_OVERLOADS(createPeaks_Overload, createPeaks, 0, 1)
+ 
+ GNU_DIAG_ON("conversion")
+ GNU_DIAG_ON("unused-local-typedef")
+@@ -88,10 +88,10 @@ void export_WorkspaceFactory() {
+                "Creates an empty TableWorkspace",
+                (arg("self"), arg("className") = "TableWorkspace"))[return_value_policy<AsType<Workspace_sptr>>()])
+ 
+-      .def("createPeaks", &WorkspaceFactoryImpl::createPeaks,
+-           createPeaks_Overload(
+-               "Creates an empty PeaksWorkspace",
+-               (arg("self"), arg("className") = "PeaksWorkspace"))[return_value_policy<AsType<Workspace_sptr>>()])
++      .def("createPeaks", &WorkspaceFactoryImpl::createPeaks, 
++           (arg("self"), arg("className") = "PeaksWorkspace"),
++           return_value_policy<AsType<Workspace_sptr>>(),
++           "Creates an empty PeaksWorkspace")
+
+       .def("Instance", &WorkspaceFactory::Instance, return_value_policy<reference_existing_object>(),
+            "Returns the single instance of this class.")
