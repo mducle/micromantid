@@ -75,6 +75,9 @@ else()
     set(BOOSTPYTHON Boost::python)
 endif()
 
+# Creates the tests package to import into Pyodide
+add_subdirectory(tests)
+
 # Add the Mantid source files
 add_subdirectory(src)
 

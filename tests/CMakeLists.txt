@@ -1,0 +1,14 @@
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../dist)
+    set(MYBINDIR ${CMAKE_CURRENT_SOURCE_DIR}/../dist)
+else()
+    set(MYBINDIR ${CMAKE_BINARY_DIR})
+endif()
+
+add_custom_target(TestWheel
+    COMMAND ${CMAKE_COMMAND} 
+        -D CURRENT_SOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}
+        -D CURRENT_BINARY_DIR=${CMAKE_CURRENT_BINARY_DIR}
+        -D BINARY_DIR=${MYBINDIR}
+        -P ${CMAKE_CURRENT_SOURCE_DIR}/testwheel.cmake
+)
+

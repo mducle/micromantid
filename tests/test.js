@@ -7,3 +7,6 @@ test("MaterialBuilder", () => {
     assert mat.numberDensity == pytest.approx(0.0034858594422501514, 0.000001)
   `);
 });
+
+test("api_ADSValidatorTest", () => {
+  let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/ADSValidatorTest") `); })

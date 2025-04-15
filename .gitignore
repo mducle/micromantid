@@ -8,3 +8,5 @@ __pycache__
 dist
 bld
 build
+*.diff
+build_env
