@@ -3,6 +3,7 @@ from importlib.machinery import SourceFileLoader
 import os
 import sys
 import unittest
+from unittest.mock import patch
 
 curdir = os.path.dirname(__file__)
 
@@ -21,14 +22,18 @@ def run(testname):
         this_globals[key] = getattr(test_module, key)
 
     # create runner & execute
-    unittest.main(
-        module=test_module,
-        # We've processed the test source so don't let unittest try to reparse it
-        # This forces it to load the tests from the supplied module
-        argv=(argv[0],),
-        # these make sure that some options that are not applicable
-        # remain hidden from the help menu.
-        failfast=False,
-        buffer=False,
-        catchbreak=False,
-    )
+    print(f'Running {testname}')
+    with patch('sys.exit') as exit_call:
+        unittest.main(
+            module=test_module,
+            # We've processed the test source so don't let unittest try to reparse it
+            # This forces it to load the tests from the supplied module
+            argv=(sys.argv[0],),
+            # these make sure that some options that are not applicable
+            # remain hidden from the help menu.
+            failfast=False,
+            buffer=False,
+            catchbreak=False,
+        )
+        # On success, unittest exits with code 0. Code 1 on failure
+        exit_call.assert_called_with(0)
