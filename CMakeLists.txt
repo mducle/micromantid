@@ -10,7 +10,8 @@ set(CXX_STANDARD_REQUIRED 20)
 cmake_policy(SET CMP0167 NEW)
 cmake_policy(SET CMP0148 OLD)  # New policy gives error when cannot find shared libs
 
-set(MICROMANTID_PYTHON_MODULE micromantid)
+set(MICROMANTID_PYTHON_MODULE _micromantid)
+set(MICROMANTID_PACKAGE_NAME micromantid)
 
 if (DEFINED ENV{CONDA_PREFIX})
     message(STATUS "Searching $ENV{CONDA_PREFIX} for Pybind11, Boost and Eigen")
@@ -103,4 +104,4 @@ target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC
 )
 
 # Destination name must match name of project in pyproject.toml
-install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PYTHON_MODULE})
+install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PACKAGE_NAME})

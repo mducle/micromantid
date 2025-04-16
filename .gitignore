@@ -8,5 +8,5 @@ __pycache__
 dist
 bld
 build
-*.diff
+all*.diff
 build_env

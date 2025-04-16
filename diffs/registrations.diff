@@ -1,21 +1,23 @@
 diff --git a/Framework/API/inc/MantidAPI/WorkspaceFactory.h b/Framework/API/inc/MantidAPI/WorkspaceFactory.h
-index 86ca515e0dc..f41972fafad 100644
+index 86ca515e0dc..3a659ffbf76 100644
 --- a/Framework/API/inc/MantidAPI/WorkspaceFactory.h
 +++ b/Framework/API/inc/MantidAPI/WorkspaceFactory.h
-@@ -11,11 +11,16 @@
+@@ -11,11 +11,18 @@
   * is used in the call to its constructor to effect a call to the factory's
   * subscribe method.
   */
-+#ifndef EMSCRIPTEN
++#ifdef EMSCRIPTEN
++#define DECLARE_WORKSPACE(classname)                                                                                   \
++  void register_ws_##classname() {                                                                                     \
++      Mantid::API::WorkspaceFactory::Instance().subscribe<classname>(#classname);                                      \
++  }
++#else
  #define DECLARE_WORKSPACE(classname)                                                                                   \
    namespace {                                                                                                          \
    Mantid::Kernel::RegistrationHelper                                                                                   \
        register_ws_##classname(((Mantid::API::WorkspaceFactory::Instance().subscribe<classname>(#classname)), 0));      \
    }
-+#else
-+// WASM gives a linker error because register_ws_classname() does not exist elsewhere
-+#define DECLARE_WORKSPACE(classname)
 +#endif
-
+ 
  #include "MantidAPI/DllConfig.h"
  #include "MantidAPI/MatrixWorkspace_fwd.h"

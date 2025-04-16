@@ -113,8 +113,8 @@ index 7653f701b24..6dcc341bcde 100644
 +void init_api()
  {
 +  // https://linuxtut.com/en/038bf30933d56cb845af/
-+  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("micromantid.api"))));
-+  boost::python::scope().attr("api") = module;
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("_micromantid._api"))));
++  boost::python::scope().attr("_api") = module;
 +  boost::python::scope scope1 = module;
 +
    // Doc string options - User defined, python arguments, C++ call signatures
@@ -172,8 +172,8 @@ index 7a20d061d34..3a64982ffd3 100644
 +void init_geometry()
  {
 +  // https://linuxtut.com/en/038bf30933d56cb845af/
-+  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("micromantid.geometry"))));
-+  boost::python::scope().attr("geometry") = module;
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("_micromantid._geometry"))));
++  boost::python::scope().attr("_geometry") = module;
 +  boost::python::scope scope1 = module;
 +
    // Doc string options - User defined, python arguments, C++ call signatures
@@ -233,8 +233,8 @@ index 7128996f6ed..222513a8147 100644
 +//BOOST_PYTHON_MODULE(_kernel) {
 +void init_kernel() {
 +  // https://linuxtut.com/en/038bf30933d56cb845af/
-+  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("micromantid.kernel"))));
-+  boost::python::scope().attr("kernel") = module;
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("_micromantid._kernel"))));
++  boost::python::scope().attr("_kernel") = module;
 +  boost::python::scope scope1 = module;
 +
    // Doc string options - User defined, python arguments, C++ call signatures
@@ -268,8 +268,8 @@ index 7d1f31fcc30..7ee27f12ebd 100644
 +void init_dataobjects()
  {
 +  // https://linuxtut.com/en/038bf30933d56cb845af/
-+  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("micromantid.dataobjects"))));
-+  boost::python::scope().attr("dataobjects") = module;
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("_micromantid._dataobjects"))));
++  boost::python::scope().attr("_dataobjects") = module;
 +  boost::python::scope scope1 = module;
 +
    // Doc string options - User defined, python arguments, C++ call signatures
