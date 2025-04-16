@@ -9,7 +9,7 @@ set(KERNEL_SRC_FILES
 #   ../mantid/Framework/Kernel/src/BinFinder.cpp
 #   ../mantid/Framework/Kernel/src/BinaryStreamReader.cpp
 #   ../mantid/Framework/Kernel/src/BinaryStreamWriter.cpp
-#   ../mantid/Framework/Kernel/src/CPUTimer.cpp
+    ../mantid/Framework/Kernel/src/CPUTimer.cpp
     ../mantid/Framework/Kernel/src/CatalogInfo.cpp
     ../mantid/Framework/Kernel/src/ChecksumHelper.cpp
     ../mantid/Framework/Kernel/src/CompositeValidator.cpp

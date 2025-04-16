@@ -30,7 +30,7 @@ set(API_SRC_FILES
 #   ../mantid/Framework/API/src/CompositeDomainMD.cpp
     ../mantid/Framework/API/src/CompositeFunction.cpp
     ../mantid/Framework/API/src/ConstraintFactory.cpp
-#   ../mantid/Framework/API/src/CoordTransform.cpp
+    ../mantid/Framework/API/src/CoordTransform.cpp
 #   ../mantid/Framework/API/src/CostFunctionFactory.cpp
     ../mantid/Framework/API/src/DataProcessorAlgorithm.cpp
     ../mantid/Framework/API/src/DeprecatedAlgorithm.cpp
@@ -41,7 +41,7 @@ set(API_SRC_FILES
 #   ../mantid/Framework/API/src/EqualBinSizesValidator.cpp
     ../mantid/Framework/API/src/ExperimentInfo.cpp
     ../mantid/Framework/API/src/Expression.cpp
-#   ../mantid/Framework/API/src/FileBackedExperimentInfo.cpp
+    ../mantid/Framework/API/src/FileBackedExperimentInfo.cpp
     ../mantid/Framework/API/src/FileFinder.cpp
     ../mantid/Framework/API/src/FileLoaderRegistry.cpp
     ../mantid/Framework/API/src/FileProperty.cpp

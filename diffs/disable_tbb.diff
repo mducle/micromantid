@@ -187,3 +187,87 @@ index ea571d63db1..36c53928a26 100644
  }
  
  /** Integrate all the spectra in the matrix workspace within the range given.
+diff --git a/Framework/DataObjects/src/FakeMD.cpp b/Framework/DataObjects/src/FakeMD.cpp
+index 4eb29b6e763..670a851c617 100644
+--- a/Framework/DataObjects/src/FakeMD.cpp
++++ b/Framework/DataObjects/src/FakeMD.cpp
+@@ -13,8 +13,8 @@
+ #include "MantidDataObjects/MDEventFactory.h"
+ #include "MantidDataObjects/MDEventInserter.h"
+ #include "MantidGeometry/Instrument.h"
+-#include "MantidKernel/ThreadPool.h"
+-#include "MantidKernel/ThreadScheduler.h"
++//#include "MantidKernel/ThreadPool.h"
++//#include "MantidKernel/ThreadScheduler.h"
+ #include "MantidKernel/Utils.h"
+ #include "MantidKernel/normal_distribution.h"
+ 
+@@ -22,8 +22,8 @@
+ 
+ namespace Mantid::DataObjects {
+ 
+-using Kernel::ThreadPool;
+-using Kernel::ThreadSchedulerFIFO;
++//using Kernel::ThreadPool;
++//using Kernel::ThreadSchedulerFIFO;
+ 
+ /**
+  * Constructor
+@@ -141,10 +141,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakePeak(typename MDEventWork
+   }
+ 
+   ws->splitBox();
+-  auto *ts = new ThreadSchedulerFIFO();
+-  ThreadPool tp(ts);
+-  ws->splitAllIfNeeded(ts);
+-  tp.joinAll();
++//auto *ts = new ThreadSchedulerFIFO();
++//ThreadPool tp(ts);
++  ws->splitAllIfNeeded(nullptr);
++//tp.joinAll();
+   ws->refreshCache();
+ }
+ 
+@@ -250,10 +250,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakeEllipsoid(typename MDEven
+   }
+ 
+   ws->splitBox();
+-  auto *ts = new ThreadSchedulerFIFO();
+-  ThreadPool tp(ts);
+-  ws->splitAllIfNeeded(ts);
+-  tp.joinAll();
++//auto *ts = new ThreadSchedulerFIFO();
++//ThreadPool tp(ts);
++  ws->splitAllIfNeeded(nullptr);
++//tp.joinAll();
+   ws->refreshCache();
+ }
+ 
+@@ -309,10 +309,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakeUniformData(typename MDEv
+     addFakeRegularData<MDE, nd>(m_uniformParams, ws);
+ 
+   ws->splitBox();
+-  auto *ts = new ThreadSchedulerFIFO();
+-  ThreadPool tp(ts);
+-  ws->splitAllIfNeeded(ts);
+-  tp.joinAll();
++//auto *ts = new ThreadSchedulerFIFO();
++//ThreadPool tp(ts);
++  ws->splitAllIfNeeded(nullptr);
++//tp.joinAll();
+   ws->refreshCache();
+ }
+ 
+diff --git a/Framework/API/inc/MantidAPI/BoxController.h b/Framework/API/inc/MantidAPI/BoxController.h
+index 38a05e1598f..c5f4bc8334a 100644
+--- a/Framework/API/inc/MantidAPI/BoxController.h
++++ b/Framework/API/inc/MantidAPI/BoxController.h
+@@ -44,7 +44,7 @@ public:
+     m_numEventsAtMax = 0;
+     m_addingEvents_eventsPerTask = 1000;
+     m_significantEventsNumber = 10000000;
+-    m_addingEvents_numTasksPerBlock = Kernel::ThreadPool::getNumPhysicalCores() * 5;
++    m_addingEvents_numTasksPerBlock = 1;//Kernel::ThreadPool::getNumPhysicalCores() * 5;
+     m_splitInto.resize(this->nd, 1);
+     resetNumBoxes();
+   }

@@ -57,8 +57,10 @@ jobs:
         run: |
           eval "$($MAMBA_EXE shell activate ems)"
           source build_env/emsdk/emsdk_env.sh
+          wd=`pwd`
           cd tests && mkdir build && cd build && cmake .. && make TestWheel
-          cd tests/testhelpers && pyodide build
+          cd $wd/tests/testhelpers && pyodide build
+          cd $wd
           npm install
           npm test
       #- name: Setup tmate
