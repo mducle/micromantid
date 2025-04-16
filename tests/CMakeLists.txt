@@ -1,3 +1,6 @@
+cmake_minimum_required (VERSION 3.30)
+project(micromantid_tests)
+
 if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/../dist)
     set(MYBINDIR ${CMAKE_CURRENT_SOURCE_DIR}/../dist)
 else()
@@ -11,4 +14,3 @@ add_custom_target(TestWheel
         -D BINARY_DIR=${MYBINDIR}
         -P ${CMAKE_CURRENT_SOURCE_DIR}/testwheel.cmake
 )
-

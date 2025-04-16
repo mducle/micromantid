@@ -53,10 +53,12 @@ jobs:
           export PLATFORM_TRIPLET=wasm32-emscripten
           source build_env/emsdk/emsdk_env.sh
           pyodide build
-          mkdir build && cd build && cmake .. && make TestWheel
       - name: Test
         run: |
           eval "$($MAMBA_EXE shell activate ems)"
+          source build_env/emsdk/emsdk_env.sh
+          cd tests && mkdir build && cd build && cmake .. && make TestWheel
+          cd tests/testhelpers && pyodide build
           npm install
           npm test
       #- name: Setup tmate
