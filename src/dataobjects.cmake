@@ -5,24 +5,24 @@ set(DATAOBJ_SRC_FILES
     #../mantid/Framework/DataObjects/src/CoordTransformAffine.cpp
     #../mantid/Framework/DataObjects/src/CoordTransformAffineParser.cpp
     #../mantid/Framework/DataObjects/src/CoordTransformAligned.cpp
-    #../mantid/Framework/DataObjects/src/CoordTransformDistance.cpp
+    ../mantid/Framework/DataObjects/src/CoordTransformDistance.cpp
     #../mantid/Framework/DataObjects/src/CoordTransformDistanceParser.cpp
     ../mantid/Framework/DataObjects/src/EventList.cpp
     ../mantid/Framework/DataObjects/src/EventWorkspace.cpp
     #../mantid/Framework/DataObjects/src/EventWorkspaceHelpers.cpp
     ../mantid/Framework/DataObjects/src/EventWorkspaceMRU.cpp
     ../mantid/Framework/DataObjects/src/Events.cpp
-    #../mantid/Framework/DataObjects/src/FakeMD.cpp
+    ../mantid/Framework/DataObjects/src/FakeMD.cpp
     #../mantid/Framework/DataObjects/src/FractionalRebinning.cpp
     ../mantid/Framework/DataObjects/src/GroupingWorkspace.cpp
     ../mantid/Framework/DataObjects/src/Histogram1D.cpp
-    #../mantid/Framework/DataObjects/src/MDBoxFlatTree.cpp
-    #../mantid/Framework/DataObjects/src/MDBoxSaveable.cpp
-    #../mantid/Framework/DataObjects/src/MDEventFactory.cpp
+    ../mantid/Framework/DataObjects/src/MDBoxFlatTree.cpp
+    ../mantid/Framework/DataObjects/src/MDBoxSaveable.cpp
+    ../mantid/Framework/DataObjects/src/MDEventFactory.cpp
     ../mantid/Framework/DataObjects/src/MDFramesToSpecialCoordinateSystem.cpp
     ../mantid/Framework/DataObjects/src/MDHistoWorkspace.cpp
     ../mantid/Framework/DataObjects/src/MDHistoWorkspaceIterator.cpp
-    #../mantid/Framework/DataObjects/src/MDLeanEvent.cpp
+    ../mantid/Framework/DataObjects/src/MDLeanEvent.cpp
     ../mantid/Framework/DataObjects/src/MaskWorkspace.cpp
     #../mantid/Framework/DataObjects/src/MementoTableWorkspace.cpp
     ../mantid/Framework/DataObjects/src/NoShape.cpp
@@ -42,7 +42,7 @@ set(DATAOBJ_SRC_FILES
     ../mantid/Framework/DataObjects/src/PropertyWithValue.cpp
     ../mantid/Framework/DataObjects/src/RebinnedOutput.cpp
     #../mantid/Framework/DataObjects/src/ReflectometryTransform.cpp
-    #../mantid/Framework/DataObjects/src/ScanningWorkspaceBuilder.cpp
+    ../mantid/Framework/DataObjects/src/ScanningWorkspaceBuilder.cpp
     ../mantid/Framework/DataObjects/src/SpecialWorkspace2D.cpp
     ../mantid/Framework/DataObjects/src/SplittersWorkspace.cpp
     #../mantid/Framework/DataObjects/src/TableColumn.cpp
@@ -61,9 +61,11 @@ add_library(DataObjects OBJECT ${DATAOBJ_SRC_FILES})
 target_include_directories(DataObjects PUBLIC
     ../inc
     ../mantid/Framework/API/inc
+    ../mantid/Framework/Beamline/inc
     ../mantid/Framework/DataObjects/inc
     ../mantid/Framework/Geometry/inc
     ../mantid/Framework/HistogramData/inc
+    ../mantid/Framework/Indexing/inc
     ../mantid/Framework/Kernel/inc
     ../mantid/Framework/Json/inc
     ../mantid/Framework/NexusCpp/inc

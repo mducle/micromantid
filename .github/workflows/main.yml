@@ -43,7 +43,7 @@ jobs:
       - name: Build
         run: |
           if [[ $($MAMBA_EXE env list | grep ems) -eq "" ]]; then
-            $MAMBA_EXE create -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build
+            $MAMBA_EXE create -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build gtest
           fi
           eval "$($MAMBA_EXE shell activate ems)"
           export PYODIDE_EMSCRIPTEN_VERSION=$(pyodide config get emscripten_version)
@@ -56,6 +56,11 @@ jobs:
       - name: Test
         run: |
           eval "$($MAMBA_EXE shell activate ems)"
+          source build_env/emsdk/emsdk_env.sh
+          wd=`pwd`
+          cd tests && mkdir build && cd build && cmake .. && make TestWheel
+          cd $wd/tests/testhelpers && pyodide build
+          cd $wd
           npm install
           npm test
       #- name: Setup tmate
