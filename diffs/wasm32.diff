@@ -29,3 +29,29 @@ index 132fae96ab5..7e73b495228 100644
    // long long long longs & vectors
    PropertyWithValueExporter<long long>::define("LongLongPropertyWithValue");
    PropertyWithValueExporter<std::vector<long long>>::define("VectorLongLongPropertyWithValue");
+diff --git a/Framework/Kernel/inc/MantidKernel/IPropertyManager.h b/Framework/Kernel/inc/MantidKernel/IPropertyManager.h
+index fb5129d18df..d149f1c3999 100644
+--- a/Framework/Kernel/inc/MantidKernel/IPropertyManager.h
++++ b/Framework/Kernel/inc/MantidKernel/IPropertyManager.h
+@@ -390,7 +390,7 @@ protected:
+     operator uint64_t();
+     operator OptionalBool();
+ 
+-#ifdef __APPLE__
++#if defined __APPLE__ || defined EMSCRIPTEN
+     operator unsigned long();
+ #endif
+     /// explicit specialization for bool()
+diff --git a/Framework/Kernel/src/IPropertyManager.cpp b/Framework/Kernel/src/IPropertyManager.cpp
+index a13b8b6096b..9b9d787a624 100644
+--- a/Framework/Kernel/src/IPropertyManager.cpp
++++ b/Framework/Kernel/src/IPropertyManager.cpp
+@@ -113,7 +113,7 @@ IPropertyManager::TypedValue::operator std::string() { return pm.getPropertyValu
+ IPropertyManager::TypedValue::operator OptionalBool() { return pm.getValue<OptionalBool>(prop); }
+ IPropertyManager::TypedValue::operator Property *() { return pm.getPointerToProperty(prop); }
+ 
+-#ifdef __APPLE__
++#if defined __APPLE__ || defined EMSCRIPTEN
+ // These must precede the operator() declaration, temporarily switch batch to global namespace
+ }
+ DEFINE_IPROPERTYMANAGER_GETVALUE(unsigned long);

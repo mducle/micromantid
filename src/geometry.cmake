@@ -92,12 +92,12 @@ set(GEOMETRY_SRC_FILES
 #   ../mantid/Framework/Geometry/src/Math/Acomp.cpp
 #   ../mantid/Framework/Geometry/src/Math/Algebra.cpp
 #   ../mantid/Framework/Geometry/src/Math/BnId.cpp
-#   ../mantid/Framework/Geometry/src/Math/ConvexPolygon.cpp
-#   ../mantid/Framework/Geometry/src/Math/ConvexPolygonIterator.cpp
+    ../mantid/Framework/Geometry/src/Math/ConvexPolygon.cpp
+    ../mantid/Framework/Geometry/src/Math/ConvexPolygonIterator.cpp
     ../mantid/Framework/Geometry/src/Math/PolyBase.cpp
-#   ../mantid/Framework/Geometry/src/Math/PolygonEdge.cpp
-#   ../mantid/Framework/Geometry/src/Math/PolygonIntersection.cpp
-#   ../mantid/Framework/Geometry/src/Math/Quadrilateral.cpp
+    ../mantid/Framework/Geometry/src/Math/PolygonEdge.cpp
+    ../mantid/Framework/Geometry/src/Math/PolygonIntersection.cpp
+    ../mantid/Framework/Geometry/src/Math/Quadrilateral.cpp
 #   ../mantid/Framework/Geometry/src/Math/RotCounter.cpp
     ../mantid/Framework/Geometry/src/Math/Triple.cpp
     ../mantid/Framework/Geometry/src/Math/mathSupport.cpp
@@ -112,7 +112,7 @@ set(GEOMETRY_SRC_FILES
     ../mantid/Framework/Geometry/src/Objects/ShapeFactory.cpp
     ../mantid/Framework/Geometry/src/Objects/Track.cpp
     ../mantid/Framework/Geometry/src/RandomPoint.cpp
-#   ../mantid/Framework/Geometry/src/Rasterize.cpp
+    ../mantid/Framework/Geometry/src/Rasterize.cpp
     ../mantid/Framework/Geometry/src/Rendering/GeometryHandler.cpp
     ../mantid/Framework/Geometry/src/Rendering/GeometryTriangulator.cpp
     ../mantid/Framework/Geometry/src/Rendering/ShapeInfo.cpp

@@ -108,3 +108,15 @@ index 193daa3bb7d..0ac26cca2ba 100644
    using namespace Mantid::DataObjects;
  
    EXPORT_WKSP_VALIDATOR_NO_ARG(TableWorkspaceNotEmptyValidator, "Checks that the workspace is not empty");
+diff --git a/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h b/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
+index 24fb94a8550..6781b4ff5f3 100644
+--- a/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
++++ b/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
+@@ -10,6 +10,7 @@
+ // Includes
+ //-----------------------------------------------------------------------------
+ #include "MantidKernel/DllConfig.h"
++#include <iterator>
+ 
+ namespace Mantid {
+ namespace Kernel {

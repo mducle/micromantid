@@ -6,6 +6,11 @@ file(COPY
     DESTINATION ${CURRENT_BINARY_DIR}/micromantid_test
 )
 
+file(COPY
+    ${CURRENT_SOURCE_DIR}/../mantid/Framework/Algorithms/test/NormaliseToUnityTest.py
+    DESTINATION ${CURRENT_BINARY_DIR}/micromantid_test/algorithms
+)
+
 file(COPY_FILE
     ${CURRENT_SOURCE_DIR}/runTest.py 
     ${CURRENT_BINARY_DIR}/micromantid_test/__init__.py

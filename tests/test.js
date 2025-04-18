@@ -139,3 +139,5 @@ test("datobj_PeakShapes", () => { let result = global.pyodide.runPython(` import
 //test("datobj_SpecialWorkspace2DTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/SpecialWorkspace2DTest") `); })
 //test("datobj_Workspace2DPickleTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/Workspace2DPickleTest") `); })
 //test("datobj_WorkspaceValidatorsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/WorkspaceValidatorsTest") `); })
+
+//test("alg_NormaliseToUnityTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("algorithms/NormaliseToUnityTest") `); })

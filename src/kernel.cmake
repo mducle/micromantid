@@ -1,5 +1,5 @@
 set(KERNEL_SRC_FILES
-#   ../mantid/Framework/Kernel/src/ANN_complete.cpp
+    ../mantid/Framework/Kernel/src/ANN_complete.cpp
     ../mantid/Framework/Kernel/src/ArrayBoundedValidator.cpp
     ../mantid/Framework/Kernel/src/ArrayLengthValidator.cpp
     ../mantid/Framework/Kernel/src/ArrayOrderedPairsValidator.cpp
@@ -19,7 +19,7 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/DataItem.cpp
     ../mantid/Framework/Kernel/src/DateAndTime.cpp
     ../mantid/Framework/Kernel/src/DateAndTimeHelpers.cpp
-#   ../mantid/Framework/Kernel/src/DateTimeValidator.cpp
+    ../mantid/Framework/Kernel/src/DateTimeValidator.cpp
 #   ../mantid/Framework/Kernel/src/DateValidator.cpp
     ../mantid/Framework/Kernel/src/DeltaEMode.cpp
     ../mantid/Framework/Kernel/src/DirectoryValidator.cpp
@@ -27,7 +27,7 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/DllOpen.cpp
     ../mantid/Framework/Kernel/src/EnabledWhenProperty.cpp
     ../mantid/Framework/Kernel/src/EnvironmentHistory.cpp
-#   ../mantid/Framework/Kernel/src/EqualBinsChecker.cpp
+    ../mantid/Framework/Kernel/src/EqualBinsChecker.cpp
 #   ../mantid/Framework/Kernel/src/ErrorReporter.cpp
     ../mantid/Framework/Kernel/src/Exception.cpp
     ../mantid/Framework/Kernel/src/FacilityInfo.cpp
@@ -41,11 +41,11 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/ICatalogInfo.cpp
     ../mantid/Framework/Kernel/src/IPropertyManager.cpp
     ../mantid/Framework/Kernel/src/ISaveable.cpp
-#   ../mantid/Framework/Kernel/src/IndexSet.cpp
+    ../mantid/Framework/Kernel/src/IndexSet.cpp
     ../mantid/Framework/Kernel/src/InstrumentInfo.cpp
 #   ../mantid/Framework/Kernel/src/InternetHelper.cpp
     ../mantid/Framework/Kernel/src/Interpolation.cpp
-#   ../mantid/Framework/Kernel/src/InvisibleProperty.cpp
+    ../mantid/Framework/Kernel/src/InvisibleProperty.cpp
     ../mantid/Framework/Kernel/src/LibraryManager.cpp
     ../mantid/Framework/Kernel/src/LibraryWrapper.cpp
     ../mantid/Framework/Kernel/src/LiveListenerInfo.cpp
@@ -55,16 +55,16 @@ set(KERNEL_SRC_FILES
 #   ../mantid/Framework/Kernel/src/MDAxisValidator.cpp
     ../mantid/Framework/Kernel/src/MDUnit.cpp
     ../mantid/Framework/Kernel/src/MDUnitFactory.cpp
-#   ../mantid/Framework/Kernel/src/MagneticIon.cpp
+    ../mantid/Framework/Kernel/src/MagneticIon.cpp
     ../mantid/Framework/Kernel/src/MandatoryValidator.cpp
      MantidVersion.cpp
 #   ../mantid/Framework/Kernel/src/MaskedProperty.cpp
     ../mantid/Framework/Kernel/src/Material.cpp
     ../mantid/Framework/Kernel/src/MaterialBuilder.cpp
 #   ../mantid/Framework/Kernel/src/MaterialXMLParser.cpp
-#   ../mantid/Framework/Kernel/src/Math/ChebyshevPolyFit.cpp
-#   ../mantid/Framework/Kernel/src/Math/Distributions/ChebyshevPolynomial.cpp
-#   ../mantid/Framework/Kernel/src/Math/Distributions/ChebyshevSeries.cpp
+    ../mantid/Framework/Kernel/src/Math/ChebyshevPolyFit.cpp
+    ../mantid/Framework/Kernel/src/Math/Distributions/ChebyshevPolynomial.cpp
+    ../mantid/Framework/Kernel/src/Math/Distributions/ChebyshevSeries.cpp
 #   ../mantid/Framework/Kernel/src/Math/Optimization/SLSQPMinimizer.cpp
     ../mantid/Framework/Kernel/src/Matrix.cpp
 #   ../mantid/Framework/Kernel/src/MatrixProperty.cpp
@@ -98,7 +98,7 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/SingletonHolder.cpp
 #   ../mantid/Framework/Kernel/src/SobolSequence.cpp
     ../mantid/Framework/Kernel/src/SplittingInterval.cpp
-#   ../mantid/Framework/Kernel/src/StartsWithValidator.cpp
+    ../mantid/Framework/Kernel/src/StartsWithValidator.cpp
     ../mantid/Framework/Kernel/src/Statistics.cpp
     ../mantid/Framework/Kernel/src/StdoutChannel.cpp
     ../mantid/Framework/Kernel/src/StringContainsValidator.cpp
@@ -120,7 +120,7 @@ set(KERNEL_SRC_FILES
 #   ../mantid/Framework/Kernel/src/UserCatalogInfo.cpp
 #   ../mantid/Framework/Kernel/src/UserStringParser.cpp
 #   ../mantid/Framework/Kernel/src/Utils.cpp
-#   ../mantid/Framework/Kernel/src/V2D.cpp
+    ../mantid/Framework/Kernel/src/V2D.cpp
     ../mantid/Framework/Kernel/src/V3D.cpp
     ../mantid/Framework/Kernel/src/VMD.cpp
     ../mantid/Framework/Kernel/src/VectorHelper.cpp
