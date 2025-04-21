@@ -9,9 +9,11 @@ module.exports = async () => {
   await pyodide.loadPackage("numpy")
   const wheels = await glob("dist/*whl");
   for (const wheel of wheels) {
-    await pyodide.loadPackage(wheel);
-  }
+    await pyodide.loadPackage(wheel); }
   console.log("Loaded Pyodide and wheels");
+  const test_wheels = await glob("tests/testhelpers/dist/*whl");
+  for (const wheel of test_wheels) {
+    await pyodide.loadPackage(wheel); }
   global.pyodide = pyodide;
 };
 
