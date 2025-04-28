@@ -11,3 +11,15 @@ index a2f61284629..6a61faea95e 100644
    tracebackToStream(msg, traceback->tb_next, false);
  }
 
+diff --git a/Framework/PythonInterface/mantid/kernel/funcinspect.py b/Framework/PythonInterface/mantid/kernel/funcinspect.py
+index 9a424746b8a..7773f229c67 100644
+--- a/Framework/PythonInterface/mantid/kernel/funcinspect.py
++++ b/Framework/PythonInterface/mantid/kernel/funcinspect.py
+@@ -210,6 +210,7 @@ OPERATOR_NAMES = {
+     "LIST_EXTEND",
+     "SET_UPDATE",
+     "BUILD_CONST_KEY_MAP",
++    "CALL",
+ }
+ 
+ 
