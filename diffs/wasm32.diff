@@ -1,31 +1,52 @@
-diff --git a/Framework/PythonInterface/mantid/kernel/src/Exports/ArrayProperty.cpp b/Framework/PythonInterface/mantid/kernel/src/Exports/ArrayProperty.cpp
-index c923238084e..ed8ca777618 100644
---- a/Framework/PythonInterface/mantid/kernel/src/Exports/ArrayProperty.cpp
-+++ b/Framework/PythonInterface/mantid/kernel/src/Exports/ArrayProperty.cpp
-@@ -129,5 +129,5 @@ void export_ArrayProperty() {
-   // Needs these declarations also to ensure that properties not created in
-   // Python can be seen also. Users shouldn't need this
-   EXPORT_ARRAY_PROP(int, CInt);
--  EXPORT_ARRAY_PROP(size_t, UnsignedInt);
-+//EXPORT_ARRAY_PROP(size_t, UnsignedInt);
+diff --git a/Framework/Kernel/src/ArrayProperty.cpp b/Framework/Kernel/src/ArrayProperty.cpp
+index 3d77b6929ad..640f6b98493 100644
+--- a/Framework/Kernel/src/ArrayProperty.cpp
++++ b/Framework/Kernel/src/ArrayProperty.cpp
+@@ -114,7 +114,7 @@ template class DLLExport ArrayProperty<std::vector<float>>;
+ template class DLLExport ArrayProperty<std::vector<double>>;
+ template class DLLExport ArrayProperty<std::vector<std::string>>;
+ 
+-#if defined(_WIN32) || defined(__clang__) && defined(__APPLE__)
++#if defined(_WIN32) || (defined(__clang__) && defined(__APPLE__)) || defined EMSCRIPTEN
+ template class DLLExport ArrayProperty<long>;
+ template class DLLExport ArrayProperty<unsigned long>;
+ template class DLLExport ArrayProperty<std::vector<long>>;
+diff --git a/Framework/Kernel/inc/MantidKernel/IPropertyManager.h b/Framework/Kernel/inc/MantidKernel/IPropertyManager.h
+index fb5129d18df..d149f1c3999 100644
+--- a/Framework/Kernel/inc/MantidKernel/IPropertyManager.h
++++ b/Framework/Kernel/inc/MantidKernel/IPropertyManager.h
+@@ -390,7 +390,7 @@ protected:
+     operator uint64_t();
+     operator OptionalBool();
+ 
+-#ifdef __APPLE__
++#if defined __APPLE__ || defined EMSCRIPTEN
+     operator unsigned long();
+ #endif
+     /// explicit specialization for bool()
+diff --git a/Framework/Kernel/src/IPropertyManager.cpp b/Framework/Kernel/src/IPropertyManager.cpp
+index a13b8b6096b..9b9d787a624 100644
+--- a/Framework/Kernel/src/IPropertyManager.cpp
++++ b/Framework/Kernel/src/IPropertyManager.cpp
+@@ -113,7 +113,7 @@ IPropertyManager::TypedValue::operator std::string() { return pm.getPropertyValu
+ IPropertyManager::TypedValue::operator OptionalBool() { return pm.getValue<OptionalBool>(prop); }
+ IPropertyManager::TypedValue::operator Property *() { return pm.getPointerToProperty(prop); }
+ 
+-#ifdef __APPLE__
++#if defined __APPLE__ || defined EMSCRIPTEN
+ // These must precede the operator() declaration, temporarily switch batch to global namespace
  }
-diff --git a/Framework/PythonInterface/mantid/kernel/src/Exports/PropertyWithValue.cpp b/Framework/PythonInterface/mantid/kernel/src/Exports/PropertyWithValue.cpp
-index 132fae96ab5..7e73b495228 100644
---- a/Framework/PythonInterface/mantid/kernel/src/Exports/PropertyWithValue.cpp
-+++ b/Framework/PythonInterface/mantid/kernel/src/Exports/PropertyWithValue.cpp
-@@ -16,13 +16,13 @@ void export_BasicPropertyWithValueTypes() {
-   PropertyWithValueExporter<std::vector<int>>::define("VectorIntPropertyWithValue");
-   PropertyWithValueExporter<unsigned int>::define("UIntPropertyWithValue");
-   PropertyWithValueExporter<std::vector<unsigned int>>::define("VectorUIntPropertyWithValue");
--
-+/*
-   // longs & vectors
-   PropertyWithValueExporter<long>::define("LongPropertyWithValue");
-   PropertyWithValueExporter<std::vector<long>>::define("VectorLongPropertyWithValue");
-   PropertyWithValueExporter<unsigned long>::define("ULongPropertyWithValue");
-   PropertyWithValueExporter<std::vector<unsigned long>>::define("VectorULongPropertyWithValue");
--
-+*/
-   // long long long longs & vectors
-   PropertyWithValueExporter<long long>::define("LongLongPropertyWithValue");
-   PropertyWithValueExporter<std::vector<long long>>::define("VectorLongLongPropertyWithValue");
+ DEFINE_IPROPERTYMANAGER_GETVALUE(unsigned long);
+diff --git a/Framework/Kernel/src/PropertyWithValue.cpp b/Framework/Kernel/src/PropertyWithValue.cpp
+index 5f18e4c4b4c..b83d0f09868 100644
+--- a/Framework/Kernel/src/PropertyWithValue.cpp
++++ b/Framework/Kernel/src/PropertyWithValue.cpp
+@@ -62,6 +62,8 @@ template <> void PropertyWithValue<long>::saveProperty(::NeXus::File *file) {
+   file->closeData();
+   file->closeGroup();
+ }
++#endif
++#if defined(_WIN32) || defined(__clang__)
+ template class MANTID_KERNEL_DLL PropertyWithValue<long>;
+ template class MANTID_KERNEL_DLL PropertyWithValue<unsigned long>;
+ template class MANTID_KERNEL_DLL PropertyWithValue<std::vector<long>>;

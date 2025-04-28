@@ -5,8 +5,7 @@ module.exports = async () => {
   let pyodide = await loadPyodide({
     indexURL: "node_modules/pyodide",
   });
-  await pyodide.loadPackage("pytest")
-  await pyodide.loadPackage("numpy")
+  await pyodide.loadPackage(["pytest", "numpy", "python-dateutil", "pytz"])
   const wheels = await glob("dist/*whl");
   for (const wheel of wheels) {
     await pyodide.loadPackage(wheel); }

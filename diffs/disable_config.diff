@@ -172,7 +172,7 @@ index 4273e8811f9..02fafcf451e 100644
        std::string line;
        double minX = std::numeric_limits<double>::max();
 diff --git a/Framework/Kernel/src/ConfigService.cpp b/Framework/Kernel/src/ConfigService.cpp
-index 035071998e4..aa4a5922317 100644
+index 035071998e4..a387ab6cd62 100644
 --- a/Framework/Kernel/src/ConfigService.cpp
 +++ b/Framework/Kernel/src/ConfigService.cpp
 @@ -15,7 +15,7 @@
@@ -195,7 +195,15 @@ index 035071998e4..aa4a5922317 100644
    // Register StdChannel with Poco
    Poco::LoggingFactory::defaultFactory().registerChannelClass(
        "StdoutChannel", new Poco::Instantiator<Poco::StdoutChannel, Poco::Channel>);
-@@ -1276,6 +1276,10 @@ std::string ConfigServiceImpl::getPathToExecutable() const {
+@@ -180,6 +180,7 @@ ConfigServiceImpl::ConfigServiceImpl()
+                       << Types::Core::DateAndTime::getCurrentTime().toFormattedString("%Y-%m-%dT%H:%MZ") << "\n";
+   g_log.information() << "Properties file(s) loaded: " << propertiesFilesList << '\n';
+ 
++
+   // Assert that the appdata and the instrument subdirectory exists
+   std::string appDataDir = getAppDataDir();
+   Poco::Path path(appDataDir);
+@@ -1276,6 +1277,10 @@ std::string ConfigServiceImpl::getPathToExecutable() const {
    const int success = _NSGetExecutablePath(pBuf, &bytes);
    if (success < 0)
      bytes = 1025;
@@ -206,7 +214,7 @@ index 035071998e4..aa4a5922317 100644
  #endif
  
    if (bytes > 0 && bytes < 1024) {
-@@ -1381,7 +1385,7 @@ std::string ConfigServiceImpl::getPropertiesDir() const { return m_strBaseDir; }
+@@ -1381,7 +1386,7 @@ std::string ConfigServiceImpl::getPropertiesDir() const { return m_strBaseDir; }
   * @return the directory that Mantid should use for writing files
   */
  std::string ConfigServiceImpl::getUserPropertiesDir() const {
@@ -215,7 +223,40 @@ index 035071998e4..aa4a5922317 100644
    return m_strBaseDir;
  #else
    Poco::Path datadir(m_pSysConfig->getString("system.homeDir"));
-@@ -1832,6 +1836,7 @@ Gets the system proxy information
+@@ -1534,6 +1539,9 @@ void ConfigServiceImpl::cacheInstrumentPaths() {
+ #ifndef _WIN32
+   addDirectoryifExists("/etc/mantid/instrument", m_instrumentDirs);
+ #endif
++#ifdef EMSCRIPTEN
++  addDirectoryifExists(Poco::Environment::get("MANTIDPATH") + "/", m_instrumentDirs);
++#endif
+ 
+   // Determine the search directory for XML instrument definition files (IDFs)
+   std::string directoryName = getString("instrumentDefinition.directory", true);
+@@ -1555,18 +1563,16 @@ void ConfigServiceImpl::cacheInstrumentPaths() {
+  */
+ bool ConfigServiceImpl::addDirectoryifExists(const std::string &directoryName,
+                                              std::vector<std::string> &directoryList) {
+-  try {
+-    if (Poco::File(directoryName).isDirectory()) {
++  Poco::File dirobj = Poco::File(directoryName);
++  if (dirobj.exists()) {
++    if (dirobj.isDirectory()) {
+       directoryList.emplace_back(directoryName);
+       return true;
+     } else {
+       g_log.information("Unable to locate directory at: " + directoryName);
+       return false;
+     }
+-  } catch (Poco::PathNotFoundException &) {
+-    g_log.information("Unable to locate directory at: " + directoryName);
+-    return false;
+-  } catch (Poco::FileNotFoundException &) {
++  } else {
+     g_log.information("Unable to locate directory at: " + directoryName);
+     return false;
+   }
+@@ -1832,6 +1838,7 @@ Gets the system proxy information
  @url A url to match the proxy to
  @return the proxy information.
  */
@@ -223,7 +264,7 @@ index 035071998e4..aa4a5922317 100644
  Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
    if (!m_isProxySet) {
      // set the proxy
-@@ -1852,6 +1857,7 @@ Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
+@@ -1852,6 +1859,7 @@ Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
    }
    return m_proxyInfo;
  }

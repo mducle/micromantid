@@ -1,4 +1,5 @@
 include(api.cmake)
+include(algorithms.cmake)
 include(beamline.cmake)
 include(dataobjects.cmake)
 include(geometry.cmake)
@@ -22,6 +23,7 @@ set(MICROMANTID_CXX_LIBRARIES
   PythonGeometryModule
   PythonDataObjectsModule
   MantidAPI
+  Algorithms
   Beamline
   DataObjects
   Geometry

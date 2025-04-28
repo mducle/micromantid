@@ -31,14 +31,14 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/CompositeFunction.cpp
     ../mantid/Framework/API/src/ConstraintFactory.cpp
     ../mantid/Framework/API/src/CoordTransform.cpp
-#   ../mantid/Framework/API/src/CostFunctionFactory.cpp
+    ../mantid/Framework/API/src/CostFunctionFactory.cpp
     ../mantid/Framework/API/src/DataProcessorAlgorithm.cpp
     ../mantid/Framework/API/src/DeprecatedAlgorithm.cpp
     ../mantid/Framework/API/src/DeprecatedAlias.cpp
 #   ../mantid/Framework/API/src/DetectorSearcher.cpp
 #   ../mantid/Framework/API/src/DomainCreatorFactory.cpp
 #   ../mantid/Framework/API/src/EnabledWhenWorkspaceIsType.cpp
-#   ../mantid/Framework/API/src/EqualBinSizesValidator.cpp
+    ../mantid/Framework/API/src/EqualBinSizesValidator.cpp
     ../mantid/Framework/API/src/ExperimentInfo.cpp
     ../mantid/Framework/API/src/Expression.cpp
     ../mantid/Framework/API/src/FileBackedExperimentInfo.cpp
@@ -46,7 +46,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/FileLoaderRegistry.cpp
     ../mantid/Framework/API/src/FileProperty.cpp
     ../mantid/Framework/API/src/FrameworkManager.cpp
-#   ../mantid/Framework/API/src/FuncMinimizerFactory.cpp
+    ../mantid/Framework/API/src/FuncMinimizerFactory.cpp
     ../mantid/Framework/API/src/FunctionDomain1D.cpp
 #   ../mantid/Framework/API/src/FunctionDomainGeneral.cpp
 #   ../mantid/Framework/API/src/FunctionDomainMD.cpp
@@ -90,9 +90,9 @@ set(API_SRC_FILES
 #   ../mantid/Framework/API/src/ImplicitFunctionFactory.cpp
 #   ../mantid/Framework/API/src/ImplicitFunctionParameterParserFactory.cpp
 #   ../mantid/Framework/API/src/ImplicitFunctionParserFactory.cpp
-#   ../mantid/Framework/API/src/IncreasingAxisValidator.cpp
-#   ../mantid/Framework/API/src/IndexProperty.cpp
-#   ../mantid/Framework/API/src/IndexTypeProperty.cpp
+    ../mantid/Framework/API/src/IncreasingAxisValidator.cpp
+    ../mantid/Framework/API/src/IndexProperty.cpp
+    ../mantid/Framework/API/src/IndexTypeProperty.cpp
     ../mantid/Framework/API/src/InstrumentDataService.cpp
     ../mantid/Framework/API/src/InstrumentFileFinder.cpp
     ../mantid/Framework/API/src/InstrumentValidator.cpp
@@ -109,13 +109,13 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/MatrixWorkspaceMDIterator.cpp
 #   ../mantid/Framework/API/src/MuParserUtils.cpp
     ../mantid/Framework/API/src/MultiDomainFunction.cpp
-#   ../mantid/Framework/API/src/MultiPeriodGroupAlgorithm.cpp
-#   ../mantid/Framework/API/src/MultiPeriodGroupWorker.cpp
+    ../mantid/Framework/API/src/MultiPeriodGroupAlgorithm.cpp
+    ../mantid/Framework/API/src/MultiPeriodGroupWorker.cpp
     ../mantid/Framework/API/src/MultipleExperimentInfos.cpp
     ../mantid/Framework/API/src/MultipleFileProperty.cpp
     ../mantid/Framework/API/src/NexusFileLoader.cpp
-#   ../mantid/Framework/API/src/NotebookBuilder.cpp
-#   ../mantid/Framework/API/src/NotebookWriter.cpp
+    ../mantid/Framework/API/src/NotebookBuilder.cpp
+    ../mantid/Framework/API/src/NotebookWriter.cpp
 #   ../mantid/Framework/API/src/NullCoordTransform.cpp
     ../mantid/Framework/API/src/NumericAxis.cpp
     ../mantid/Framework/API/src/NumericAxisValidator.cpp
@@ -135,12 +135,12 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/Run.cpp
     ../mantid/Framework/API/src/Sample.cpp
 #   ../mantid/Framework/API/src/SampleShapeValidator.cpp
-#   ../mantid/Framework/API/src/SampleValidator.cpp
+    ../mantid/Framework/API/src/SampleValidator.cpp
 #   ../mantid/Framework/API/src/ScopedWorkspace.cpp
-#   ../mantid/Framework/API/src/ScriptBuilder.cpp
+    ../mantid/Framework/API/src/ScriptBuilder.cpp
 #   ../mantid/Framework/API/src/ScriptRepository.cpp
 #   ../mantid/Framework/API/src/ScriptRepositoryFactory.cpp
-#   ../mantid/Framework/API/src/SingleCountValidator.cpp
+    ../mantid/Framework/API/src/SingleCountValidator.cpp
     ../mantid/Framework/API/src/SpectraAxis.cpp
     ../mantid/Framework/API/src/SpectraAxisValidator.cpp
     ../mantid/Framework/API/src/SpectrumDetectorMapping.cpp
@@ -151,10 +151,10 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/Workspace.cpp
     ../mantid/Framework/API/src/WorkspaceFactory.cpp
     ../mantid/Framework/API/src/WorkspaceGroup.cpp
-#   ../mantid/Framework/API/src/WorkspaceHasDxValidator.cpp
+    ../mantid/Framework/API/src/WorkspaceHasDxValidator.cpp
     ../mantid/Framework/API/src/WorkspaceHistory.cpp
-#   ../mantid/Framework/API/src/WorkspaceNearestNeighbourInfo.cpp
-#   ../mantid/Framework/API/src/WorkspaceNearestNeighbours.cpp
+    ../mantid/Framework/API/src/WorkspaceNearestNeighbourInfo.cpp
+    ../mantid/Framework/API/src/WorkspaceNearestNeighbours.cpp
     ../mantid/Framework/API/src/WorkspaceOpOverloads.cpp
     ../mantid/Framework/API/src/WorkspaceProperty.cpp
     ../mantid/Framework/API/src/WorkspacePropertyUtils.cpp

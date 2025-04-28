@@ -21,3 +21,23 @@ index 86ca515e0dc..3a659ffbf76 100644
  
  #include "MantidAPI/DllConfig.h"
  #include "MantidAPI/MatrixWorkspace_fwd.h"
+diff --git a/Framework/API/inc/MantidAPI/Algorithm.h b/Framework/API/inc/MantidAPI/Algorithm.h
+index 9710a4be462..26f11bde193 100644
+--- a/Framework/API/inc/MantidAPI/Algorithm.h
++++ b/Framework/API/inc/MantidAPI/Algorithm.h
+@@ -538,8 +538,15 @@ private:
+  * is used in the call to its constructor to effect a call to the factory's
+  * subscribe method.
+  */
++#ifdef EMSCRIPTEN
++#define DECLARE_ALGORITHM(classname)                                                                                   \
++  void register_alg_##classname() {                                                                                    \
++      Mantid::API::AlgorithmFactory::Instance().subscribe<classname>();                                                \
++  }
++#else
+ #define DECLARE_ALGORITHM(classname)                                                                                   \
+   namespace {                                                                                                          \
+   Mantid::Kernel::RegistrationHelper                                                                                   \
+       register_alg_##classname(((Mantid::API::AlgorithmFactory::Instance().subscribe<classname>()), 0));               \
+   }
++#endif

@@ -10,3 +10,7 @@ bld
 build
 all*.diff
 build_env
+sysroot
+old
+py_env.out
+source_env.sh

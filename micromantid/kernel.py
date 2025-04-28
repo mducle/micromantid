@@ -1,6 +1,8 @@
 from ._micromantid import _kernel
 from ._utils import lazy_instance_access, add_to_globals
-from . import _funcinspect as funcinspect
+from . import funcinspect
+import sys, os, types
+sys.modules[f'{__name__}.funcinspect'] = funcinspect
 
 add_to_globals(_kernel, globals())
 
@@ -76,3 +78,34 @@ def amend_config(
     finally:
         for key in modified_keys:
             config[key] = backup[key]
+
+
+def update_sys_paths(paths, recursive=False):
+    """
+    Add the required script directories to the path
+    @param paths A list of path strings or a string using a semi-colon
+                 separator
+    @param recursive If true then all directories below the given paths
+                     are added as well
+    """
+    if paths == "":
+        return
+
+    if type(paths) is str:
+        paths = paths.split(";")
+
+    def _append_to_path(path):
+        # sys.path doesn't like trailing slashes
+        sys.path.append(path.rstrip("\\").rstrip("/"))
+
+    for path in paths:
+        _append_to_path(path)
+        if recursive:
+            for dirpath, dirnames, filenames in os.walk(path):
+                for dirname in dirnames:
+                    _append_to_path(_os.path.join(dirpath, dirname))
+
+pkgsetup_name = f'{__name__}.packagesetup'
+pkgsetup_mod = types.ModuleType(pkgsetup_name)
+pkgsetup_mod.__dict__['update_sys_paths'] = update_sys_paths
+sys.modules[pkgsetup_name] = pkgsetup_mod

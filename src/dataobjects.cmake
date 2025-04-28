@@ -13,7 +13,7 @@ set(DATAOBJ_SRC_FILES
     ../mantid/Framework/DataObjects/src/EventWorkspaceMRU.cpp
     ../mantid/Framework/DataObjects/src/Events.cpp
     ../mantid/Framework/DataObjects/src/FakeMD.cpp
-    #../mantid/Framework/DataObjects/src/FractionalRebinning.cpp
+    ../mantid/Framework/DataObjects/src/FractionalRebinning.cpp
     ../mantid/Framework/DataObjects/src/GroupingWorkspace.cpp
     ../mantid/Framework/DataObjects/src/Histogram1D.cpp
     ../mantid/Framework/DataObjects/src/MDBoxFlatTree.cpp
@@ -26,7 +26,7 @@ set(DATAOBJ_SRC_FILES
     ../mantid/Framework/DataObjects/src/MaskWorkspace.cpp
     #../mantid/Framework/DataObjects/src/MementoTableWorkspace.cpp
     ../mantid/Framework/DataObjects/src/NoShape.cpp
-    #../mantid/Framework/DataObjects/src/OffsetsWorkspace.cpp
+    ../mantid/Framework/DataObjects/src/OffsetsWorkspace.cpp
     ../mantid/Framework/DataObjects/src/Peak.cpp
     ../mantid/Framework/DataObjects/src/LeanElasticPeak.cpp
     ../mantid/Framework/DataObjects/src/BasePeak.cpp
@@ -48,10 +48,10 @@ set(DATAOBJ_SRC_FILES
     #../mantid/Framework/DataObjects/src/TableColumn.cpp
     ../mantid/Framework/DataObjects/src/TableWorkspace.cpp
     ../mantid/Framework/DataObjects/src/TableWorkspaceNotEmptyValidator.cpp
-    #../mantid/Framework/DataObjects/src/TimeSplitter.cpp
+    ../mantid/Framework/DataObjects/src/TimeSplitter.cpp
     #../mantid/Framework/DataObjects/src/VectorColumn.cpp
     ../mantid/Framework/DataObjects/src/Workspace2D.cpp
-    #../mantid/Framework/DataObjects/src/WorkspaceCreation.cpp
+    ../mantid/Framework/DataObjects/src/WorkspaceCreation.cpp
     ../mantid/Framework/DataObjects/src/WorkspaceProperty.cpp
     ../mantid/Framework/DataObjects/src/WorkspaceSingleValue.cpp
     ../mantid/Framework/DataObjects/src/PeakShapeDetectorBin.cpp

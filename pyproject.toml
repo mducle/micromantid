@@ -28,7 +28,7 @@ Repository = "https://github.com/mducle/micromantid"
 test = ["pytest"]
 
 [tool.scikit-build.cmake.define]
-CMAKE_CXX_FLAGS_RELEASE = "-O2 -DNDEBUG"
+CMAKE_CXX_FLAGS_RELEASE = "-O2 -DNDEBUG -fexceptions -DPROJECT_NAME=micromantid"
 
 [tool.scikit-build]
 cmake.args = ["-G Unix Makefiles"]
