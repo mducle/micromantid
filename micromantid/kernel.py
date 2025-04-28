@@ -1,6 +1,6 @@
 from ._micromantid import _kernel
 from ._utils import lazy_instance_access, add_to_globals
-from . import _funcinspect as funcinspect
+from . import funcinspect
 import sys, os, types
 sys.modules[f'{__name__}.funcinspect'] = funcinspect
 

@@ -102,3 +102,11 @@ target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC
 
 # Destination name must match name of project in pyproject.toml
 install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PACKAGE_NAME})
+
+# Copies Python source files to make wheel
+install(FILES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/instrument/Facilities.xml
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/simpleapi.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/funcinspect.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_workspaceops.py
+    DESTINATION ${MICROMANTID_PACKAGE_NAME})
