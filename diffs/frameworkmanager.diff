@@ -1,5 +1,20 @@
+diff --git a/Framework/API/inc/MantidAPI/FrameworkManager.h b/Framework/API/inc/MantidAPI/FrameworkManager.h
+index 5e2db1b8439..19f5d6d0031 100644
+--- a/Framework/API/inc/MantidAPI/FrameworkManager.h
++++ b/Framework/API/inc/MantidAPI/FrameworkManager.h
+@@ -13,6 +13,10 @@
+ #include "MantidKernel/SingletonHolder.h"
+ #include <memory>
+
++#ifndef PROJECT_NAME
++#define PROJECT_NAME mantid
++#endif
++
+ namespace Mantid {
+
+ namespace API {
 diff --git a/Framework/API/src/FrameworkManager.cpp b/Framework/API/src/FrameworkManager.cpp
-index 7c08dbb6c58..f7e46a3d62f 100644
+index 7c08dbb6c58..eb925c79e3e 100644
 --- a/Framework/API/src/FrameworkManager.cpp
 +++ b/Framework/API/src/FrameworkManager.cpp
 @@ -15,7 +15,7 @@
@@ -9,15 +24,15 @@ index 7c08dbb6c58..f7e46a3d62f 100644
 -#include "MantidKernel/UsageService.h"
 +//#include "MantidKernel/UsageService.h"
  #include "MantidNexusCpp/NeXusFile.hpp"
-
+ 
  #include <boost/algorithm/string/classification.hpp>
 @@ -27,7 +27,7 @@
  #include <cstdarg>
  #include <memory>
-
+ 
 -#include "tbb/global_control.h"
 +//#include "tbb/global_control.h"
-
+ 
  #ifdef _WIN32
  #include <winsock2.h>
 @@ -46,14 +46,14 @@ namespace {
@@ -27,7 +42,7 @@ index 7c08dbb6c58..f7e46a3d62f 100644
 -tbb::global_control *GLOBAL_TBB_CONTROL = nullptr;
 +//tbb::global_control *GLOBAL_TBB_CONTROL = nullptr;
  } // namespace
-
+ 
  namespace Mantid {
  using Kernel::ConfigService;
  using Kernel::LibraryManager;
@@ -47,15 +62,15 @@ index 7c08dbb6c58..f7e46a3d62f 100644
    if (GLOBAL_TBB_CONTROL) {
 @@ -169,6 +170,7 @@ void FrameworkManagerImpl::setNumOMPThreads(const int nthreads) {
    }
-
+ 
    GLOBAL_TBB_CONTROL = new tbb::global_control(tbb::global_control::max_allowed_parallelism, nthreads);
 +*/
  }
-
+ 
  /**
 @@ -190,9 +192,9 @@ void FrameworkManagerImpl::clear() {
  }
-
+ 
  void FrameworkManagerImpl::shutdown() {
 -  Kernel::UsageService::Instance().shutdown();
 +//Kernel::UsageService::Instance().shutdown();
@@ -64,11 +79,11 @@ index 7c08dbb6c58..f7e46a3d62f 100644
 +//delete GLOBAL_TBB_CONTROL;
    clear();
  }
-
+ 
 @@ -360,9 +362,9 @@ void FrameworkManagerImpl::asynchronousStartupTasks() {
      g_log.information() << "Version check disabled.\n";
    }
-
+ 
 -  setupUsageReporting();
 +//setupUsageReporting();
  }
@@ -77,7 +92,7 @@ index 7c08dbb6c58..f7e46a3d62f 100644
  void FrameworkManagerImpl::setupUsageReporting() {
    auto &configSvc = ConfigService::Instance();
    auto interval = configSvc.getValue<int>("Usage.BufferCheckInterval");
-@@ -374,7 +376,7 @@ void FrameworkManagerImpl::setupUsageReporting() {
+@@ -374,9 +376,10 @@ void FrameworkManagerImpl::setupUsageReporting() {
    usageSvc.setEnabled(enabled.value_or(false));
    usageSvc.registerStartup();
  }
@@ -85,5 +100,58 @@ index 7c08dbb6c58..f7e46a3d62f 100644
 +*/
  /// Update instrument definitions from github
  void FrameworkManagerImpl::updateInstrumentDefinitions() {
++/*
    try {
-
+     auto algDownloadInstrument = Mantid::API::AlgorithmManager::Instance().create("DownloadInstrument");
+     algDownloadInstrument->setAlgStartupLogging(false);
+@@ -385,10 +388,12 @@ void FrameworkManagerImpl::updateInstrumentDefinitions() {
+     g_log.debug() << "DowndloadInstrument algorithm is not available - cannot "
+                      "update instrument definitions.\n";
+   }
++*/
+ }
+ 
+ /// Check if a newer release of Mantid is available
+ void FrameworkManagerImpl::checkIfNewerVersionIsAvailable() {
++/*
+   try {
+     auto algCheckVersion = Mantid::API::AlgorithmManager::Instance().create("CheckMantidVersion");
+     algCheckVersion->setAlgStartupLogging(false);
+@@ -397,6 +402,7 @@ void FrameworkManagerImpl::checkIfNewerVersionIsAvailable() {
+     g_log.debug() << "CheckMantidVersion algorithm is not available - cannot "
+                      "check if a newer version is available.\n";
+   }
++*/
+ }
+ 
+ } // namespace API
+diff --git a/Framework/PythonInterface/mantid/api/src/Exports/FrameworkManager.cpp b/Framework/PythonInterface/mantid/api/src/Exports/FrameworkManager.cpp
+index 8250e410498..178317681e5 100644
+--- a/Framework/PythonInterface/mantid/api/src/Exports/FrameworkManager.cpp
++++ b/Framework/PythonInterface/mantid/api/src/Exports/FrameworkManager.cpp
+@@ -43,7 +43,7 @@ void declareCPPAlgorithms() { AlgorithmFactory::Instance().subscribe<Mantid::Pyt
+  * pythonscripts.directories
+  */
+ void updatePythonPaths() {
+-  auto packagesetup = import("mantid.kernel.packagesetup");
++  auto packagesetup = import(BOOST_PP_STRINGIZE(PROJECT_NAME) ".kernel.packagesetup");
+   packagesetup.attr("update_sys_paths")(ConfigService::Instance().getValue<std::string>(PYTHONPATHS_KEY).value_or(""));
+ }
+ 
+@@ -70,14 +70,14 @@ FrameworkManagerImpl &instance() {
+     INSTANCE_CALLED = true;
+     declareCPPAlgorithms();
+     updatePythonPaths();
+-    import("mantid.simpleapi");
++    import(BOOST_PP_STRINGIZE(PROJECT_NAME) ".simpleapi");
+     // Without a python-based exit handler the singletons are only cleaned
+     // up after main() and this is too late to acquire the GIL to be able to
+     // delete any python objects still stored in other singletons like the
+     // ADS or AlgorithmManager.
+     PyRun_SimpleString("import atexit\n"
+                        "def cleanupFrameworkManager():\n"
+-                       "    from mantid.api import FrameworkManager\n"
++                       "    from " BOOST_PP_STRINGIZE(PROJECT_NAME) ".api import FrameworkManager\n"
+                        "    FrameworkManager.shutdown()\n"
+                        "atexit.register(cleanupFrameworkManager)");
+   });

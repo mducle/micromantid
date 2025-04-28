@@ -1,6 +1,7 @@
 from ._micromantid import _api
 from ._utils import lazy_instance_access, add_to_globals
 from ._funcinspect import customise_func, lhs_info, LazyMethodSignature
+import sys, types
 
 add_to_globals(_api, globals())
 
@@ -245,3 +246,11 @@ def attach_func_as_method(name, func_obj, self_param_name, algm_name, workspace_
             setattr(cls, name, _method_impl)
     else:
         setattr(Workspace, name, _method_impl)
+
+wsops_name = f'{__name__}._workspaceops'
+_workspaceops = types.ModuleType(wsops_name)
+_workspaceops.__dict__.update({'attach_binary_operators_to_workspace': attach_binary_operators_to_workspace,
+    '_workspace_op_prefix': _workspace_op_prefix, '_workspace_op_tmps': _workspace_op_tmps, '_do_binary_operation': _do_binary_operation,
+    'attach_unary_operators_to_workspace': attach_unary_operators_to_workspace, '_do_unary_operation': _do_unary_operation,
+    'attach_tableworkspaceiterator': attach_tableworkspaceiterator, 'attach_func_as_method': attach_func_as_method})
+sys.modules[wsops_name] = _workspaceops
