@@ -2,12 +2,14 @@ include(api.cmake)
 include(algorithms.cmake)
 include(beamline.cmake)
 include(dataobjects.cmake)
+include(datahandling.cmake)
 include(geometry.cmake)
 include(histo.cmake)
 include(index.cmake)
 include(json.cmake)
 include(kernel.cmake)
 include(nexus.cmake)
+include(mantidnexus.cmake)
 include(types.cmake)
 
 include(pythoncore.cmake)
@@ -26,11 +28,13 @@ set(MICROMANTID_CXX_LIBRARIES
   Algorithms
   Beamline
   DataObjects
+  DataHandling
   Geometry
   HistogramData
   Indexing
   Json
   Kernel
   NexusCpp
+  MantidNexus
   Types
 CACHE INTERNAL "")

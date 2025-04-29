@@ -271,3 +271,413 @@ index 38a05e1598f..c5f4bc8334a 100644
      m_splitInto.resize(this->nd, 1);
      resetNumBoxes();
    }
+diff --git a/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h b/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h
+index a10dbe86874..54dc107fb13 100644
+--- a/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h
++++ b/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h
+@@ -9,9 +9,10 @@
+ #include "MantidAPI/Progress.h"
+ #include "MantidDataHandling/DllConfig.h"
+ #include "MantidKernel/Task.h"
+-#include "MantidKernel/ThreadScheduler.h"
++//#include "MantidKernel/ThreadScheduler.h"
+ 
+ #include <cstdint>
++#include <vector>
+ 
+ namespace NeXus {
+ class File;
+@@ -30,7 +31,7 @@ class MANTID_DATAHANDLING_DLL LoadBankFromDiskTask : public Kernel::Task {
+ public:
+   LoadBankFromDiskTask(DefaultEventLoader &loader, std::string entry_name, std::string entry_type,
+                        const std::size_t numEvents, const bool oldNeXusFileNames, API::Progress *prog,
+-                       std::shared_ptr<std::mutex> ioMutex, Kernel::ThreadScheduler &scheduler,
++//                     std::shared_ptr<std::mutex> ioMutex, Kernel::ThreadScheduler &scheduler,
+                        std::vector<int> framePeriodNumbers);
+ 
+   void run() override;
+@@ -54,7 +55,7 @@ private:
+   /// Progress reporting
+   API::Progress *prog;
+   /// ThreadScheduler running this task
+-  Kernel::ThreadScheduler &scheduler;
++//Kernel::ThreadScheduler &scheduler;
+   /// Object with the pulse times for this bank
+   std::shared_ptr<BankPulseTimes> thisBankPulseTimes;
+   /// Did we get an error in loading
+diff --git a/Framework/DataHandling/inc/MantidDataHandling/ParallelEventLoader.h b/Framework/DataHandling/inc/MantidDataHandling/ParallelEventLoader.h
+index 2fdd90fa451..8c8232a7c21 100644
+--- a/Framework/DataHandling/inc/MantidDataHandling/ParallelEventLoader.h
++++ b/Framework/DataHandling/inc/MantidDataHandling/ParallelEventLoader.h
+@@ -31,6 +31,5 @@ public:
+                                const std::string &groupName, const std::vector<std::string> &bankNames,
+                                const bool eventIDIsSpectrumNumber, const bool precalcEvents);
+ };
+-
+ } // namespace DataHandling
+ } // namespace Mantid
+diff --git a/Framework/DataHandling/src/CompressEventAccumulator.cpp b/Framework/DataHandling/src/CompressEventAccumulator.cpp
+index bd26f7b238e..aa54ecf95f9 100644
+--- a/Framework/DataHandling/src/CompressEventAccumulator.cpp
++++ b/Framework/DataHandling/src/CompressEventAccumulator.cpp
+@@ -9,7 +9,7 @@
+ #include "MantidDataObjects/EventList.h"
+ 
+ #include <algorithm>
+-#include <tbb/parallel_sort.h>
++//#include <tbb/parallel_sort.h>
+ 
+ using Mantid::DataObjects::EventList;
+ 
+@@ -99,14 +99,14 @@ private:
+     const auto delta = 1. / static_cast<float>((*(iter + 1)) - (*iter));
+ 
+     // parallel sort only if this is big enough of a vector
+-    if (m_tof.size() < MIN_VEC_LENGTH_PARALLEL_SORT)
++//  if (m_tof.size() < MIN_VEC_LENGTH_PARALLEL_SORT)
+       std::sort(m_tof.begin(), m_tof.end(), [delta](const auto &left, const auto &right) {
+         return std::floor(left * delta) < std::floor(right * delta);
+       });
+-    else
+-      tbb::parallel_sort(m_tof.begin(), m_tof.end(), [delta](const auto &left, const auto &right) {
+-        return std::floor(left * delta) < std::floor(right * delta);
+-      });
++//  else
++//    tbb::parallel_sort(m_tof.begin(), m_tof.end(), [delta](const auto &left, const auto &right) {
++//      return std::floor(left * delta) < std::floor(right * delta);
++//    });
+     m_is_sorted = true;
+   }
+ 
+@@ -223,10 +223,10 @@ public:
+     }
+ 
+     // parallel sort only if this is big enough of a vector
+-    if (m_tof_bin.size() < MIN_VEC_LENGTH_PARALLEL_SORT)
++//  if (m_tof_bin.size() < MIN_VEC_LENGTH_PARALLEL_SORT)
+       std::sort(m_tof_bin.begin(), m_tof_bin.end());
+-    else
+-      tbb::parallel_sort(m_tof_bin.begin(), m_tof_bin.end());
++//  else
++//    tbb::parallel_sort(m_tof_bin.begin(), m_tof_bin.end());
+     m_is_sorted = true;
+   }
+ 
+diff --git a/Framework/DataHandling/src/CompressEvents.cpp b/Framework/DataHandling/src/CompressEvents.cpp
+index 51684b8aea6..789f6a66910 100644
+--- a/Framework/DataHandling/src/CompressEvents.cpp
++++ b/Framework/DataHandling/src/CompressEvents.cpp
+@@ -16,7 +16,7 @@
+ #include "MantidKernel/ListValidator.h"
+ #include "MantidKernel/VectorHelper.h"
+ 
+-#include "tbb/parallel_for.h"
++//#include "tbb/parallel_for.h"
+ 
+ #include <numeric>
+ #include <set>
+@@ -134,10 +134,11 @@ void CompressEvents::exec() {
+     outputWS = create<EventWorkspace>(*inputWS, HistogramData::BinEdges(2));
+     // We DONT copy the data though
+     // Loop over the histograms (detector spectra)
+-    tbb::parallel_for(tbb::blocked_range<size_t>(0, noSpectra),
+-                      [compressFat, sortFirst, toleranceTof, startTime, toleranceWallClock, num_edges,
+-                       &histogram_bin_edges, &inputWS, &outputWS, &prog](const tbb::blocked_range<size_t> &range) {
+-                        for (size_t index = range.begin(); index < range.end(); ++index) {
++//  tbb::parallel_for(tbb::blocked_range<size_t>(0, noSpectra),
++//                    [compressFat, sortFirst, toleranceTof, startTime, toleranceWallClock, num_edges,
++//                     &histogram_bin_edges, &inputWS, &outputWS, &prog](const tbb::blocked_range<size_t> &range) {
++//                      for (size_t index = range.begin(); index < range.end(); ++index) {
++                        for (size_t index = 0; index < noSpectra; ++index) {
+                           // The input event list
+                           EventList &input_el = inputWS->getSpectrum(index);
+                           // And on the output side
+@@ -153,12 +154,13 @@ void CompressEvents::exec() {
+                             input_el.compressEvents(toleranceTof, &output_el, histogram_bin_edges);
+                           prog.report("Compressing");
+                         }
+-                      });
++//                    });
+   } else { // inplace
+-    tbb::parallel_for(tbb::blocked_range<size_t>(0, noSpectra),
+-                      [compressFat, sortFirst, toleranceTof, startTime, toleranceWallClock, num_edges,
+-                       &histogram_bin_edges, &outputWS, &prog](const tbb::blocked_range<size_t> &range) {
+-                        for (size_t index = range.begin(); index < range.end(); ++index) {
++//  tbb::parallel_for(tbb::blocked_range<size_t>(0, noSpectra),
++//                    [compressFat, sortFirst, toleranceTof, startTime, toleranceWallClock, num_edges,
++//                     &histogram_bin_edges, &outputWS, &prog](const tbb::blocked_range<size_t> &range) {
++//                      for (size_t index = range.begin(); index < range.end(); ++index) {
++                        for (size_t index = 0; index < noSpectra; ++index) {
+                           // The input (also output) event list
+                           auto &output_el = outputWS->getSpectrum(index);
+                           // The EventList method does the work.
+@@ -170,7 +172,7 @@ void CompressEvents::exec() {
+                             output_el.compressEvents(toleranceTof, &output_el, histogram_bin_edges);
+                           prog.report("Compressing");
+                         }
+-                      });
++//                    });
+   }
+ 
+   // Cast to the matrixOutputWS and save it
+diff --git a/Framework/DataHandling/src/DefaultEventLoader.cpp b/Framework/DataHandling/src/DefaultEventLoader.cpp
+index fde3472383c..af9cf4c2dbf 100644
+--- a/Framework/DataHandling/src/DefaultEventLoader.cpp
++++ b/Framework/DataHandling/src/DefaultEventLoader.cpp
+@@ -8,8 +8,8 @@
+ #include "MantidAPI/Progress.h"
+ #include "MantidDataHandling/LoadBankFromDiskTask.h"
+ #include "MantidDataHandling/LoadEventNexus.h"
+-#include "MantidKernel/ThreadPool.h"
+-#include "MantidKernel/ThreadSchedulerMutexes.h"
++//#include "MantidKernel/ThreadPool.h"
++//#include "MantidKernel/ThreadSchedulerMutexes.h"
+ 
+ using namespace Mantid::Kernel;
+ 
+@@ -21,29 +21,31 @@ void DefaultEventLoader::load(LoadEventNexus *alg, EventWorkspaceCollection &ws,
+                               std::vector<std::size_t> bankNumEvents, const bool oldNeXusFileNames, const bool precount,
+                               const int chunk, const int totalChunks) {
+   DefaultEventLoader loader(alg, ws, haveWeights, event_id_is_spec, bankNames.size(), precount, chunk, totalChunks);
+-
++/*
+   auto bankRange = loader.setupChunking(bankNames, bankNumEvents);
+ 
+   // Make the thread pool
+   auto scheduler = new ThreadSchedulerMutexes;
+   ThreadPool pool(scheduler);
+   auto diskIOMutex = std::make_shared<std::mutex>();
+-
++*/
+   // set up progress bar for the rest of the (multi-threaded) process
+   size_t numProg = bankNames.size() * (1 + 3); // 1 = disktask, 3 = proc task
+-  if (loader.splitProcessing)
+-    numProg += bankNames.size() * 3; // 3 = second proc task
++//if (loader.splitProcessing)
++//  numProg += bankNames.size() * 3; // 3 = second proc task
+   auto prog = std::make_unique<API::Progress>(loader.alg, 0.3, 1.0, numProg);
+ 
+-  for (size_t i = bankRange.first; i < bankRange.second; i++) {
++//for (size_t i = bankRange.first; i < bankRange.second; i++) {
++  for (size_t i = 0; i < bankNames.size(); i++) {
+     if (bankNumEvents[i] > 0)
+-      pool.schedule(std::make_shared<LoadBankFromDiskTask>(loader, bankNames[i], classType, bankNumEvents[i],
+-                                                           oldNeXusFileNames, prog.get(), diskIOMutex, *scheduler,
+-                                                           periodLog));
++//    pool.schedule(std::make_shared<LoadBankFromDiskTask>(loader, bankNames[i], classType, bankNumEvents[i],
++//                                                         oldNeXusFileNames, prog.get(), diskIOMutex, *scheduler,
++//                                                         periodLog));
++      LoadBankFromDiskTask(loader, bankNames[i], classType, bankNumEvents[i], oldNeXusFileNames, prog.get(), periodLog).run();
+   }
+   // Start and end all threads
+-  pool.joinAll();
+-  diskIOMutex.reset();
++//pool.joinAll();
++//diskIOMutex.reset();
+ }
+ 
+ DefaultEventLoader::DefaultEventLoader(LoadEventNexus *alg, EventWorkspaceCollection &ws, bool haveWeights,
+@@ -82,9 +84,9 @@ DefaultEventLoader::DefaultEventLoader(LoadEventNexus *alg, EventWorkspaceCollec
+ 
+   // split banks up if the number of cores is more than twice the number of
+   // banks
+-  splitProcessing = bool(numBanks * 2 < ThreadPool::getNumPhysicalCores());
++  splitProcessing = false;//bool(numBanks * 2 < ThreadPool::getNumPhysicalCores());
+ }
+-
++/*
+ std::pair<size_t, size_t> DefaultEventLoader::setupChunking(std::vector<std::string> &bankNames,
+                                                             std::vector<std::size_t> &bankNumEvents) {
+   size_t bank0 = 0;
+@@ -147,5 +149,5 @@ std::pair<size_t, size_t> DefaultEventLoader::setupChunking(std::vector<std::str
+   }
+   return {bank0, bankn};
+ }
+-
++*/
+ } // namespace Mantid::DataHandling
+diff --git a/Framework/DataHandling/src/LoadBankFromDiskTask.cpp b/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
+index 134892bc2be..3922080e316 100644
+--- a/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
++++ b/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
+@@ -41,12 +41,12 @@ namespace Mantid::DataHandling {
+  */
+ LoadBankFromDiskTask::LoadBankFromDiskTask(DefaultEventLoader &loader, std::string entry_name, std::string entry_type,
+                                            const std::size_t numEvents, const bool oldNeXusFileNames,
+-                                           API::Progress *prog, std::shared_ptr<std::mutex> ioMutex,
+-                                           Kernel::ThreadScheduler &scheduler, std::vector<int> framePeriodNumbers)
++                                           API::Progress *prog, /*std::shared_ptr<std::mutex> ioMutex,
++                                           Kernel::ThreadScheduler &scheduler,*/ std::vector<int> framePeriodNumbers)
+     : m_loader(loader), entry_name(std::move(entry_name)), entry_type(std::move(entry_type)), prog(prog),
+-      scheduler(scheduler), m_loadError(false), m_have_weight(false),
++    /*scheduler(scheduler),*/ m_loadError(false), m_have_weight(false),
+       m_framePeriodNumbers(std::move(framePeriodNumbers)) {
+-  setMutex(ioMutex);
++//setMutex(ioMutex);
+   m_cost = static_cast<double>(numEvents);
+ 
+   // some field names changed over time
+@@ -514,27 +514,31 @@ void LoadBankFromDiskTask::run() {
+                                                             *histogram_bin_edges);
+ 
+     // create the tasks
+-    std::shared_ptr<Task> newTask1 = std::make_shared<ProcessBankCompressed>(
++//  std::shared_ptr<Task> newTask1 = std::make_shared<ProcessBankCompressed>(
++    ProcessBankCompressed(
+         m_loader, entry_name, prog, event_id_shrd, event_time_of_flight_shrd, startAt, event_index_shrd,
+-        thisBankPulseTimes, m_min_id, mid_id, histogram_bin_edges, m_loader.alg->compressTolerance);
+-    scheduler.push(newTask1);
++        thisBankPulseTimes, m_min_id, mid_id, histogram_bin_edges, m_loader.alg->compressTolerance).run();
++//  scheduler.push(newTask1);
+     if (m_loader.splitProcessing && (mid_id < m_max_id)) {
+-      std::shared_ptr<Task> newTask2 = std::make_shared<ProcessBankCompressed>(
++//    std::shared_ptr<Task> newTask2 = std::make_shared<ProcessBankCompressed>(
++    ProcessBankCompressed(
+           m_loader, entry_name, prog, event_id_shrd, event_time_of_flight_shrd, startAt, event_index_shrd,
+-          thisBankPulseTimes, (mid_id + 1), m_max_id, histogram_bin_edges, m_loader.alg->compressTolerance);
+-      scheduler.push(newTask2);
++          thisBankPulseTimes, (mid_id + 1), m_max_id, histogram_bin_edges, m_loader.alg->compressTolerance).run();
++//    scheduler.push(newTask2);
+     }
+   } else {
+     // create all events using traditional method
+-    std::shared_ptr<Task> newTask1 = std::make_shared<ProcessBankData>(
++//  std::shared_ptr<Task> newTask1 = std::make_shared<ProcessBankData>(
++    ProcessBankData(
+         m_loader, entry_name, prog, event_id_shrd, event_time_of_flight_shrd, numEvents, startAt, event_index_shrd,
+-        thisBankPulseTimes, m_have_weight, event_weight_shrd, m_min_id, mid_id);
+-    scheduler.push(newTask1);
++        thisBankPulseTimes, m_have_weight, event_weight_shrd, m_min_id, mid_id).run();
++//  scheduler.push(newTask1);
+     if (m_loader.splitProcessing && (mid_id < m_max_id)) {
+-      std::shared_ptr<Task> newTask2 = std::make_shared<ProcessBankData>(
++//    std::shared_ptr<Task> newTask2 = std::make_shared<ProcessBankData>(
++    ProcessBankData(
+           m_loader, entry_name, prog, event_id_shrd, event_time_of_flight_shrd, numEvents, startAt, event_index_shrd,
+-          thisBankPulseTimes, m_have_weight, event_weight_shrd, (mid_id + 1), m_max_id);
+-      scheduler.push(newTask2);
++          thisBankPulseTimes, m_have_weight, event_weight_shrd, (mid_id + 1), m_max_id).run();
++//    scheduler.push(newTask2);
+     }
+   }
+ 
+diff --git a/Framework/DataHandling/src/LoadEventNexus.cpp b/Framework/DataHandling/src/LoadEventNexus.cpp
+index d9bb6549a65..35dae8782ec 100644
+--- a/Framework/DataHandling/src/LoadEventNexus.cpp
++++ b/Framework/DataHandling/src/LoadEventNexus.cpp
+@@ -17,7 +17,7 @@
+ #include "MantidDataHandling/EventWorkspaceCollection.h"
+ #include "MantidDataHandling/LoadEventNexusIndexSetup.h"
+ #include "MantidDataHandling/LoadHelper.h"
+-#include "MantidDataHandling/ParallelEventLoader.h"
++//#include "MantidDataHandling/ParallelEventLoader.h"
+ #include "MantidDataObjects/EventWorkspace.h"
+ #include "MantidGeometry/Instrument.h"
+ #include "MantidGeometry/Instrument/Goniometer.h"
+@@ -1189,6 +1189,7 @@ void LoadEventNexus::loadEvents(API::Progress *const prog, const bool monitors)
+ 
+   bool loaded{false};
+   auto loaderType = defineLoaderType(haveWeights, oldNeXusFileNames, classType);
++/*
+   if (loaderType == LoaderType::MULTIPROCESS) {
+     auto ws = m_ws->getSingleHeldWorkspace();
+     m_file->close();
+@@ -1220,6 +1221,7 @@ void LoadEventNexus::loadEvents(API::Progress *const prog, const bool monitors)
+ 
+     safeOpenFile(m_filename);
+   }
++*/
+   if (!loaded) {
+     loaderType = LoaderType::DEFAULT; // to be used later
+     bool precount = getProperty("Precount");
+diff --git a/Framework/DataHandling/src/LoadNexus.cpp b/Framework/DataHandling/src/LoadNexus.cpp
+index 3c0dcfce6c3..e10f7d34734 100644
+--- a/Framework/DataHandling/src/LoadNexus.cpp
++++ b/Framework/DataHandling/src/LoadNexus.cpp
+@@ -93,7 +93,9 @@ void LoadNexus::exec() {
+     throw Exception::FileError("Error no entries found in ", m_filename);
+   }
+   if (definition[0] == muonTD || definition[0] == pulsedTD) {
+-    runLoadMuonNexus();
++    //runLoadMuonNexus();
++    g_log.error("Muons is a currently unsupported type of NeXus file");
++    throw Exception::FileError("Unable to read File:", m_filename);
+   } else if (entryName[0] == "mantid_workspace_1") {
+     runLoadNexusProcessed();
+   } else if (entryName[0] == "raw_data_1") {
+@@ -110,7 +112,7 @@ void LoadNexus::exec() {
+     runLoadTOFRawNexus();
+   }
+ }
+-
++/*
+ void LoadNexus::runLoadMuonNexus() {
+   // The Load algorithm will choose the correct LoadMuonNexus algorithm
+   auto loadMuonNexus = createChildAlgorithm("Load", 0., 1.);
+@@ -151,7 +153,7 @@ void LoadNexus::runLoadMuonNexus() {
+ 
+   setOutputWorkspace(loadMuonNexus);
+ }
+-
++*/
+ void LoadNexus::runLoadNexusProcessed() {
+   auto loadNexusPro = createChildAlgorithm("LoadNexusProcessed", 0., 1.);
+   // Pass through the same input filename
+diff --git a/Framework/DataHandling/src/ProcessBankCompressed.cpp b/Framework/DataHandling/src/ProcessBankCompressed.cpp
+index 68822e195b9..feb3d6f5d1a 100644
+--- a/Framework/DataHandling/src/ProcessBankCompressed.cpp
++++ b/Framework/DataHandling/src/ProcessBankCompressed.cpp
+@@ -12,7 +12,7 @@
+ #include "MantidDataHandling/PulseIndexer.h"
+ #include "MantidKernel/Timer.h"
+ 
+-#include "tbb/parallel_for.h"
++//#include "tbb/parallel_for.h"
+ #include <iostream>
+ 
+ namespace Mantid {
+@@ -167,6 +167,7 @@ void ProcessBankCompressed::createWeightedEvents(const size_t period_index, cons
+   m_spectra_accum[period_index][det_index].reset();
+ }
+ 
++/*
+ namespace { // anonymous
+ // private class to allow TBB do a more controlled spreading out of event creation
+ // since each detid/spectrum/EventList is already independent, these can be done at once
+@@ -204,6 +205,7 @@ private:
+ };
+ 
+ } // namespace
++*/
+ 
+ void ProcessBankCompressed::addToEventLists() {
+   Kernel::Timer timer;
+@@ -212,11 +214,26 @@ void ProcessBankCompressed::addToEventLists() {
+   // loop over periods
+   for (size_t period_index = 0; period_index < num_periods; ++period_index) {
+     // create the events and add them to the EventLists
+-    EventCreationTask create_task(&(m_spectra_accum[period_index]), &m_loader.weightedNoTimeEventVectors[period_index],
++/*  EventCreationTask create_task(&(m_spectra_accum[period_index]), &m_loader.weightedNoTimeEventVectors[period_index],
+                                   m_detid_min, &m_sorting);
+     // grainsize selected to balance overhead of creating threads with how much work is done in a thread
+     const size_t grainsize = std::min<size_t>(20, num_dets / 20);
+-    tbb::parallel_for(tbb::blocked_range<size_t>(0, num_dets, grainsize), create_task);
++    tbb::parallel_for(tbb::blocked_range<size_t>(0, num_dets, grainsize), create_task); */
++    for (size_t index = 0; index < num_dets; ++index) {
++      auto &accumulator = m_spectra_accum[period_index].operator[](index);
++      if (accumulator->totalWeight() > 0.) {
++        auto *raw_events = m_loader.weightedNoTimeEventVectors[period_index].operator[](index + m_detid_min);
++        // create the events on the correct event list
++        m_spectra_accum[period_index].operator[](index)->createWeightedEvents(raw_events);
++        // drop extra space if the capacity is more than 10% of what is needed
++        if (static_cast<double>(raw_events->capacity()) > 1.1 * static_cast<double>(raw_events->size()))
++          raw_events->shrink_to_fit();
++      }
++      // get the sorting type back
++      m_sorting.operator[](index) = m_spectra_accum[period_index].operator[](index)->getSortType();
++      // let go of the unique_ptr to free up memory
++      m_spectra_accum[period_index].operator[](index).reset();
++    }
+   }
+ 
+ #ifndef _WIN32

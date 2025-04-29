@@ -83,7 +83,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/IPeaksWorkspace.cpp
 #   ../mantid/Framework/API/src/IPowderDiffPeakFunction.cpp
 #   ../mantid/Framework/API/src/ISISInstrumentDataCache.cpp
-#   ../mantid/Framework/API/src/ISISRunLogs.cpp
+    ../mantid/Framework/API/src/ISISRunLogs.cpp
     ../mantid/Framework/API/src/ISpectrum.cpp
     ../mantid/Framework/API/src/ITableWorkspace.cpp
     ../mantid/Framework/API/src/ImmutableCompositeFunction.cpp

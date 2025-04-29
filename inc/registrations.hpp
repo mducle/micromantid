@@ -321,6 +321,84 @@ namespace Mantid {
     void register_alg_DiscusMultipleScatteringCorrection();
     void register_alg_GenerateGoniometerIndependentBackground();
   }
+
+  // DataHandling
+  namespace DataHandling {
+    void register_alg_Load();
+    void register_alg_LoadLog();
+    void register_alg_SaveCSV();
+    void register_alg_SavePAR();
+    void register_alg_SavePHX();
+    void register_alg_SaveSPE();
+    void register_alg_SetBeam();
+    void register_alg_LoadMask();
+    void register_alg_LoadSpec();
+    void register_alg_SaveMask();
+    void register_alg_LoadNexus();
+    void register_alg_RenameLog();
+    void register_alg_SaveAscii();
+    void register_alg_SaveNexus();
+    void register_alg_SaveNXSPE();
+    void register_alg_RemoveLogs();
+    void register_alg_SaveAscii2();
+    void register_alg_LoadCalFile();
+    void register_alg_LoadRawBin0();
+    void register_alg_MaskSpectra();
+    void register_alg_NexusTester();
+    void register_alg_RawFileInfo();
+    void register_alg_SaveCalFile();
+    void register_alg_ApplyDiffCal();
+    void register_alg_RotateSource();
+    void register_alg_LoadNexusLogs();
+    void register_alg_MaskDetectors();
+    void register_alg_SaveISISNexus();
+    void register_alg_CompressEvents();
+    void register_alg_GroupDetectors();
+    void register_alg_LoadInstrument();
+    void register_alg_DeleteTableRows();
+    void register_alg_GroupDetectors2();
+    void register_alg_FindDetectorsPar();
+    void register_alg_LoadDetectorInfo();
+    void register_alg_LoadIDFFromNexus();
+    void register_alg_LoadMappingTable();
+    void register_alg_LoadRawSpectrum0();
+    void register_alg_CreateSampleShape();
+    void register_alg_DefineGaugeVolume();
+    void register_alg_DetermineChunking();
+    void register_alg_LoadNexusMonitors();
+    void register_alg_LoadParameterFile();
+    void register_alg_RotateSampleShape();
+    void register_alg_SaveParameterFile();
+    void register_alg_SetSampleMaterial();
+    void register_alg_CheckMantidVersion();
+    void register_alg_LoadNexusMonitors2();
+    void register_alg_SaveNexusProcessed();
+    void register_alg_SortTableWorkspace();
+    void register_alg_FindDetectorsInShape();
+    void register_alg_LoadErrorEventsNexus();
+    void register_alg_LoadPreNexusMonitors();
+    void register_alg_MaskDetectorsInShape();
+    void register_alg_LoadInstrumentFromRaw();
+    void register_alg_SaveDetectorsGrouping();
+    void register_alg_GenerateGroupingPowder();
+    void register_alg_LoadEventAsWorkspace2D();
+    void register_alg_ExtractMonitorWorkspace();
+    void register_alg_GenerateGroupingPowder2();
+    void register_alg_LoadInstrumentFromNexus();
+    void register_alg_MoveInstrumentComponent();
+    void register_alg_LoadSampleDetailsFromRaw();
+    void register_alg_ModifyDetectorDotDatFile();
+    void register_alg_ScaleInstrumentComponent();
+    void register_alg_UpdateInstrumentFromFile();
+    void register_alg_CreateSimulationWorkspace();
+    void register_alg_LoadDetectorsGroupingFile();
+    void register_alg_RotateInstrumentComponent();
+    void register_alg_CreateChunkingFromInstrument();
+    void register_alg_CreatePolarizationEfficiencies();
+    void register_alg_ExtractPolarizationEfficiencies();
+    void register_alg_JoinISISPolarizationEfficiencies();
+    void register_alg_LoadISISPolarizationEfficiencies();
+  }
 }
 
 #endif // EMSCRIPTEN
