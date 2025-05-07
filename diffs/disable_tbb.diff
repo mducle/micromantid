@@ -681,3 +681,35 @@ index 68822e195b9..feb3d6f5d1a 100644
    }
  
  #ifndef _WIN32
+diff --git a/Framework/MDAlgorithms/inc/MantidMDAlgorithms/MDEventTreeBuilder.h b/Framework/MDAlgorithms/inc/MantidMDAlgorithms/MDEventTreeBuilder.h
+index e8480e8f868..797377496fe 100644
+--- a/Framework/MDAlgorithms/inc/MantidMDAlgorithms/MDEventTreeBuilder.h
++++ b/Framework/MDAlgorithms/inc/MantidMDAlgorithms/MDEventTreeBuilder.h
+@@ -8,8 +8,8 @@
+ 
+ #include <algorithm>
+ #include <queue>
+-#include <tbb/parallel_sort.h>
+-#include <tbb/task_arena.h>
++//#include <tbb/parallel_sort.h>
++//#include <tbb/task_arena.h>
+ #include <thread>
+ 
+ namespace Mantid {
+@@ -168,12 +168,13 @@ MDEventTreeBuilder<ND, MDEventType, EventIterator>::convertToIndex(std::vector<M
+ template <size_t ND, template <size_t> class MDEventType, typename EventIterator>
+ void MDEventTreeBuilder<ND, MDEventType, EventIterator>::sortEvents(std::vector<MDEventType<ND>> &mdEvents) {
+ 
+-  tbb::task_arena limited_arena(m_numWorkers);
++/*tbb::task_arena limited_arena(m_numWorkers);
+   limited_arena.execute([&]() {
+-    tbb::parallel_sort(mdEvents.begin(), mdEvents.end(), [](const MDEventType<ND> &a, const MDEventType<ND> &b) {
++    tbb::parallel_sort(mdEvents.begin(), mdEvents.end(), [](const MDEventType<ND> &a, const MDEventType<ND> &b) {*/
++    std::sort(mdEvents.begin(), mdEvents.end(), [](const MDEventType<ND> &a, const MDEventType<ND> &b) {
+       return IndexCoordinateSwitcher::getIndex(a) < IndexCoordinateSwitcher::getIndex(b);
+     });
+-  });
++//});*/
+ }
+ 
+ template <size_t ND, template <size_t> class MDEventType, typename EventIterator>

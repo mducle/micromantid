@@ -1,10 +1,10 @@
 set(DATAOBJ_SRC_FILES
-    #../mantid/Framework/DataObjects/src/AffineMatrixParameter.cpp
+    ../mantid/Framework/DataObjects/src/AffineMatrixParameter.cpp
     #../mantid/Framework/DataObjects/src/AffineMatrixParameterParser.cpp
-    #../mantid/Framework/DataObjects/src/BoxControllerNeXusIO.cpp
-    #../mantid/Framework/DataObjects/src/CoordTransformAffine.cpp
+    ../mantid/Framework/DataObjects/src/BoxControllerNeXusIO.cpp
+    ../mantid/Framework/DataObjects/src/CoordTransformAffine.cpp
     #../mantid/Framework/DataObjects/src/CoordTransformAffineParser.cpp
-    #../mantid/Framework/DataObjects/src/CoordTransformAligned.cpp
+    ../mantid/Framework/DataObjects/src/CoordTransformAligned.cpp
     ../mantid/Framework/DataObjects/src/CoordTransformDistance.cpp
     #../mantid/Framework/DataObjects/src/CoordTransformDistanceParser.cpp
     ../mantid/Framework/DataObjects/src/EventList.cpp

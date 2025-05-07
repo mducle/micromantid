@@ -9,7 +9,7 @@ set(GEOMETRY_SRC_FILES
 #   ../mantid/Framework/Geometry/src/Crystal/ConventionalCell.cpp
     ../mantid/Framework/Geometry/src/Crystal/CrystalStructure.cpp
     ../mantid/Framework/Geometry/src/Crystal/CyclicGroup.cpp
-#   ../mantid/Framework/Geometry/src/Crystal/EdgePixel.cpp
+    ../mantid/Framework/Geometry/src/Crystal/EdgePixel.cpp
     ../mantid/Framework/Geometry/src/Crystal/Group.cpp
     ../mantid/Framework/Geometry/src/Crystal/GroupTransformation.cpp
     ../mantid/Framework/Geometry/src/Crystal/HKLFilter.cpp
@@ -73,21 +73,21 @@ set(GEOMETRY_SRC_FILES
     ../mantid/Framework/Geometry/src/Instrument/XMLInstrumentParameter.cpp
 #   ../mantid/Framework/Geometry/src/MDGeometry/CompositeImplicitFunction.cpp
     ../mantid/Framework/Geometry/src/MDGeometry/GeneralFrame.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/HKL.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/IMDDimension.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/IMDDimensionFactory.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/MDBoxImplicitFunction.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/MDFrameFactory.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/HKL.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/IMDDimension.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/IMDDimensionFactory.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/MDBoxImplicitFunction.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/MDFrameFactory.cpp
     ../mantid/Framework/Geometry/src/MDGeometry/MDGeometryXMLBuilder.cpp
 #   ../mantid/Framework/Geometry/src/MDGeometry/MDGeometryXMLParser.cpp
     ../mantid/Framework/Geometry/src/MDGeometry/MDHistoDimension.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/MDHistoDimensionBuilder.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/MDImplicitFunction.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/MDHistoDimensionBuilder.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/MDImplicitFunction.cpp
     ../mantid/Framework/Geometry/src/MDGeometry/MDPlane.cpp
 #   ../mantid/Framework/Geometry/src/MDGeometry/MDPlaneImplicitFunction.cpp
 #   ../mantid/Framework/Geometry/src/MDGeometry/NullImplicitFunction.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/QLab.cpp
-#   ../mantid/Framework/Geometry/src/MDGeometry/QSample.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/QLab.cpp
+    ../mantid/Framework/Geometry/src/MDGeometry/QSample.cpp
     ../mantid/Framework/Geometry/src/MDGeometry/UnknownFrame.cpp
 #   ../mantid/Framework/Geometry/src/Math/Acomp.cpp
 #   ../mantid/Framework/Geometry/src/Math/Algebra.cpp

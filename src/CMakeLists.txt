@@ -1,5 +1,6 @@
 include(api.cmake)
 include(algorithms.cmake)
+include(md_algos.cmake)
 include(beamline.cmake)
 include(dataobjects.cmake)
 include(datahandling.cmake)
@@ -36,5 +37,6 @@ set(MICROMANTID_CXX_LIBRARIES
   Kernel
   NexusCpp
   MantidNexus
+  MDAlgorithms
   Types
 CACHE INTERNAL "")

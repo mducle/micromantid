@@ -399,6 +399,66 @@ namespace Mantid {
     void register_alg_JoinISISPolarizationEfficiencies();
     void register_alg_LoadISISPolarizationEfficiencies();
   }
+
+  // MD
+  namespace MDAlgorithms {
+    void register_alg_OrMD();
+    void register_alg_AndMD();
+    void register_alg_BinMD();
+    void register_alg_CutMD();
+    void register_alg_NotMD();
+    void register_alg_XorMD();
+    void register_alg_MaskMD();
+    void register_alg_MDNorm();
+    void register_alg_PlusMD();
+    void register_alg_SaveMD();
+    void register_alg_MergeMD();
+    void register_alg_MinusMD();
+    void register_alg_PowerMD();
+    void register_alg_SaveMD2();
+    void register_alg_SliceMD();
+    void register_alg_CreateMD();
+    void register_alg_DivideMD();
+    void register_alg_SmoothMD();
+    void register_alg_CompactMD();
+    void register_alg_EqualToMD();
+    void register_alg_MDNormSCD();
+    void register_alg_LessThanMD();
+    void register_alg_MultiplyMD();
+    void register_alg_SetMDFrame();
+    void register_alg_ConvertToMD();
+    void register_alg_FindPeaksMD();
+    void register_alg_LogarithmMD();
+    void register_alg_ReplicateMD();
+    void register_alg_TransformMD();
+    void register_alg_TransposeMD();
+    void register_alg_AccumulateMD();
+    void register_alg_MergeMDFiles();
+    void register_alg_ExponentialMD();
+    void register_alg_GreaterThanMD();
+    void register_alg_MDNormDirectSC();
+    void register_alg_SetMDUsingMask();
+    void register_alg_WeightedMeanMD();
+    void register_alg_FakeMDEventData();
+    void register_alg_CloneMDWorkspace();
+    void register_alg_QueryMDWorkspace();
+    void register_alg_ChangeQConvention();
+    void register_alg_CreateMDWorkspace();
+    void register_alg_EvaluateMDFunction();
+    void register_alg_CompareMDWorkspaces();
+    void register_alg_CalculateCoverageDGS();
+    void register_alg_ApplyDetailedBalanceMD();
+    void register_alg_ConvertToMDMinMaxLocal();
+    void register_alg_CreateMDHistoWorkspace();
+    void register_alg_ImportMDEventWorkspace();
+    void register_alg_ImportMDHistoWorkspace();
+    void register_alg_ConvertToMDMinMaxGlobal();
+    void register_alg_PreprocessDetectorsToMD();
+    void register_alg_MagneticFormFactorCorrectionMD();
+    void register_alg_RecalculateTrajectoriesExtents();
+    void register_alg_ConvertMDHistoToMatrixWorkspace();
+    void register_alg_DgsScatteredTransmissionCorrectionMD();
+  }
 }
 
 #endif // EMSCRIPTEN

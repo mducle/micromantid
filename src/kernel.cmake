@@ -7,7 +7,7 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/Atom.cpp
     ../mantid/Framework/Kernel/src/AttenuationProfile.cpp
 #   ../mantid/Framework/Kernel/src/BinFinder.cpp
-#   ../mantid/Framework/Kernel/src/BinaryStreamReader.cpp
+    ../mantid/Framework/Kernel/src/BinaryStreamReader.cpp
 #   ../mantid/Framework/Kernel/src/BinaryStreamWriter.cpp
     ../mantid/Framework/Kernel/src/CPUTimer.cpp
     ../mantid/Framework/Kernel/src/CatalogInfo.cpp
@@ -52,7 +52,7 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/LogFilter.cpp
     ../mantid/Framework/Kernel/src/LogParser.cpp
     ../mantid/Framework/Kernel/src/Logger.cpp
-#   ../mantid/Framework/Kernel/src/MDAxisValidator.cpp
+    ../mantid/Framework/Kernel/src/MDAxisValidator.cpp
     ../mantid/Framework/Kernel/src/MDUnit.cpp
     ../mantid/Framework/Kernel/src/MDUnitFactory.cpp
     ../mantid/Framework/Kernel/src/MagneticIon.cpp
