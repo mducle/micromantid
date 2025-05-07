@@ -4,7 +4,7 @@ set -e
 
 export SYSROOT=`pwd`/sysroot
 
-$MAMBA_EXE create -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build gtest
+$MAMBA_EXE create -y -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build gtest rsync
 eval "$($MAMBA_EXE shell activate ems --shell=bash)"
 mkdir build_env && cd build_env
 wd=$(pwd)
@@ -29,7 +29,7 @@ tar zxf boost-1.84.0.tar.gz && cd boost-1.84.0 && \
 # Without this, boost outputs WASM modules not static library archives as an output.
 # I don't understand why... the jam file used by boost is quite hard to understand.
 printf "using clang : emscripten : emcc : <archiver>emar <ranlib>emranlib <linker>emlink ;" | tee -a ./project-config.jam
-./b2 variant=release toolset=clang-emscripten link=static threading=single \
+./b2 variant=release toolset=clang-emscripten threading=single \
   --with-date_time --with-filesystem --with-python --with-headers --with-serialization \
   --with-system --with-regex --with-chrono --with-random --with-program_options --disable-icu \
   cxxflags="$SIDE_MODULE_CXXFLAGS -fexceptions -DBOOST_SP_DISABLE_THREADS=1" \
