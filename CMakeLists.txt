@@ -64,10 +64,6 @@ if (EMSCRIPTEN)
     set(GSL_LIBS
         $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgsl.a
         $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgslcblas.a)
-    file(GLOB LIBBOOSTPYTHON $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libboost_python*.so)
-    if (LIBBOOSTPYTHON STREQUAL "")
-        message(FATAL_ERROR "libboost_python.so not found - please build and install Boost::Python")
-    endif()
 else()
     set(POCOLIBS Poco::Foundation Poco::XML Poco::Util)
     set(JSON_LIBS jsoncpp)
@@ -92,15 +88,11 @@ target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC
 target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC
     ${MICROMANTID_CXX_LIBRARIES}
     Boost::python
-    ${POCOLIBS}
-    ${HDF5_LIBRARIES}
-    ${JSON_LIBS}
-    ${MUPARSER_LIBS}
-    ${GSL_LIBS}
+    mantidcpp
 )
 
 # Destination name must match name of project in pyproject.toml
-install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PACKAGE_NAME})
+install(TARGETS ${MICROMANTID_PYTHON_MODULE} mantidcpp DESTINATION ${MICROMANTID_PACKAGE_NAME})
 
 # Copies Python source files to make wheel
 install(FILES 
@@ -108,5 +100,4 @@ install(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/simpleapi.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/funcinspect.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_workspaceops.py
-#   ${LIBBOOSTPYTHON}
     DESTINATION ${MICROMANTID_PACKAGE_NAME})

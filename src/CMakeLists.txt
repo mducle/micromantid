@@ -19,6 +19,8 @@ include(pythongeometry.cmake)
 include(pythonapi.cmake)
 include(pythondataobjects.cmake)
 
+include(mantidcpp.cmake)
+
 set(MICROMANTID_CXX_LIBRARIES
   PythonInterfaceCore
   PythonKernelModule
@@ -27,16 +29,16 @@ set(MICROMANTID_CXX_LIBRARIES
   PythonDataObjectsModule
   MantidAPI
   Algorithms
-  Beamline
+# Beamline
   DataObjects
   DataHandling
   Geometry
   HistogramData
   Indexing
-  Json
+# Json
   Kernel
-  NexusCpp
+# NexusCpp
   MantidNexus
   MDAlgorithms
-  Types
+# Types
 CACHE INTERNAL "")
