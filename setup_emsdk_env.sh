@@ -48,12 +48,36 @@ cd $wd
 rsync -av ${SYSROOT} ${EMSDK}/upstream/emscripten/cache
 
 git clone https://github.com/pocoproject/poco
-cd poco && git checkout poco-1.14.0-release && mkdir bld && cd bld && \
+cd poco && git checkout poco-1.14.0-release 
+cat <<EOF > overrideprops.cmake
+set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)
+set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "-s WASM_BIGINT -s SIDE_MODULE=1")
+set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "-s WASM_BIGINT -s SIDE_MODULE=1")
+set(CMAKE_STRIP FALSE)
+EOF
+cat <<EOF > foundationcmake.diff
+diff --git a/Foundation/CMakeLists.txt b/Foundation/CMakeLists.txt
+index 5898d22f5..e985cc39a 100644
+--- a/Foundation/CMakeLists.txt
++++ b/Foundation/CMakeLists.txt
+@@ -159,7 +159,7 @@ else()
+                target_link_libraries(Foundation PUBLIC ${CMAKE_DL_LIBS} rt Threads::Threads)
+            else()
+                target_compile_definitions(Foundation PUBLIC _XOPEN_SOURCE=500 POCO_HAVE_FD_EPOLL)
+-               target_link_libraries(Foundation PUBLIC pthread atomic ${CMAKE_DL_LIBS} rt)
++               target_link_libraries(Foundation PUBLIC pthread ${CMAKE_DL_LIBS} rt)
+            endif()
+        endif(APPLE)
+    endif(UNIX AND NOT ANDROID)
+EOF
+patch -p1 < foundationcmake.diff
+mkdir bld && cd bld && \
   emcmake cmake -DENABLE_ACTIVERECORD_COMPILER=OFF \
                 -DENABLE_PAGECOMPILER=OFF \
                 -DENABLE_PAGECOMPILER_FILE2PAGE=off \
                 -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-                -DBUILD_SHARED_LIBS=OFF \
+                -DBUILD_SHARED_LIBS=ON \
+                -DCMAKE_PROJECT_INCLUDE=overrideprops.cmake \
                 -DCMAKE_INSTALL_PREFIX=${SYSROOT} .. && \
   emmake make -j 8 install
 cd $wd
