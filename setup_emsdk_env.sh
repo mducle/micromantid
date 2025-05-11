@@ -61,14 +61,14 @@ index 5898d22f5..e985cc39a 100644
 --- a/Foundation/CMakeLists.txt
 +++ b/Foundation/CMakeLists.txt
 @@ -159,7 +159,7 @@ else()
-                target_link_libraries(Foundation PUBLIC ${CMAKE_DL_LIBS} rt Threads::Threads)
-            else()
-                target_compile_definitions(Foundation PUBLIC _XOPEN_SOURCE=500 POCO_HAVE_FD_EPOLL)
--               target_link_libraries(Foundation PUBLIC pthread atomic ${CMAKE_DL_LIBS} rt)
-+               target_link_libraries(Foundation PUBLIC pthread ${CMAKE_DL_LIBS} rt)
-            endif()
-        endif(APPLE)
-    endif(UNIX AND NOT ANDROID)
+ 				target_link_libraries(Foundation PUBLIC \${CMAKE_DL_LIBS} rt Threads::Threads)
+ 			else()
+ 				target_compile_definitions(Foundation PUBLIC _XOPEN_SOURCE=500 POCO_HAVE_FD_EPOLL)
+-				target_link_libraries(Foundation PUBLIC pthread atomic \${CMAKE_DL_LIBS} rt)
++				target_link_libraries(Foundation PUBLIC pthread \${CMAKE_DL_LIBS} rt)
+ 			endif()
+ 		endif(APPLE)
+ 	endif(UNIX AND NOT ANDROID)
 EOF
 patch -p1 < foundationcmake.diff
 mkdir bld && cd bld && \

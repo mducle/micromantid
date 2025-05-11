@@ -53,13 +53,6 @@ jobs:
           export PLATFORM_TRIPLET=wasm32-emscripten
           source build_env/emsdk/emsdk_env.sh
           pyodide build
-          # Copy the Boost::Python shared library file into the wheel manually
-          cd dist
-          wheelname=$(find -name micromantid*whl)
-          unzip $wheelname
-          sofile=$(find build_env/emsdk/upstream/emscripten/cache/sysroot/ -name libboost_python*so*)
-          cp $sofile micromantid/
-          zip -r $wheelname micromantid/
       - name: Test
         run: |
           eval "$($MAMBA_EXE shell activate ems)"
