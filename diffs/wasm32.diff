@@ -93,3 +93,16 @@ index f545d13116f..e6ed9df1dd8 100644
  #endif
  
    g_log.debug() << "Memory: " << sys_avail << " (free), " << sys_total << " (total).\n";
+diff --git a/Framework/PythonInterface/mantid/api/src/Exports/AlgoTimeRegister.cpp b/Framework/PythonInterface/mantid/api/src/Exports/AlgoTimeRegister.cpp
+index b361b85cdb3..520dec09b74 100644
+--- a/Framework/PythonInterface/mantid/api/src/Exports/AlgoTimeRegister.cpp
++++ b/Framework/PythonInterface/mantid/api/src/Exports/AlgoTimeRegister.cpp
+@@ -16,7 +16,7 @@ using namespace Mantid::Instrumentation;
+ using namespace boost::python;
+ using Mantid::Kernel::time_point_ns;
+ 
+-void addTimeWrapper(const std::string &name, size_t begin, size_t end) {
++void addTimeWrapper(const std::string &name, uint64_t begin, uint64_t end) {
+ 
+   std::chrono::nanoseconds begin_ns(begin);
+   std::chrono::nanoseconds end_ns(end);
