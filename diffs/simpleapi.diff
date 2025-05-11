@@ -106,3 +106,16 @@ index 919408d4a81..bb5272e04cc 100644
 
      if lhs_vars[0] > 0:
          # Assume the first and clear the temporaries as this
+diff --git a/Framework/PythonInterface/mantid/api/_adsimports.py b/Framework/PythonInterface/mantid/api/_adsimports.py
+index 7d9b61ee09e..fcf99d5c080 100644
+--- a/Framework/PythonInterface/mantid/api/_adsimports.py
++++ b/Framework/PythonInterface/mantid/api/_adsimports.py
+@@ -15,7 +15,7 @@ The function is also attached to the AnalysisDataService and named importAll.
+
+ """
+
+-from mantid.api import AnalysisDataServiceImpl
++from .api import AnalysisDataServiceImpl
+ import inspect as _inspect
+ import keyword as _keyword
+ import re as _re
