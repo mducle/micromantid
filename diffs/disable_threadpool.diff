@@ -1,0 +1,386 @@
+diff --git a/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.tcc b/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.tcc
+index 192619771ca..407479b0f3d 100644
+--- a/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.tcc
++++ b/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.tcc
+@@ -22,7 +22,7 @@
+ #include "MantidKernel/Memory.h"
+ #include "MantidKernel/ProgressBase.h"
+ #include "MantidKernel/Task.h"
+-#include "MantidKernel/ThreadPool.h"
++//#include "MantidKernel/ThreadPool.h"
+ #include "MantidKernel/ThreadScheduler.h"
+ #include "MantidKernel/Timer.h"
+ #include "MantidKernel/Utils.h"
+diff --git a/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.tcc b/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.tcc
+index 7099d63e8c0..791e1f6c162 100644
+--- a/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.tcc
++++ b/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.tcc
+@@ -11,7 +11,7 @@
+ #include "MantidKernel/FunctionTask.h"
+ #include "MantidKernel/Strings.h"
+ #include "MantidKernel/Task.h"
+-#include "MantidKernel/ThreadPool.h"
++//#include "MantidKernel/ThreadPool.h"
+ #include "MantidKernel/ThreadScheduler.h"
+ #include "MantidKernel/ThreadSchedulerMutexes.h"
+ #include "MantidKernel/Timer.h"
+diff --git a/Framework/MDAlgorithms/src/ConvToMDEventsWS.cpp b/Framework/MDAlgorithms/src/ConvToMDEventsWS.cpp
+index 883c8b4e85f..0d81985f0d9 100644
+--- a/Framework/MDAlgorithms/src/ConvToMDEventsWS.cpp
++++ b/Framework/MDAlgorithms/src/ConvToMDEventsWS.cpp
+@@ -135,14 +135,14 @@ void ConvToMDEventsWS::appendEventsFromInputWS(API::Progress *pProgress, const A
+   size_t lastNumBoxes = bc->getTotalNumMDBoxes();
+   size_t nEventsInWS = m_OutWSWrapper->pWorkspace()->getNPoints();
+   //--->>> Thread control stuff
+-  Kernel::ThreadSchedulerFIFO *ts(nullptr);
++//Kernel::ThreadSchedulerFIFO *ts(nullptr);
+ 
+-  int nThreads(m_NumThreads);
++/*int nThreads(m_NumThreads);
+   if (nThreads < 0)
+     nThreads = 0; // negative m_NumThreads correspond to all cores used, 0 no
+-  // threads and positive number -- nThreads requested;
++*/// threads and positive number -- nThreads requested;
+   bool runMultithreaded = false;
+-  if (m_NumThreads != 0) {
++/*if (m_NumThreads != 0) {
+     runMultithreaded = true;
+     // Create the thread pool that will run all of these. It will be deleted by
+     // the threadpool
+@@ -152,7 +152,7 @@ void ConvToMDEventsWS::appendEventsFromInputWS(API::Progress *pProgress, const A
+     pProgress->resetNumSteps(m_NSpectra, 0, 1);
+   }
+   Kernel::ThreadPool tp(ts, nThreads, new API::Progress(*pProgress));
+-  //<<<--  Thread control stuff
++*///<<<--  Thread control stuff
+ 
+   size_t eventsAdded = 0;
+   for (size_t wi = 0; wi < m_NSpectra; wi++) {
+@@ -162,16 +162,16 @@ void ConvToMDEventsWS::appendEventsFromInputWS(API::Progress *pProgress, const A
+     nEventsInWS += nConverted;
+     // Keep a running total of how many events we've added
+     if (bc->shouldSplitBoxes(nEventsInWS, eventsAdded, lastNumBoxes)) {
+-      if (runMultithreaded) {
++/*    if (runMultithreaded) {
+         // Now do all the splitting tasks
+         m_OutWSWrapper->pWorkspace()->splitAllIfNeeded(ts);
+         if (ts->size() > 0)
+           tp.joinAll();
+-      } else {
++      } else {*/
+         m_OutWSWrapper->pWorkspace()->splitAllIfNeeded(nullptr); // it is done this way as it is possible trying to do
+                                                                  // single
+                                                                  // threaded split more efficiently
+-      }
++//    }
+       // Count the new # of boxes.
+       lastNumBoxes = m_OutWSWrapper->pWorkspace()->getBoxController()->getTotalNumMDBoxes();
+       eventsAdded = 0;
+@@ -179,12 +179,12 @@ void ConvToMDEventsWS::appendEventsFromInputWS(API::Progress *pProgress, const A
+     }
+   }
+   // Do a final splitting of everything
+-  if (runMultithreaded) {
++/*if (runMultithreaded) {
+     m_OutWSWrapper->pWorkspace()->splitAllIfNeeded(ts);
+     tp.joinAll();
+-  } else {
++  } else {*/
+     m_OutWSWrapper->pWorkspace()->splitAllIfNeeded(nullptr);
+-  }
++//}
+ 
+   // Recount totals at the end.
+   m_OutWSWrapper->pWorkspace()->refreshCache();
+diff --git a/Framework/MDAlgorithms/src/ConvToMDHistoWS.cpp b/Framework/MDAlgorithms/src/ConvToMDHistoWS.cpp
+index 4efacc7c589..5a2c0330455 100644
+--- a/Framework/MDAlgorithms/src/ConvToMDHistoWS.cpp
++++ b/Framework/MDAlgorithms/src/ConvToMDHistoWS.cpp
+@@ -172,7 +172,7 @@ void ConvToMDHistoWS::runConversion(API::Progress *pProgress) {
+   if (!m_QConverter->calcGenericVariables(m_Coord, m_NDims))
+     return;
+ 
+-  //--->>> Thread control stuff
++/*//--->>> Thread control stuff
+   Kernel::ThreadSchedulerFIFO *ts(nullptr);
+   int nThreads(m_NumThreads);
+   if (nThreads < 0)
+@@ -189,12 +189,12 @@ void ConvToMDHistoWS::runConversion(API::Progress *pProgress) {
+     pProgress->resetNumSteps(nValidSpectra, 0, 1);
+   }
+   Kernel::ThreadPool tp(ts, nThreads, new API::Progress(*pProgress));
+-  //<<<--  Thread control stuff
++*///<<<--  Thread control stuff
+ 
+-  if (runMultithreaded)
++/*if (runMultithreaded)
+     nThreads = static_cast<int>(tp.getNumPhysicalCores());
+   else
+-    nThreads = 1;
++*/  int nThreads = 1;
+ 
+   // estimate the size of data conversion a single thread should perform
+   // TO DO: this piece of code should be carefully rethinked
+@@ -208,18 +208,18 @@ void ConvToMDHistoWS::runConversion(API::Progress *pProgress) {
+     nEventsInWS += nThreadEv;
+ 
+     if (bc->shouldSplitBoxes(nEventsInWS, nAddedEvents, lastNumBoxes)) {
+-      if (runMultithreaded) {
++/*    if (runMultithreaded) {
+         // Do all the adding tasks
+         tp.joinAll();
+         // Now do all the splitting tasks
+         m_OutWSWrapper->pWorkspace()->splitAllIfNeeded(ts);
+         if (ts->size() > 0)
+           tp.joinAll();
+-      } else {
++      } else {*/
+         m_OutWSWrapper->pWorkspace()->splitAllIfNeeded(nullptr); // it is done this way as it is possible trying to do
+                                                                  // single
+                                                                  // threaded split more efficiently
+-      }
++//    }
+       // Count the new # of boxes.
+       lastNumBoxes = bc->getTotalNumMDBoxes();
+       nAddedEvents = 0;
+@@ -241,13 +241,13 @@ void ConvToMDHistoWS::runConversion(API::Progress *pProgress) {
+     // pProgress->report(i);
+   } // end detectors loop;
+   // Do a final splitting of everything
+-  if (runMultithreaded) {
++/*if (runMultithreaded) {
+     tp.joinAll();
+     m_OutWSWrapper->pWorkspace()->splitAllIfNeeded(ts);
+     tp.joinAll();
+-  } else {
++  } else {*/
+     m_OutWSWrapper->pWorkspace()->splitAllIfNeeded(nullptr);
+-  }
++//}
+   m_OutWSWrapper->pWorkspace()->refreshCache();
+   // m_OutWSWrapper->refreshCentroid();
+   pProgress->report();
+diff --git a/Framework/MDAlgorithms/src/FitMD.cpp b/Framework/MDAlgorithms/src/FitMD.cpp
+index d5d15c2293d..aee0873af81 100644
+--- a/Framework/MDAlgorithms/src/FitMD.cpp
++++ b/Framework/MDAlgorithms/src/FitMD.cpp
+@@ -221,10 +221,10 @@ std::shared_ptr<API::Workspace> FitMD::createEventOutputWorkspace(const std::str
+   } while (inputIter->next());
+ 
+   // This splits up all the boxes according to split thresholds and sizes.
+-  auto threadScheduler = new Kernel::ThreadSchedulerFIFO();
++/*auto threadScheduler = new Kernel::ThreadSchedulerFIFO();
+   Kernel::ThreadPool threadPool(threadScheduler);
+-  outputWS->splitAllIfNeeded(threadScheduler);
+-  threadPool.joinAll();
++*/outputWS->splitAllIfNeeded(nullptr);//threadScheduler);
++//threadPool.joinAll();
+   outputWS->refreshCache();
+ 
+   // Store it
+diff --git a/Framework/MDAlgorithms/src/LoadSQW.cpp b/Framework/MDAlgorithms/src/LoadSQW.cpp
+index 3a0e9d09ec3..4253e42fbff 100644
+--- a/Framework/MDAlgorithms/src/LoadSQW.cpp
++++ b/Framework/MDAlgorithms/src/LoadSQW.cpp
+@@ -22,8 +22,8 @@
+ #include "MantidKernel/Matrix.h"
+ #include "MantidKernel/Memory.h"
+ #include "MantidKernel/PropertyWithValue.h"
+-#include "MantidKernel/ThreadPool.h"
+-#include "MantidKernel/ThreadScheduler.h"
++//#include "MantidKernel/ThreadPool.h"
++//#include "MantidKernel/ThreadScheduler.h"
+ #include <cfloat>
+ 
+ using namespace Mantid::Kernel;
+@@ -293,10 +293,10 @@ void LoadSQW::readEvents(Mantid::DataObjects::MDEventWorkspace<MDEvent<4>, 4> *w
+       g_log.information() << "Splitting boxes after " << eventsAdded << " events added.\n";
+ 
+       // This splits up all the boxes according to split thresholds and sizes.
+-      Kernel::ThreadScheduler *ts = new ThreadSchedulerFIFO();
++/*    Kernel::ThreadScheduler *ts = new ThreadSchedulerFIFO();
+       ThreadPool tp(ts);
+-      ws->splitAllIfNeeded(ts);
+-      tp.joinAll();
++*/    ws->splitAllIfNeeded(nullptr);
++//    tp.joinAll();
+ 
+       // Flush the cache - this will save things out to disk
+       if (dbuf)
+@@ -343,10 +343,10 @@ void LoadSQW::readEvents(Mantid::DataObjects::MDEventWorkspace<MDEvent<4>, 4> *w
+     // Report progress once per block.
+     m_prog->report();
+   }
+-  Kernel::ThreadScheduler *ts = new ThreadSchedulerFIFO();
++/*Kernel::ThreadScheduler *ts = new ThreadSchedulerFIFO();
+   ThreadPool tp(ts);
+-  ws->splitAllIfNeeded(ts);
+-  tp.joinAll();
++*/ws->splitAllIfNeeded(nullptr);
++//tp.joinAll();
+ 
+   // Flush the cache - this will save things out to disk
+   if (dbuf)
+diff --git a/Framework/MDAlgorithms/src/LoadSQW2.cpp b/Framework/MDAlgorithms/src/LoadSQW2.cpp
+index 3750b9eb400..f36262746b6 100644
+--- a/Framework/MDAlgorithms/src/LoadSQW2.cpp
++++ b/Framework/MDAlgorithms/src/LoadSQW2.cpp
+@@ -20,7 +20,7 @@
+ #include "MantidKernel/ListValidator.h"
+ #include "MantidKernel/Matrix.h"
+ #include "MantidKernel/Memory.h"
+-#include "MantidKernel/ThreadScheduler.h"
++//#include "MantidKernel/ThreadScheduler.h"
+ #include "MantidKernel/Timer.h"
+ #include "MantidKernel/V3D.h"
+ #include "MantidKernel/WarningSuppressions.h"
+@@ -636,12 +636,12 @@ void LoadSQW2::readPixelDataIntoWorkspace() {
+  * Split boxes in the output workspace if required
+  */
+ void LoadSQW2::splitAllBoxes() {
+-  using Kernel::ThreadPool;
++/*using Kernel::ThreadPool;
+   using Kernel::ThreadSchedulerFIFO;
+   auto *ts = new ThreadSchedulerFIFO();
+-  ThreadPool tp(ts);
+-  m_outputWS->splitAllIfNeeded(ts);
+-  tp.joinAll();
++  ThreadPool tp(ts);*/
++  m_outputWS->splitAllIfNeeded(nullptr);
++//tp.joinAll();
+ }
+ 
+ /**
+diff --git a/Framework/MDAlgorithms/src/MergeMD.cpp b/Framework/MDAlgorithms/src/MergeMD.cpp
+index 0797cd21c51..2510344abfa 100644
+--- a/Framework/MDAlgorithms/src/MergeMD.cpp
++++ b/Framework/MDAlgorithms/src/MergeMD.cpp
+@@ -241,11 +241,11 @@ template <typename MDE, size_t nd> void MergeMD::doPlus(typename MDEventWorkspac
+ 
+     // Progress * prog2 = new Progress(this, 0.4, 0.9, 100);
+     Progress *prog2 = nullptr;
+-    ThreadScheduler *ts = new ThreadSchedulerFIFO();
++/*  ThreadScheduler *ts = new ThreadSchedulerFIFO();
+     ThreadPool tp(ts, 0, prog2);
+-    ws1->splitAllIfNeeded(ts);
++*/  ws1->splitAllIfNeeded(nullptr);
+     // prog2->resetNumSteps( ts->size(), 0.4, 0.6);
+-    tp.joinAll();
++//  tp.joinAll();
+ 
+     // Set a marker that the file-back-end needs updating if the # of events
+     // changed.
+diff --git a/Framework/MDAlgorithms/src/MergeMDFiles.cpp b/Framework/MDAlgorithms/src/MergeMDFiles.cpp
+index 3b69f423748..03af2d38cb5 100644
+--- a/Framework/MDAlgorithms/src/MergeMDFiles.cpp
++++ b/Framework/MDAlgorithms/src/MergeMDFiles.cpp
+@@ -230,8 +230,8 @@ void MergeMDFiles::doExecByCloning(const Mantid::API::IMDEventWorkspace_sptr &ws
+   // Prepare thread pool
+   CPUTimer overallTime;
+ 
+-  auto ts = new ThreadSchedulerFIFO();
+-  ThreadPool tp(ts);
++/*auto ts = new ThreadSchedulerFIFO();
++  ThreadPool tp(ts);*/
+ 
+   Kernel::DiskBuffer *DiskBuf(nullptr);
+   if (m_fileBasedTargetWS) {
+diff --git a/Framework/MDAlgorithms/src/MinusMD.cpp b/Framework/MDAlgorithms/src/MinusMD.cpp
+index d60c326fdf8..159c43d862f 100644
+--- a/Framework/MDAlgorithms/src/MinusMD.cpp
++++ b/Framework/MDAlgorithms/src/MinusMD.cpp
+@@ -96,11 +96,11 @@ template <typename MDE, size_t nd> void MinusMD::doMinus(typename MDEventWorkspa
+   // This is freed in the destructor of the ThreadPool class,
+   // it should not be a memory leak
+   auto prog2 = new Progress(this, 0.4, 0.9, 100);
+-  ThreadScheduler *ts = new ThreadSchedulerFIFO();
++/*ThreadScheduler *ts = new ThreadSchedulerFIFO();
+   ThreadPool tp(ts, 0, prog2);
+-  ws1->splitAllIfNeeded(ts);
+-  prog2->resetNumSteps(ts->size(), 0.4, 0.6);
+-  tp.joinAll();
++*/ws1->splitAllIfNeeded(nullptr);
++//prog2->resetNumSteps(ts->size(), 0.4, 0.6);
++//tp.joinAll();
+ 
+   this->progress(0.95, "Refreshing cache");
+   ws1->refreshCache();
+diff --git a/Framework/MDAlgorithms/src/PlusMD.cpp b/Framework/MDAlgorithms/src/PlusMD.cpp
+index 1b60d13ede5..4e3c97e0f5f 100644
+--- a/Framework/MDAlgorithms/src/PlusMD.cpp
++++ b/Framework/MDAlgorithms/src/PlusMD.cpp
+@@ -9,8 +9,8 @@
+ #include "MantidDataObjects/MDBoxBase.h"
+ #include "MantidDataObjects/MDBoxIterator.h"
+ #include "MantidDataObjects/MDEventFactory.h"
+-#include "MantidKernel/ThreadPool.h"
+-#include "MantidKernel/ThreadScheduler.h"
++//#include "MantidKernel/ThreadPool.h"
++//#include "MantidKernel/ThreadScheduler.h"
+ 
+ using namespace Mantid::Kernel;
+ using namespace Mantid::DataObjects;
+@@ -61,11 +61,11 @@ template <typename MDE, size_t nd> void PlusMD::doPlus(typename MDEventWorkspace
+   // This is freed in the destructor of the ThreadPool class,
+   // it should not be a memory leak
+   auto prog2 = new Progress(this, 0.4, 0.9, 100);
+-  ThreadScheduler *ts = new ThreadSchedulerFIFO();
++/*ThreadScheduler *ts = new ThreadSchedulerFIFO();
+   ThreadPool tp(ts, 0, prog2);
+-  ws1->splitAllIfNeeded(ts);
+-  prog2->resetNumSteps(ts->size(), 0.4, 0.6);
+-  tp.joinAll();
++*/ws1->splitAllIfNeeded(nullptr);
++//prog2->resetNumSteps(ts->size(), 0.4, 0.6);
++//tp.joinAll();
+ 
+   //// Now we need to save all the data that was not saved before.
+   // if (ws1->isFileBacked())
+diff --git a/Framework/MDAlgorithms/src/SliceMD.cpp b/Framework/MDAlgorithms/src/SliceMD.cpp
+index d3b6a40d259..cd4f77b16ac 100644
+--- a/Framework/MDAlgorithms/src/SliceMD.cpp
++++ b/Framework/MDAlgorithms/src/SliceMD.cpp
+@@ -12,8 +12,8 @@
+ #include "MantidGeometry/MDGeometry/MDImplicitFunction.h"
+ #include "MantidKernel/BoundedValidator.h"
+ #include "MantidKernel/EnabledWhenProperty.h"
+-#include "MantidKernel/ThreadPool.h"
+-#include "MantidKernel/ThreadScheduler.h"
++//#include "MantidKernel/ThreadPool.h"
++//#include "MantidKernel/ThreadScheduler.h"
+ 
+ using namespace Mantid::Kernel;
+ using namespace Mantid::API;
+@@ -219,10 +219,10 @@ void SliceMD::slice(typename MDEventWorkspace<MDE, nd>::sptr ws) {
+       // if (numSinceSplit > 20000000 || (i == int(boxes.size()-1)))
+       {
+         // This splits up all the boxes according to split thresholds and sizes.
+-        Kernel::ThreadScheduler *ts = new ThreadSchedulerFIFO();
++/*      Kernel::ThreadScheduler *ts = new ThreadSchedulerFIFO();
+         ThreadPool tp(ts);
+-        outWS->splitAllIfNeeded(ts);
+-        tp.joinAll();
++*/      outWS->splitAllIfNeeded(nullptr);
++//      tp.joinAll();
+         // Accumulate stats
+         totalAdded += numSinceSplit;
+         numSinceSplit = 0;
+diff --git a/Framework/MDAlgorithms/src/TransformMD.cpp b/Framework/MDAlgorithms/src/TransformMD.cpp
+index a8d2575a718..1aec67c5e9b 100644
+--- a/Framework/MDAlgorithms/src/TransformMD.cpp
++++ b/Framework/MDAlgorithms/src/TransformMD.cpp
+@@ -187,11 +187,11 @@ void TransformMD::exec() {
+     // Call the method for this type of MDEventWorkspace.
+     CALL_MDEVENT_FUNCTION(this->doTransform, outWS);
+     Progress *prog2 = nullptr;
+-    ThreadScheduler *ts = new ThreadSchedulerFIFO();
++/*  ThreadScheduler *ts = new ThreadSchedulerFIFO();
+     ThreadPool tp(ts, 0, prog2);
+-    event->splitAllIfNeeded(ts);
++*/  event->splitAllIfNeeded(nullptr);
+     // prog2->resetNumSteps( ts->size(), 0.4, 0.6);
+-    tp.joinAll();
++//  tp.joinAll();
+     event->refreshCache();
+     // Set the special coordinate system.
+     IMDEventWorkspace_sptr inEvent = std::dynamic_pointer_cast<IMDEventWorkspace>(inWS);

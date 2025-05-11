@@ -4,7 +4,7 @@ set -e
 
 export SYSROOT=`pwd`/sysroot
 
-$MAMBA_EXE create -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build gtest
+$MAMBA_EXE create -y -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build gtest rsync
 eval "$($MAMBA_EXE shell activate ems --shell=bash)"
 mkdir build_env && cd build_env
 wd=$(pwd)
@@ -29,7 +29,7 @@ tar zxf boost-1.84.0.tar.gz && cd boost-1.84.0 && \
 # Without this, boost outputs WASM modules not static library archives as an output.
 # I don't understand why... the jam file used by boost is quite hard to understand.
 printf "using clang : emscripten : emcc : <archiver>emar <ranlib>emranlib <linker>emlink ;" | tee -a ./project-config.jam
-./b2 variant=release toolset=clang-emscripten link=static threading=single \
+./b2 variant=release toolset=clang-emscripten threading=single \
   --with-date_time --with-filesystem --with-python --with-headers --with-serialization \
   --with-system --with-regex --with-chrono --with-random --with-program_options --disable-icu \
   cxxflags="$SIDE_MODULE_CXXFLAGS -fexceptions -DBOOST_SP_DISABLE_THREADS=1" \
@@ -48,12 +48,36 @@ cd $wd
 rsync -av ${SYSROOT} ${EMSDK}/upstream/emscripten/cache
 
 git clone https://github.com/pocoproject/poco
-cd poco && git checkout poco-1.14.0-release && mkdir bld && cd bld && \
+cd poco && git checkout poco-1.14.0-release 
+cat <<EOF > overrideprops.cmake
+set_property(GLOBAL PROPERTY TARGET_SUPPORTS_SHARED_LIBS TRUE)
+set(CMAKE_SHARED_LIBRARY_CREATE_C_FLAGS "-s WASM_BIGINT -s SIDE_MODULE=1")
+set(CMAKE_SHARED_LIBRARY_CREATE_CXX_FLAGS "-s WASM_BIGINT -s SIDE_MODULE=1")
+set(CMAKE_STRIP FALSE)
+EOF
+cat <<EOF > foundationcmake.diff
+diff --git a/Foundation/CMakeLists.txt b/Foundation/CMakeLists.txt
+index 5898d22f5..e985cc39a 100644
+--- a/Foundation/CMakeLists.txt
++++ b/Foundation/CMakeLists.txt
+@@ -159,7 +159,7 @@ else()
+ 				target_link_libraries(Foundation PUBLIC \${CMAKE_DL_LIBS} rt Threads::Threads)
+ 			else()
+ 				target_compile_definitions(Foundation PUBLIC _XOPEN_SOURCE=500 POCO_HAVE_FD_EPOLL)
+-				target_link_libraries(Foundation PUBLIC pthread atomic \${CMAKE_DL_LIBS} rt)
++				target_link_libraries(Foundation PUBLIC pthread \${CMAKE_DL_LIBS} rt)
+ 			endif()
+ 		endif(APPLE)
+ 	endif(UNIX AND NOT ANDROID)
+EOF
+patch -p1 < foundationcmake.diff
+mkdir bld && cd bld && \
   emcmake cmake -DENABLE_ACTIVERECORD_COMPILER=OFF \
                 -DENABLE_PAGECOMPILER=OFF \
                 -DENABLE_PAGECOMPILER_FILE2PAGE=off \
                 -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
-                -DBUILD_SHARED_LIBS=OFF \
+                -DBUILD_SHARED_LIBS=ON \
+                -DCMAKE_PROJECT_INCLUDE=overrideprops.cmake \
                 -DCMAKE_INSTALL_PREFIX=${SYSROOT} .. && \
   emmake make -j 8 install
 cd $wd

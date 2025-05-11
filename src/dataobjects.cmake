@@ -1,10 +1,10 @@
 set(DATAOBJ_SRC_FILES
-    #../mantid/Framework/DataObjects/src/AffineMatrixParameter.cpp
+    ../mantid/Framework/DataObjects/src/AffineMatrixParameter.cpp
     #../mantid/Framework/DataObjects/src/AffineMatrixParameterParser.cpp
-    #../mantid/Framework/DataObjects/src/BoxControllerNeXusIO.cpp
-    #../mantid/Framework/DataObjects/src/CoordTransformAffine.cpp
+    ../mantid/Framework/DataObjects/src/BoxControllerNeXusIO.cpp
+    ../mantid/Framework/DataObjects/src/CoordTransformAffine.cpp
     #../mantid/Framework/DataObjects/src/CoordTransformAffineParser.cpp
-    #../mantid/Framework/DataObjects/src/CoordTransformAligned.cpp
+    ../mantid/Framework/DataObjects/src/CoordTransformAligned.cpp
     ../mantid/Framework/DataObjects/src/CoordTransformDistance.cpp
     #../mantid/Framework/DataObjects/src/CoordTransformDistanceParser.cpp
     ../mantid/Framework/DataObjects/src/EventList.cpp
@@ -31,12 +31,12 @@ set(DATAOBJ_SRC_FILES
     ../mantid/Framework/DataObjects/src/LeanElasticPeak.cpp
     ../mantid/Framework/DataObjects/src/BasePeak.cpp
     ../mantid/Framework/DataObjects/src/PeakColumn.cpp
-    #../mantid/Framework/DataObjects/src/PeakNoShapeFactory.cpp
+    ../mantid/Framework/DataObjects/src/PeakNoShapeFactory.cpp
     ../mantid/Framework/DataObjects/src/PeakShapeBase.cpp
     ../mantid/Framework/DataObjects/src/PeakShapeEllipsoid.cpp
-    #../mantid/Framework/DataObjects/src/PeakShapeEllipsoidFactory.cpp
+    ../mantid/Framework/DataObjects/src/PeakShapeEllipsoidFactory.cpp
     ../mantid/Framework/DataObjects/src/PeakShapeSpherical.cpp
-    #../mantid/Framework/DataObjects/src/PeakShapeSphericalFactory.cpp
+    ../mantid/Framework/DataObjects/src/PeakShapeSphericalFactory.cpp
     ../mantid/Framework/DataObjects/src/PeaksWorkspace.cpp
     ../mantid/Framework/DataObjects/src/LeanElasticPeaksWorkspace.cpp
     ../mantid/Framework/DataObjects/src/PropertyWithValue.cpp
@@ -55,7 +55,7 @@ set(DATAOBJ_SRC_FILES
     ../mantid/Framework/DataObjects/src/WorkspaceProperty.cpp
     ../mantid/Framework/DataObjects/src/WorkspaceSingleValue.cpp
     ../mantid/Framework/DataObjects/src/PeakShapeDetectorBin.cpp
-    #../mantid/Framework/DataObjects/src/PeakShapeDetectorBinFactory.cpp
+    ../mantid/Framework/DataObjects/src/PeakShapeDetectorBinFactory.cpp
 )
 add_library(DataObjects OBJECT ${DATAOBJ_SRC_FILES})
 target_include_directories(DataObjects PUBLIC

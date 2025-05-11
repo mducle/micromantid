@@ -34,7 +34,7 @@ endif()
 if (EMSCRIPTEN)
     message(STATUS "Emscripten detected - setting Pybind to use cross-compiler")
     set(PYBIND11_USE_CROSSCOMPILING TRUE)
-    set(Boost_USE_STATIC_LIBS ON)
+    #set(Boost_USE_STATIC_LIBS ON)
     set(Boost_USE_MULTITHREADED OFF)
 endif()
 
@@ -50,30 +50,30 @@ find_package(muparser)
 
 if (EMSCRIPTEN)
     # We can't use the provided Poco::Foundation label as it uses dynamic linking
-    file(GLOB poco_search ${Poco_DIR}/../../libPocoFoundation.a)
+    file(GLOB poco_search ${Poco_DIR}/../../libPocoFoundation.so.110)
     if (poco_search STREQUAL "")
         message(FATAL_ERROR "libPocoFoundation.a not found - please build and install Poco")
     endif()
     set(POCOLIBS
-        ${Poco_DIR}/../../libPocoFoundation.a
-        ${Poco_DIR}/../../libPocoXML.a
-        ${Poco_DIR}/../../libPocoUtil.a
+        ${Poco_DIR}/../../libPocoFoundation.so.110
+        ${Poco_DIR}/../../libPocoXML.so.110
+        ${Poco_DIR}/../../libPocoUtil.so.110
+        ${Poco_DIR}/../../libPocoJSON.so.110
     )
     set(JSON_LIBS $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libjsoncpp.a)
     set(MUPARSER_LIBS $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libmuparser.a)
     set(GSL_LIBS
         $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgsl.a
         $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgslcblas.a)
-    file(GLOB BOOSTPYTHON $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libboost_python*.a)
-    if (BOOSTPYTHON STREQUAL "")
-        message(FATAL_ERROR "libboost_python.a not found - please build and install Boost::Python")
+    file(GLOB LIBBOOSTPYTHON $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libboost_python*.so.*)
+    if (LIBBOOSTPYTHON STREQUAL "")
+        message(FATAL_ERROR "libboost_python.so not found - please build and install Boost::Python")
     endif()
 else()
     set(POCOLIBS Poco::Foundation Poco::XML Poco::Util)
     set(JSON_LIBS jsoncpp)
     set(MUPARSER_LIBS muparser)
     set(GSL_LIBS gsl)
-    set(BOOSTPYTHON Boost::python)
 endif()
 
 # Add the Mantid source files
@@ -92,7 +92,7 @@ target_include_directories(${MICROMANTID_PYTHON_MODULE} PUBLIC
 )
 target_link_libraries(${MICROMANTID_PYTHON_MODULE} PUBLIC
     ${MICROMANTID_CXX_LIBRARIES}
-    ${BOOSTPYTHON}
+    Boost::python
     ${POCOLIBS}
     ${HDF5_LIBRARIES}
     ${JSON_LIBS}
@@ -109,4 +109,6 @@ install(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/simpleapi.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/funcinspect.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_workspaceops.py
+    ${LIBBOOSTPYTHON}
+    ${POCOLIBS}
     DESTINATION ${MICROMANTID_PACKAGE_NAME})

@@ -19,7 +19,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/BinEdgeAxis.cpp
 #   ../mantid/Framework/API/src/BoostOptionalToAlgorithmProperty.cpp
     ../mantid/Framework/API/src/BoxController.cpp
-#   ../mantid/Framework/API/src/BoxControllerSettingsAlgorithm.cpp
+    ../mantid/Framework/API/src/BoxControllerSettingsAlgorithm.cpp
 #   ../mantid/Framework/API/src/CatalogManager.cpp
 #   ../mantid/Framework/API/src/CatalogSession.cpp
     ../mantid/Framework/API/src/Citation.cpp
@@ -49,7 +49,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/FuncMinimizerFactory.cpp
     ../mantid/Framework/API/src/FunctionDomain1D.cpp
 #   ../mantid/Framework/API/src/FunctionDomainGeneral.cpp
-#   ../mantid/Framework/API/src/FunctionDomainMD.cpp
+    ../mantid/Framework/API/src/FunctionDomainMD.cpp
     ../mantid/Framework/API/src/FunctionFactory.cpp
 #   ../mantid/Framework/API/src/FunctionGenerator.cpp
     ../mantid/Framework/API/src/FunctionParameterDecorator.cpp
@@ -62,7 +62,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/HistogramValidator.cpp
     ../mantid/Framework/API/src/HistoryItem.cpp
     ../mantid/Framework/API/src/HistoryView.cpp
-#   ../mantid/Framework/API/src/IDomainCreator.cpp
+    ../mantid/Framework/API/src/IDomainCreator.cpp
 #   ../mantid/Framework/API/src/IEventList.cpp
     ../mantid/Framework/API/src/IEventWorkspace.cpp
 #   ../mantid/Framework/API/src/IFuncMinimizer.cpp
@@ -70,7 +70,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/IFunction1D.cpp
 #   ../mantid/Framework/API/src/IFunction1DSpectrum.cpp
 #   ../mantid/Framework/API/src/IFunctionGeneral.cpp
-#   ../mantid/Framework/API/src/IFunctionMD.cpp
+    ../mantid/Framework/API/src/IFunctionMD.cpp
 #   ../mantid/Framework/API/src/IFunctionMW.cpp
 #   ../mantid/Framework/API/src/IJournal.cpp
 #   ../mantid/Framework/API/src/ILatticeFunction.cpp
@@ -83,13 +83,13 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/IPeaksWorkspace.cpp
 #   ../mantid/Framework/API/src/IPowderDiffPeakFunction.cpp
 #   ../mantid/Framework/API/src/ISISInstrumentDataCache.cpp
-#   ../mantid/Framework/API/src/ISISRunLogs.cpp
+    ../mantid/Framework/API/src/ISISRunLogs.cpp
     ../mantid/Framework/API/src/ISpectrum.cpp
     ../mantid/Framework/API/src/ITableWorkspace.cpp
     ../mantid/Framework/API/src/ImmutableCompositeFunction.cpp
-#   ../mantid/Framework/API/src/ImplicitFunctionFactory.cpp
-#   ../mantid/Framework/API/src/ImplicitFunctionParameterParserFactory.cpp
-#   ../mantid/Framework/API/src/ImplicitFunctionParserFactory.cpp
+    ../mantid/Framework/API/src/ImplicitFunctionFactory.cpp
+    ../mantid/Framework/API/src/ImplicitFunctionParameterParserFactory.cpp
+    ../mantid/Framework/API/src/ImplicitFunctionParserFactory.cpp
     ../mantid/Framework/API/src/IncreasingAxisValidator.cpp
     ../mantid/Framework/API/src/IndexProperty.cpp
     ../mantid/Framework/API/src/IndexTypeProperty.cpp
@@ -116,7 +116,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/NexusFileLoader.cpp
     ../mantid/Framework/API/src/NotebookBuilder.cpp
     ../mantid/Framework/API/src/NotebookWriter.cpp
-#   ../mantid/Framework/API/src/NullCoordTransform.cpp
+    ../mantid/Framework/API/src/NullCoordTransform.cpp
     ../mantid/Framework/API/src/NumericAxis.cpp
     ../mantid/Framework/API/src/NumericAxisValidator.cpp
     ../mantid/Framework/API/src/OrientedLatticeValidator.cpp
