@@ -20,6 +20,15 @@ file(MAKE_DIRECTORY
     ${CURRENT_BINARY_DIR}/micromantid_test-1.0.0.dist-info
 )
 
+file(MAKE_DIRECTORY ${CURRENT_BINARY_DIR}/micromantid_test/data)
+file(GLOB_RECURSE TestDataFiles "${CURRENT_SOURCE_DIR}/test_data/*md5")
+foreach(_datafile ${TestDataFiles})
+    cmake_path(GET _datafile FILENAME _datafile)
+    string(REGEX REPLACE "\\.md5$" "" _datafile ${_datafile})
+    file(READ_SYMLINK ${CURRENT_BINARY_DIR}/test_data/${_datafile} _linkname)
+    file(COPY_FILE test_data/${_linkname} ${CURRENT_BINARY_DIR}/micromantid_test/data/${_datafile})
+endforeach()
+
 file(MAKE_DIRECTORY
     ${CURRENT_BINARY_DIR}/mantid
 )
