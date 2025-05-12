@@ -97,7 +97,7 @@ test("kernel_PropertyHistoryTest", () => { let result = global.pyodide.runPython
 test("kernel_PropertyManagerDataServiceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PropertyManagerDataServiceTest") `); })
 test("kernel_PropertyManagerPropertyTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PropertyManagerPropertyTest") `); })
 test("kernel_PropertyManagerTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PropertyManagerTest") `); })
-//test("kernel_PropertyWithValueTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PropertyWithValueTest") `); })
+test("kernel_PropertyWithValueTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PropertyWithValueTest") `); })
 //test("kernel_PythonPluginsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PythonPluginsTest") `); })
 test("kernel_QuatTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/QuatTest") `); })
 test("kernel_RebinParamsValidatorTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/RebinParamsValidatorTest") `); })
