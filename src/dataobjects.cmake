@@ -45,11 +45,11 @@ set(DATAOBJ_SRC_FILES
     ../mantid/Framework/DataObjects/src/ScanningWorkspaceBuilder.cpp
     ../mantid/Framework/DataObjects/src/SpecialWorkspace2D.cpp
     ../mantid/Framework/DataObjects/src/SplittersWorkspace.cpp
-    #../mantid/Framework/DataObjects/src/TableColumn.cpp
+    ../mantid/Framework/DataObjects/src/TableColumn.cpp
     ../mantid/Framework/DataObjects/src/TableWorkspace.cpp
     ../mantid/Framework/DataObjects/src/TableWorkspaceNotEmptyValidator.cpp
     ../mantid/Framework/DataObjects/src/TimeSplitter.cpp
-    #../mantid/Framework/DataObjects/src/VectorColumn.cpp
+    ../mantid/Framework/DataObjects/src/VectorColumn.cpp
     ../mantid/Framework/DataObjects/src/Workspace2D.cpp
     ../mantid/Framework/DataObjects/src/WorkspaceCreation.cpp
     ../mantid/Framework/DataObjects/src/WorkspaceProperty.cpp

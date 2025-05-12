@@ -16,6 +16,8 @@ namespace Mantid {
     void register_ws_SpecialWorkspace2D();
     void register_ws_WorkspaceSingleValue();
     void register_ws_LeanElasticPeaksWorkspace();
+    void register_tablecolumn_types();
+    void register_vectorcolumn_types();
   } 
 
   // Algorithms

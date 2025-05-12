@@ -41,3 +41,55 @@ index 9710a4be462..26f11bde193 100644
        register_alg_##classname(((Mantid::API::AlgorithmFactory::Instance().subscribe<classname>()), 0));               \
    }
 +#endif
+diff --git a/Framework/DataObjects/src/TableColumn.cpp b/Framework/DataObjects/src/TableColumn.cpp
+index f59fa0894c1..7c83500a1bf 100644
+--- a/Framework/DataObjects/src/TableColumn.cpp
++++ b/Framework/DataObjects/src/TableColumn.cpp
+@@ -10,6 +10,19 @@
+
+ namespace Mantid::DataObjects {
+
++#ifdef EMSCRIPTEN
++  void register_tablecolumn_types() {
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<int>>("int");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<uint32_t>>("uint");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<int64_t>>("long64");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<size_t>>("size_t");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<float>>("float");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<double>>("double");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<std::string>>("str");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<Mantid::API::Boolean>>("bool");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::TableColumn<Mantid::Kernel::V3D>>("V3D");
++  }
++#else
+ DECLARE_TABLECOLUMN(int, int)
+ DECLARE_TABLECOLUMN(uint32_t, uint)
+ DECLARE_TABLECOLUMN(int64_t, long64)
+@@ -19,5 +32,6 @@ DECLARE_TABLECOLUMN(double, double)
+ DECLARE_TABLECOLUMN(API::Boolean, bool)
+ DECLARE_TABLECOLUMN(std::string, str)
+ DECLARE_TABLECOLUMN(Mantid::Kernel::V3D, V3D)
++#endif
+
+ } // namespace Mantid::DataObjects
+diff --git a/Framework/DataObjects/src/VectorColumn.cpp b/Framework/DataObjects/src/VectorColumn.cpp
+index 524997dbc59..95d18a8b7ee 100644
+--- a/Framework/DataObjects/src/VectorColumn.cpp
++++ b/Framework/DataObjects/src/VectorColumn.cpp
+@@ -20,6 +20,15 @@ namespace Mantid::DataObjects {
+ //   - IF_VECTOR_COLUMN in LoadNexusProcessed.cpp, so that column can be loaded
+ //   from Nexus file
+ 
++#ifdef EMSCRIPTEN
++  template <> std::string VectorColumn<int>::typeName() { return "vector_int"; }
++  template <> std::string VectorColumn<double>::typeName() { return "vector_double"; }
++  void register_vectorcolumn_types() {
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::VectorColumn<int>>("vector_int");
++    Mantid::API::ColumnFactory::Instance().subscribe<Mantid::DataObjects::VectorColumn<double>>("vector_double");
++  }
++#else
+ DECLARE_VECTORCOLUMN(int, vector_int)
+ DECLARE_VECTORCOLUMN(double, vector_double)
++#endif
+ } // namespace Mantid::DataObjects
+

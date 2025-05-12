@@ -35,7 +35,7 @@ test("api_IFunction1DValidatorTest", () => { let result = global.pyodide.runPyth
 test("api_IMaskWorkspaceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/IMaskWorkspaceTest") `); })
 //test("api_IPeakFunctionTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/IPeakFunctionTest") `); })
 test("api_IPeaksWorkspaceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/IPeaksWorkspaceTest") `); })
-//test("api_ITableWorkspaceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/ITableWorkspaceTest") `); })
+test("api_ITableWorkspaceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/ITableWorkspaceTest") `); })
 test("api_JacobianTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/JacobianTest") `); })
 //test("api_MatrixWorkspaceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/MatrixWorkspaceTest") `); })
 test("api_MDEventWorkspaceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/MDEventWorkspaceTest") `); })

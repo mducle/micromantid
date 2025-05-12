@@ -38,6 +38,8 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::DataObjects::register_ws_SpecialWorkspace2D();
   Mantid::DataObjects::register_ws_WorkspaceSingleValue();
   Mantid::DataObjects::register_ws_LeanElasticPeaksWorkspace();
+  Mantid::DataObjects::register_tablecolumn_types();
+  Mantid::DataObjects::register_vectorcolumn_types();
   Mantid::Algorithms::register_alg_FFT();
   Mantid::Algorithms::register_alg_Max();
   Mantid::Algorithms::register_alg_Min();
