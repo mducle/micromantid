@@ -1,5 +1,5 @@
 diff --git a/Framework/PythonInterface/mantid/simpleapi.py b/Framework/PythonInterface/mantid/simpleapi.py
-index 66b5b3727c7..25e9a5da390 100644
+index 66b5b3727c7..8a935e0593a 100644
 --- a/Framework/PythonInterface/mantid/simpleapi.py
 +++ b/Framework/PythonInterface/mantid/simpleapi.py
 @@ -36,12 +36,12 @@ from dateutil.parser import parse as parse_date
@@ -19,7 +19,7 @@ index 66b5b3727c7..25e9a5da390 100644
  from mantid.kernel.funcinspect import (
      customise_func as _customise_func,
      lhs_info as _lhs_info,
-@@ -49,15 +49,15 @@ from mantid.kernel.funcinspect import (
+@@ -49,15 +49,16 @@ from mantid.kernel.funcinspect import (
  )
  
  # register matplotlib projection
@@ -40,10 +40,11 @@ index 66b5b3727c7..25e9a5da390 100644
 +#from mantid.kernel._aliases import *
 +#from mantid.api._aliases import *
 +#from mantid.fitfunctions import *
++from .api import mtd, FileFinder
  
  MODULE_NAME = "simpleapi"
  
-@@ -1122,6 +1122,7 @@ def _create_algorithm_object(name, version=-1, startProgress=None, endProgress=N
+@@ -1122,6 +1123,7 @@ def _create_algorithm_object(name, version=-1, startProgress=None, endProgress=N
      :param version A int version number
      """
      import inspect
@@ -51,7 +52,7 @@ index 66b5b3727c7..25e9a5da390 100644
  
      parent = _find_parent_pythonalgorithm(inspect.currentframe())
      if parent is not None:
-@@ -1225,7 +1226,7 @@ def _translate():
+@@ -1225,7 +1227,7 @@ def _translate():
      for each of them
      :returns: a list of the name of new function calls
      """
@@ -60,7 +61,7 @@ index 66b5b3727c7..25e9a5da390 100644
  
      new_func_attrs = []
      # Method names mapped to their algorithm names. Used to detect multiple copies of same method name
-@@ -1311,7 +1312,7 @@ _translate()
+@@ -1311,7 +1313,7 @@ _translate()
  
  # Load the Python plugins
  # The exported C++ plugins
@@ -69,7 +70,7 @@ index 66b5b3727c7..25e9a5da390 100644
  
  # Now the algorithms
  # There is a chicken and egg problem with what we want to achieve here.
-@@ -1326,6 +1327,7 @@ from . import _plugins  # noqa
+@@ -1326,6 +1328,7 @@ from . import _plugins  # noqa
  # Set the .simpleapi attribute on the 'mantid' module before importing
  # the plugins. Python usual does this once the module has been fully imported
  # but we need to do this earlier
@@ -77,7 +78,7 @@ index 66b5b3727c7..25e9a5da390 100644
  setattr(mantid, MODULE_NAME, sys.modules["mantid.{}".format(MODULE_NAME)])
  try:
      _user_key = "user.python.plugins.directories"
-@@ -1381,3 +1383,4 @@ except Exception:
+@@ -1381,3 +1384,4 @@ except Exception:
      # with standard python behaviour and reraise the exception
      delattr(mantid, MODULE_NAME)
      raise

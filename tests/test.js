@@ -45,7 +45,7 @@ test("api_MDHistoWorkspaceTest", () => { let result = global.pyodide.runPython(`
 //test("api_MultipleFilePropertyTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/MultipleFilePropertyTest") `); })
 test("api_PreviewManagerTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/PreviewManagerTest") `); })
 test("api_ProgressTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/ProgressTest") `); })
-//test("api_ProjectionTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/ProjectionTest") `); })
+test("api_ProjectionTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/ProjectionTest") `); })
 test("api_PythonAlgorithmChildAlgCallTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/PythonAlgorithmChildAlgCallTest") `); })
 test("api_PythonAlgorithmPropertiesTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/PythonAlgorithmPropertiesTest") `); })
 test("api_PythonAlgorithmTraitsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/PythonAlgorithmTraitsTest") `); })
