@@ -59,6 +59,7 @@ jobs:
           source build_env/emsdk/emsdk_env.sh
           wd=`pwd`
           cd tests && mkdir build && cd build && cmake .. && make TestWheel
+          cd $wd && mkdir build && cd build && cmake .. && make InstrumentWheel
           cd $wd/tests/testhelpers && pyodide build
           cd $wd
           npm install
@@ -66,3 +67,9 @@ jobs:
       #- name: Setup tmate
       #  if: ${{ failure() }}
       #  uses: mxschmitt/action-tmate@v3
+      - uses: actions/upload-artifact@v4
+        with:
+          name: wheels.zip
+          path: |
+            dist/*
+            tests/testhelpers/dist/*

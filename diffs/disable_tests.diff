@@ -42,3 +42,43 @@ index 31c1254b8fb..653a77c2dbd 100644
      def test_default_table_columns_are_editable(self):
          test_table = self._create_test_table()
          self.assertFalse(test_table.isColumnReadOnly(0))
+diff --git a/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py b/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py
+index aa81b30e343..a9f4f8ae73c 100644
+--- a/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py
++++ b/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py
+@@ -96,7 +96,7 @@ class ConfigServiceTest(unittest.TestCase):
+         """Retrieve the search paths"""
+         paths = config.getDataSearchDirs()
+         self.assertEqual(type(paths), std_vector_str)
+-        self.assert_(len(paths) > 0)
++        self.assertTrue(len(paths) > 0)
+ 
+     def test_setting_paths(self):
+         def do_test(paths):
+diff --git a/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py b/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
+index 09200e410a0..f06fb3f921b 100644
+--- a/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
++++ b/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
+@@ -14,14 +14,17 @@ import json
+ 
+ 
+ class IPeakTest(unittest.TestCase):
+-    def setUp(self):
++    @classmethod
++    def setUpClass(cls):
+         # IPeak cannot currently be instatiated so this is a quick way
+         # getting a handle to a peak object
+-        ws = CreateSimulationWorkspace("SXD", BinParams="1,1,10")
++        cls._ws = CreateSimulationWorkspace("SXD", BinParams="1,1,10", OutputWorkspace='ws')
+         # load IDF pre cycle 19_1 when bank 1 upgraded and position was changed
+-        LoadInstrument(Workspace=ws, Filename="SXD_Definition.xml", RewriteSpectraMap=False)
+-        peaks = CreatePeaksWorkspace(ws, 1)
+-        self._peak = peaks.getPeak(0)
++        LoadInstrument(Workspace=cls._ws, Filename="SXD_Definition.xml", RewriteSpectraMap=False)
++
++    def setUp(self):
++        _peaks = CreatePeaksWorkspace(self._ws, 1)
++        self._peak = _peaks.getPeak(0)
+ 
+         # tolerance for differences in q vectors that a recomputed
+         # on every call.
