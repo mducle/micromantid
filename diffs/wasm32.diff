@@ -50,3 +50,59 @@ index 5f18e4c4b4c..b83d0f09868 100644
  template class MANTID_KERNEL_DLL PropertyWithValue<long>;
  template class MANTID_KERNEL_DLL PropertyWithValue<unsigned long>;
  template class MANTID_KERNEL_DLL PropertyWithValue<std::vector<long>>;
+diff --git a/Framework/Kernel/src/Memory.cpp b/Framework/Kernel/src/Memory.cpp
+index f545d13116f..e6ed9df1dd8 100644
+--- a/Framework/Kernel/src/Memory.cpp
++++ b/Framework/Kernel/src/Memory.cpp
+@@ -10,7 +10,7 @@
+ #include <cstdio>
+ #include <sstream>
+ 
+-#ifdef __linux__
++#if defined __linux__ || __EMSCRIPTEN__
+ #include <fstream>
+ #include <malloc.h>
+ #include <sys/resource.h>
+@@ -27,6 +27,9 @@
+ #include <Psapi.h>
+ #include <windows.h>
+ #endif
++#ifdef __EMSCRIPTEN__
++#include <emscripten/emscripten.h>
++#endif
+ 
+ using std::size_t;
+ using std::string;
+@@ -117,6 +120,9 @@ void process_mem_usage(size_t &vm_usage, size_t &resident_set) {
+     resident_set = pmc.WorkingSetSize / 1024;
+   }
+   CloseHandle(hProcess);
++#elif __EMSCRIPTEN__
++  vm_usage = EM_ASM_INT(return HEAP8.length);
++  resident_set = mallinfo().uordblks / 1024;
+ #endif
+ }
+ 
+@@ -265,6 +271,9 @@ void MemoryStats::process_mem_system(size_t &sys_avail, size_t &sys_total) {
+     sys_avail = static_cast<size_t>(memStatus.ullAvailVirtual / 1024);
+     sys_total = static_cast<size_t>(memStatus.ullTotalVirtual / 1024);
+   }
++#elif __EMSCRIPTEN__
++  sys_total = 2097152;  // Hardcoded to 2GiB
++  sys_avail = mallinfo().fordblks / 1024;
+ #endif
+ 
+   g_log.debug() << "Memory: " << sys_avail << " (free), " << sys_total << " (total).\n";
+diff --git a/Framework/PythonInterface/mantid/api/src/Exports/AlgoTimeRegister.cpp b/Framework/PythonInterface/mantid/api/src/Exports/AlgoTimeRegister.cpp
+index b361b85cdb3..520dec09b74 100644
+--- a/Framework/PythonInterface/mantid/api/src/Exports/AlgoTimeRegister.cpp
++++ b/Framework/PythonInterface/mantid/api/src/Exports/AlgoTimeRegister.cpp
+@@ -16,7 +16,7 @@ using namespace Mantid::Instrumentation;
+ using namespace boost::python;
+ using Mantid::Kernel::time_point_ns;
+ 
+-void addTimeWrapper(const std::string &name, size_t begin, size_t end) {
++void addTimeWrapper(const std::string &name, uint64_t begin, uint64_t end) {
+ 
+   std::chrono::nanoseconds begin_ns(begin);
+   std::chrono::nanoseconds end_ns(end);

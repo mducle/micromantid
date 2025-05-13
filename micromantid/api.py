@@ -18,3 +18,9 @@ AlgoTimeRegister = lazy_instance_access(AlgoTimeRegisterImpl)
 mtd = AnalysisDataService
 
 sys.modules[f'{__name__}._workspaceops'] = _workspaceops
+
+_workspaceops.attach_binary_operators_to_workspace()
+_workspaceops.attach_unary_operators_to_workspace()
+_workspaceops.attach_tableworkspaceiterator()
+
+from . import _adsimports

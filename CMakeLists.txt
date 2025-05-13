@@ -109,6 +109,7 @@ install(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/simpleapi.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/funcinspect.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_workspaceops.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_adsimports.py
     ${LIBBOOSTPYTHON}
     ${POCOLIBS}
     DESTINATION ${MICROMANTID_PACKAGE_NAME})

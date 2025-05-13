@@ -12,14 +12,27 @@ index a2f61284629..6a61faea95e 100644
  }
 
 diff --git a/Framework/PythonInterface/mantid/kernel/funcinspect.py b/Framework/PythonInterface/mantid/kernel/funcinspect.py
-index 9a424746b8a..7773f229c67 100644
+index 9a424746b8a..dcb0baf7948 100644
 --- a/Framework/PythonInterface/mantid/kernel/funcinspect.py
 +++ b/Framework/PythonInterface/mantid/kernel/funcinspect.py
-@@ -210,6 +210,7 @@ OPERATOR_NAMES = {
+@@ -210,6 +210,8 @@ OPERATOR_NAMES = {
      "LIST_EXTEND",
      "SET_UPDATE",
      "BUILD_CONST_KEY_MAP",
 +    "CALL",
++    "BINARY_OP",
  }
- 
- 
+
+
+@@ -246,7 +248,10 @@ def process_frame(frame):
+     call_function_locs[start_offset] = (start_index, len(ins_stack) - 1)
+
+     output_var_names = []
+-    last_func_offset = call_function_locs[last_i][0]
++    try:
++        last_func_offset = call_function_locs[last_i][0]
++    except KeyError: # A weird offset which sometimes happens in Python 3.12
++        last_func_offset = call_function_locs[last_i - 6][0]
+     # On Windows since migrating to Python 3.10, the last instruction index appears
+     # to be one step behind where it should be. We think it's related to the comment
+     # here:

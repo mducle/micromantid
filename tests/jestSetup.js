@@ -14,6 +14,11 @@ module.exports = async () => {
   for (const wheel of test_wheels) {
     await pyodide.loadPackage(wheel); }
   global.pyodide = pyodide;
+  global.pyodide.runPython(`
+    from mantid import config
+    import os, micromantid_test
+    config.appendDataSearchDir(os.path.join(os.path.dirname(micromantid_test.__file__), 'data'))
+  `);
 };
 
 

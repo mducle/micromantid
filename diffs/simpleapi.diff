@@ -1,8 +1,8 @@
 diff --git a/Framework/PythonInterface/mantid/simpleapi.py b/Framework/PythonInterface/mantid/simpleapi.py
-index 66b5b3727c7..25e9a5da390 100644
+index 66b5b3727c7..f4d9f63d1a1 100644
 --- a/Framework/PythonInterface/mantid/simpleapi.py
 +++ b/Framework/PythonInterface/mantid/simpleapi.py
-@@ -36,12 +36,12 @@ from dateutil.parser import parse as parse_date
+@@ -36,28 +36,29 @@ from dateutil.parser import parse as parse_date
  import os
  import sys
  
@@ -13,13 +13,14 @@ index 66b5b3727c7..25e9a5da390 100644
 -from mantid import api as _api, kernel as _kernel
 -from mantid import apiVersion  # noqa: F401
 -from mantid.kernel import plugins as _plugin_helper
+-from mantid.kernel.funcinspect import (
 +from . import api as _api, kernel as _kernel
 +from . import apiVersion  # noqa: F401
 +#from mantid.kernel import plugins as _plugin_helper
- from mantid.kernel.funcinspect import (
++from .funcinspect import (
      customise_func as _customise_func,
      lhs_info as _lhs_info,
-@@ -49,15 +49,15 @@ from mantid.kernel.funcinspect import (
+     LazyFunctionSignature,
  )
  
  # register matplotlib projection
@@ -40,10 +41,11 @@ index 66b5b3727c7..25e9a5da390 100644
 +#from mantid.kernel._aliases import *
 +#from mantid.api._aliases import *
 +#from mantid.fitfunctions import *
++from .api import mtd, FileFinder
  
  MODULE_NAME = "simpleapi"
  
-@@ -1122,6 +1122,7 @@ def _create_algorithm_object(name, version=-1, startProgress=None, endProgress=N
+@@ -1122,6 +1123,7 @@ def _create_algorithm_object(name, version=-1, startProgress=None, endProgress=N
      :param version A int version number
      """
      import inspect
@@ -51,7 +53,7 @@ index 66b5b3727c7..25e9a5da390 100644
  
      parent = _find_parent_pythonalgorithm(inspect.currentframe())
      if parent is not None:
-@@ -1225,7 +1226,7 @@ def _translate():
+@@ -1225,7 +1227,7 @@ def _translate():
      for each of them
      :returns: a list of the name of new function calls
      """
@@ -60,7 +62,7 @@ index 66b5b3727c7..25e9a5da390 100644
  
      new_func_attrs = []
      # Method names mapped to their algorithm names. Used to detect multiple copies of same method name
-@@ -1311,7 +1312,7 @@ _translate()
+@@ -1311,7 +1313,7 @@ _translate()
  
  # Load the Python plugins
  # The exported C++ plugins
@@ -69,7 +71,7 @@ index 66b5b3727c7..25e9a5da390 100644
  
  # Now the algorithms
  # There is a chicken and egg problem with what we want to achieve here.
-@@ -1326,6 +1327,7 @@ from . import _plugins  # noqa
+@@ -1326,6 +1328,7 @@ from . import _plugins  # noqa
  # Set the .simpleapi attribute on the 'mantid' module before importing
  # the plugins. Python usual does this once the module has been fully imported
  # but we need to do this earlier
@@ -77,13 +79,13 @@ index 66b5b3727c7..25e9a5da390 100644
  setattr(mantid, MODULE_NAME, sys.modules["mantid.{}".format(MODULE_NAME)])
  try:
      _user_key = "user.python.plugins.directories"
-@@ -1381,3 +1383,4 @@ except Exception:
+@@ -1381,3 +1384,4 @@ except Exception:
      # with standard python behaviour and reraise the exception
      delattr(mantid, MODULE_NAME)
      raise
 +"""
 diff --git a/Framework/PythonInterface/mantid/api/_workspaceops.py b/Framework/PythonInterface/mantid/api/_workspaceops.py
-index 919408d4a81..0c290d17b53 100644
+index 919408d4a81..bb5272e04cc 100644
 --- a/Framework/PythonInterface/mantid/api/_workspaceops.py
 +++ b/Framework/PythonInterface/mantid/api/_workspaceops.py
 @@ -13,8 +13,8 @@ It is intended for internal use.
@@ -97,3 +99,25 @@ index 919408d4a81..0c290d17b53 100644
 
 
  # ------------------------------------------------------------------------------
+@@ -155,7 +155,7 @@ def _do_unary_operation(op, self, lhs_vars):
+             their names as the first and second element respectively
+     """
+     global _workspace_op_tmps
+-    import mantid.simpleapi as simpleapi
++    from . import simpleapi
+
+     if lhs_vars[0] > 0:
+         # Assume the first and clear the temporaries as this
+diff --git a/Framework/PythonInterface/mantid/api/_adsimports.py b/Framework/PythonInterface/mantid/api/_adsimports.py
+index 7d9b61ee09e..fcf99d5c080 100644
+--- a/Framework/PythonInterface/mantid/api/_adsimports.py
++++ b/Framework/PythonInterface/mantid/api/_adsimports.py
+@@ -15,7 +15,7 @@ The function is also attached to the AnalysisDataService and named importAll.
+
+ """
+
+-from mantid.api import AnalysisDataServiceImpl
++from .api import AnalysisDataServiceImpl
+ import inspect as _inspect
+ import keyword as _keyword
+ import re as _re

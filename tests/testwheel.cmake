@@ -20,6 +20,15 @@ file(MAKE_DIRECTORY
     ${CURRENT_BINARY_DIR}/micromantid_test-1.0.0.dist-info
 )
 
+file(MAKE_DIRECTORY ${CURRENT_BINARY_DIR}/micromantid_test/data)
+file(GLOB_RECURSE TestDataFiles "${CURRENT_SOURCE_DIR}/test_data/*md5")
+foreach(_datafile ${TestDataFiles})
+    cmake_path(GET _datafile FILENAME _datafile)
+    string(REGEX REPLACE "\\.md5$" "" _datafile ${_datafile})
+    file(READ_SYMLINK ${CURRENT_BINARY_DIR}/test_data/${_datafile} _linkname)
+    file(COPY_FILE test_data/${_linkname} ${CURRENT_BINARY_DIR}/micromantid_test/data/${_datafile})
+endforeach()
+
 file(MAKE_DIRECTORY
     ${CURRENT_BINARY_DIR}/mantid
 )
@@ -34,7 +43,13 @@ file(WRITE ${CURRENT_BINARY_DIR}/mantid/geometry.py "from micromantid.geometry i
 file(WRITE ${CURRENT_BINARY_DIR}/mantid/kernel.py 
     "from micromantid.kernel import *\n"
     "import sys; sys.modules[f'{__name__}.funcinspect'] = funcinspect")
-file(WRITE ${CURRENT_BINARY_DIR}/mantid/simpleapi.py "from micromantid.simpleapi import *")
+file(WRITE ${CURRENT_BINARY_DIR}/mantid/simpleapi.py 
+    "from micromantid.simpleapi import *\n"
+    "from micromantid.simpleapi import _create_algorithm_function as _create_alg_fn\n"
+    "def _create_algorithm_function(name, version, algm_object):\n"
+    "   alg_wrapper = _create_alg_fn(name, version, algm_object)\n"
+    "   globals()[name] = alg_wrapper\n"
+    "   return alg_wrapper")
 
 file(ARCHIVE_CREATE
     OUTPUT "micromantid_test-1.0.0-py2.py3-none-any.whl"

@@ -55,19 +55,6 @@ index cda55fc6ddd..cc663adafee 100644
  const std::string LIB_SUFFIX = ".so";
  #elif defined __APPLE__
  const std::string LIB_SUFFIX = ".dylib";
-diff --git a/Framework/Kernel/src/Memory.cpp b/Framework/Kernel/src/Memory.cpp
-index f545d13116f..e6ed9df1dd8 100644
---- a/Framework/Kernel/src/Memory.cpp
-+++ b/Framework/Kernel/src/Memory.cpp
-@@ -10,7 +10,7 @@
- #include <cstdio>
- #include <sstream>
- 
--#ifdef __linux__
-+#if defined __linux__ || __EMSCRIPTEN__
- #include <fstream>
- #include <malloc.h>
- #include <sys/resource.h>
 diff --git a/Framework/NexusCpp/inc/MantidNexusCpp/napiconfig.h b/Framework/NexusCpp/inc/MantidNexusCpp/napiconfig.h
 index c79fdc73d42..a0922158e1e 100644
 --- a/Framework/NexusCpp/inc/MantidNexusCpp/napiconfig.h
