@@ -59,7 +59,7 @@ jobs:
           source build_env/emsdk/emsdk_env.sh
           wd=`pwd`
           cd tests && mkdir build && cd build && cmake .. && make TestWheel
-          cd $wd && mkdir build && cd build && cmake .. && make InstrumentWheel
+          cd $wd/instrument && mkdir build && cd build && cmake .. && make InstrumentWheel
           cd $wd/tests/testhelpers && pyodide build
           cd $wd
           npm install
