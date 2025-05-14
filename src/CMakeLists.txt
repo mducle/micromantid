@@ -1,5 +1,6 @@
 include(api.cmake)
 include(algorithms.cmake)
+include(curvefitting.cmake)
 include(md_algos.cmake)
 include(beamline.cmake)
 include(dataobjects.cmake)
@@ -28,6 +29,7 @@ set(MICROMANTID_CXX_LIBRARIES
   MantidAPI
   Algorithms
   Beamline
+  CurveFitting
   DataObjects
   DataHandling
   Geometry

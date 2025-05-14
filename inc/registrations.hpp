@@ -324,6 +324,28 @@ namespace Mantid {
     void register_alg_GenerateGoniometerIndependentBackground();
   }
 
+  // CurveFitting
+  namespace CurveFitting {
+    namespace Algorithms {
+      void register_alg_Fit();
+      void register_alg_PawleyFit();
+      void register_alg_DoublePulseFit();
+      void register_alg_ConvertToYSpace();
+      void register_alg_SplineSmoothing();
+      void register_alg_EvaluateFunction();
+      void register_alg_SplineBackground();
+      void register_alg_EstimatePeakErrors();
+      void register_alg_CalculateChiSquared();
+      void register_alg_NormaliseByPeakArea();
+      void register_alg_SplineInterpolation();
+      void register_alg_CalculateCostFunction();
+      void register_alg_EstimateFitParameters();
+    }
+    namespace Functions {
+      void register_alg_UserFunction1D();
+    }
+  }
+
   // DataHandling
   namespace DataHandling {
     void register_alg_Load();
@@ -462,6 +484,7 @@ namespace Mantid {
     void register_alg_DgsScatteredTransmissionCorrectionMD();
   }
 }
+void register_alg_SaveFocusedXYE(); // Should be in Mantid::DataHandling but is not for some reason!
 
 #endif // EMSCRIPTEN
 #endif // REGISTRATIONS_HPP

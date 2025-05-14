@@ -36,7 +36,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/DeprecatedAlgorithm.cpp
     ../mantid/Framework/API/src/DeprecatedAlias.cpp
 #   ../mantid/Framework/API/src/DetectorSearcher.cpp
-#   ../mantid/Framework/API/src/DomainCreatorFactory.cpp
+    ../mantid/Framework/API/src/DomainCreatorFactory.cpp
 #   ../mantid/Framework/API/src/EnabledWhenWorkspaceIsType.cpp
     ../mantid/Framework/API/src/EqualBinSizesValidator.cpp
     ../mantid/Framework/API/src/ExperimentInfo.cpp
@@ -48,7 +48,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/FrameworkManager.cpp
     ../mantid/Framework/API/src/FuncMinimizerFactory.cpp
     ../mantid/Framework/API/src/FunctionDomain1D.cpp
-#   ../mantid/Framework/API/src/FunctionDomainGeneral.cpp
+    ../mantid/Framework/API/src/FunctionDomainGeneral.cpp
     ../mantid/Framework/API/src/FunctionDomainMD.cpp
     ../mantid/Framework/API/src/FunctionFactory.cpp
 #   ../mantid/Framework/API/src/FunctionGenerator.cpp
@@ -65,20 +65,20 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/IDomainCreator.cpp
 #   ../mantid/Framework/API/src/IEventList.cpp
     ../mantid/Framework/API/src/IEventWorkspace.cpp
-#   ../mantid/Framework/API/src/IFuncMinimizer.cpp
+    ../mantid/Framework/API/src/IFuncMinimizer.cpp
     ../mantid/Framework/API/src/IFunction.cpp
     ../mantid/Framework/API/src/IFunction1D.cpp
-#   ../mantid/Framework/API/src/IFunction1DSpectrum.cpp
-#   ../mantid/Framework/API/src/IFunctionGeneral.cpp
+    ../mantid/Framework/API/src/IFunction1DSpectrum.cpp
+    ../mantid/Framework/API/src/IFunctionGeneral.cpp
     ../mantid/Framework/API/src/IFunctionMD.cpp
-#   ../mantid/Framework/API/src/IFunctionMW.cpp
+    ../mantid/Framework/API/src/IFunctionMW.cpp
 #   ../mantid/Framework/API/src/IJournal.cpp
-#   ../mantid/Framework/API/src/ILatticeFunction.cpp
+    ../mantid/Framework/API/src/ILatticeFunction.cpp
     ../mantid/Framework/API/src/IMDEventWorkspace.cpp
     ../mantid/Framework/API/src/IMDHistoWorkspace.cpp
     ../mantid/Framework/API/src/IMDIterator.cpp
     ../mantid/Framework/API/src/IMDWorkspace.cpp
-#   ../mantid/Framework/API/src/IPawleyFunction.cpp
+    ../mantid/Framework/API/src/IPawleyFunction.cpp
     ../mantid/Framework/API/src/IPeakFunction.cpp
     ../mantid/Framework/API/src/IPeaksWorkspace.cpp
 #   ../mantid/Framework/API/src/IPowderDiffPeakFunction.cpp
@@ -96,8 +96,8 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/InstrumentDataService.cpp
     ../mantid/Framework/API/src/InstrumentFileFinder.cpp
     ../mantid/Framework/API/src/InstrumentValidator.cpp
-#   ../mantid/Framework/API/src/JointDomain.cpp
-#   ../mantid/Framework/API/src/LatticeDomain.cpp
+    ../mantid/Framework/API/src/JointDomain.cpp
+    ../mantid/Framework/API/src/LatticeDomain.cpp
 #   ../mantid/Framework/API/src/LinearScale.cpp
 #   ../mantid/Framework/API/src/LiveListener.cpp
 #   ../mantid/Framework/API/src/LiveListenerFactory.cpp
@@ -107,7 +107,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/MDGeometry.cpp
     ../mantid/Framework/API/src/MatrixWorkspace.cpp
     ../mantid/Framework/API/src/MatrixWorkspaceMDIterator.cpp
-#   ../mantid/Framework/API/src/MuParserUtils.cpp
+    ../mantid/Framework/API/src/MuParserUtils.cpp
     ../mantid/Framework/API/src/MultiDomainFunction.cpp
     ../mantid/Framework/API/src/MultiPeriodGroupAlgorithm.cpp
     ../mantid/Framework/API/src/MultiPeriodGroupWorker.cpp

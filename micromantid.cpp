@@ -340,6 +340,20 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::Algorithms::register_alg_DiffractionEventCalibrateDetectors();
   Mantid::Algorithms::register_alg_DiscusMultipleScatteringCorrection();
   Mantid::Algorithms::register_alg_GenerateGoniometerIndependentBackground();
+  Mantid::CurveFitting::Algorithms::register_alg_Fit();
+  Mantid::CurveFitting::Algorithms::register_alg_PawleyFit();
+  Mantid::CurveFitting::Algorithms::register_alg_DoublePulseFit();
+  Mantid::CurveFitting::Algorithms::register_alg_ConvertToYSpace();
+  Mantid::CurveFitting::Algorithms::register_alg_SplineSmoothing();
+  Mantid::CurveFitting::Algorithms::register_alg_EvaluateFunction();
+  Mantid::CurveFitting::Algorithms::register_alg_SplineBackground();
+  Mantid::CurveFitting::Algorithms::register_alg_EstimatePeakErrors();
+  Mantid::CurveFitting::Algorithms::register_alg_CalculateChiSquared();
+  Mantid::CurveFitting::Algorithms::register_alg_NormaliseByPeakArea();
+  Mantid::CurveFitting::Algorithms::register_alg_SplineInterpolation();
+  Mantid::CurveFitting::Algorithms::register_alg_CalculateCostFunction();
+  Mantid::CurveFitting::Algorithms::register_alg_EstimateFitParameters();
+  Mantid::CurveFitting::Functions::register_alg_UserFunction1D();
   Mantid::DataHandling::register_alg_Load();
   Mantid::DataHandling::register_alg_LoadLog();
   Mantid::DataHandling::register_alg_SaveCSV();
@@ -371,6 +385,7 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::DataHandling::register_alg_CompressEvents();
   Mantid::DataHandling::register_alg_GroupDetectors();
   Mantid::DataHandling::register_alg_LoadInstrument();
+  register_alg_SaveFocusedXYE();
   Mantid::DataHandling::register_alg_DeleteTableRows();
   Mantid::DataHandling::register_alg_GroupDetectors2();
   Mantid::DataHandling::register_alg_FindDetectorsPar();

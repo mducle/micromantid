@@ -301,3 +301,31 @@ index fc3e35e5d1a..24f21726d4b 100644
  }
  /**
   * Virtual copy constructor
+diff --git a/Framework/CurveFitting/src/Algorithms/Fit.cpp b/Framework/CurveFitting/src/Algorithms/Fit.cpp
+index 8b77772ebb7..3aa73f190d7 100644
+--- a/Framework/CurveFitting/src/Algorithms/Fit.cpp
++++ b/Framework/CurveFitting/src/Algorithms/Fit.cpp
+@@ -22,7 +22,7 @@
+ #include "MantidKernel/BoundedValidator.h"
+ #include "MantidKernel/Exception.h"
+ #include "MantidKernel/StartsWithValidator.h"
+-#include "MantidKernel/UsageService.h"
++//#include "MantidKernel/UsageService.h"
+ 
+ #include <memory>
+ 
+@@ -375,12 +375,14 @@ void Fit::createOutput() {
+ Register usage of the minimizer and cost function with the UsageService
+ */
+ void Fit::registerMinimizerAndCostFuncUsage() {
++/*
+   std::stringstream ss;
+   ss << m_minimizer->name() << " Minimizer";
+   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
+   ss.str("");
+   ss << m_costFunction->name() << " Cost Function";
+   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
++*/
+ }
+ 
+ /** Executes the algorithm

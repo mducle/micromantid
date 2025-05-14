@@ -93,3 +93,18 @@ index 524997dbc59..95d18a8b7ee 100644
 +#endif
  } // namespace Mantid::DataObjects
 
+diff --git a/Framework/Kernel/inc/MantidKernel/RegistrationHelper.h b/Framework/Kernel/inc/MantidKernel/RegistrationHelper.h
+index 4a351de1926..d37474f18f2 100644
+--- a/Framework/Kernel/inc/MantidKernel/RegistrationHelper.h
++++ b/Framework/Kernel/inc/MantidKernel/RegistrationHelper.h
+@@ -24,7 +24,9 @@ public:
+   /** Constructor. Does nothing.
+    * @param i :: Takes an int and does nothing with it
+    */
+-  inline RegistrationHelper(int i) { UNUSED_ARG(i); }
++  inline RegistrationHelper(int i) { _i = i; }
++private:
++  int _i;
+ };
+ // clang-format on
+ } // namespace Kernel
