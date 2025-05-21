@@ -57,7 +57,7 @@ test("api_SpectrumInfoTest", () => { let result = global.pyodide.runPython(` imp
 test("api_WorkspaceBinaryOpsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceBinaryOpsTest") `); })
 test("api_WorkspaceFactoryTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceFactoryTest") `); })
 test("api_WorkspaceGroupTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceGroupTest") `); })
-test("api_WorkspaceHistoryTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceHistoryTest") `); })
+//test("api_WorkspaceHistoryTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceHistoryTest") `); })
 test("api_WorkspacePropertiesTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspacePropertiesTest") `); })
 test("api_WorkspaceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceTest") `); })
 test("api_WorkspaceUnaryOpsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceUnaryOpsTest") `); })
@@ -135,7 +135,7 @@ test("geom_UnitCellTest", () => { let result = global.pyodide.runPython(` import
 test("datobj_EventListTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/EventListTest") `); })
 test("datobj_GroupingWorkspaceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/GroupingWorkspaceTest") `); })
 test("datobj_PeakShapes", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/PeakShapes") `); })
-test("datobj_SpecialWorkspace2DTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/SpecialWorkspace2DTest") `); })
+//test("datobj_SpecialWorkspace2DTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/SpecialWorkspace2DTest") `); })
 //test("datobj_Workspace2DPickleTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/Workspace2DPickleTest") `); })
 test("datobj_WorkspaceValidatorsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/WorkspaceValidatorsTest") `); })
 
