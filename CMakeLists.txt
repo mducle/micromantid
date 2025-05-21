@@ -107,9 +107,23 @@ install(TARGETS ${MICROMANTID_PYTHON_MODULE} DESTINATION ${MICROMANTID_PACKAGE_N
 install(FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/instrument/Facilities.xml
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/simpleapi.py
-    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/funcinspect.py
-    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_workspaceops.py
-    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_adsimports.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/fitfunctions.py
     ${LIBBOOSTPYTHON}
     ${POCOLIBS}
     DESTINATION ${MICROMANTID_PACKAGE_NAME})
+
+install(FILES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/funcinspect.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/AmendConfig.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/packagesetup.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/plugins.py
+    DESTINATION ${MICROMANTID_PACKAGE_NAME}/kernel)
+
+install(FILES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_workspaceops.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/api/_adsimports.py
+    DESTINATION ${MICROMANTID_PACKAGE_NAME}/api)
+
+install(FILES 
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/plugins/algorithms/CreateEmptyTableWorkspace.py
+    DESTINATION ${MICROMANTID_PACKAGE_NAME}/plugins/python/algorithms)
