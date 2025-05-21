@@ -9,7 +9,6 @@ test("MaterialBuilder", () => {
 });
 
 test("api_ADSValidatorTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/ADSValidatorTest") `); })
-//test("api_AlgoRegisterTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AlgoRegisterTest") `); })
 test("api_AlgorithmFactoryObserverTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AlgorithmFactoryObserverTest") `); })
 test("api_AlgorithmFactoryTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AlgorithmFactoryTest") `); })
 test("api_AlgorithmHistoryTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AlgorithmHistoryTest") `); })
@@ -18,6 +17,7 @@ test("api_AlgorithmPropertyTest", () => { let result = global.pyodide.runPython(
 //test("api_AlgorithmTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AlgorithmTest") `); })
 test("api_AnalysisDataServiceObserverTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AnalysisDataServiceObserverTest") `); })
 test("api_AnalysisDataServiceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AnalysisDataServiceTest") `); })
+test("api_AlgoRegisterTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AlgoRegisterTest") `); })
 test("api_AxisTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/AxisTest") `); })
 //test("api_CatalogManagerTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/CatalogManagerTest") `); })
 test("api_CompositeFunctionTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/CompositeFunctionTest") `); })
@@ -72,7 +72,6 @@ test("kernel_BoundedValidatorTest", () => { let result = global.pyodide.runPytho
 test("kernel_CompositeValidatorTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/CompositeValidatorTest") `); })
 test("kernel_ConfigObserverTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/ConfigObserverTest") `); })
 test("kernel_ConfigPropertyObserverTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/ConfigPropertyObserverTest") `); })
-//test("kernel_ConfigServiceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/ConfigServiceTest") `); })
 test("kernel_DateAndTimeTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/DateAndTimeTest") `); })
 test("kernel_DeltaEModeTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/DeltaEModeTest") `); })
 test("kernel_EnabledWhenPropertyTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/EnabledWhenPropertyTest") `); })
@@ -98,7 +97,7 @@ test("kernel_PropertyManagerDataServiceTest", () => { let result = global.pyodid
 test("kernel_PropertyManagerPropertyTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PropertyManagerPropertyTest") `); })
 test("kernel_PropertyManagerTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PropertyManagerTest") `); })
 test("kernel_PropertyWithValueTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PropertyWithValueTest") `); })
-//test("kernel_PythonPluginsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PythonPluginsTest") `); })
+test("kernel_PythonPluginsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/PythonPluginsTest") `); })
 test("kernel_QuatTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/QuatTest") `); })
 test("kernel_RebinParamsValidatorTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/RebinParamsValidatorTest") `); })
 test("kernel_StatisticsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/StatisticsTest") `); })
@@ -138,6 +137,8 @@ test("datobj_GroupingWorkspaceTest", () => { let result = global.pyodide.runPyth
 test("datobj_PeakShapes", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/PeakShapes") `); })
 test("datobj_SpecialWorkspace2DTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/SpecialWorkspace2DTest") `); })
 //test("datobj_Workspace2DPickleTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/Workspace2DPickleTest") `); })
-//test("datobj_WorkspaceValidatorsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/WorkspaceValidatorsTest") `); })
+test("datobj_WorkspaceValidatorsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/WorkspaceValidatorsTest") `); })
 
 test("alg_NormaliseToUnityTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("algorithms/NormaliseToUnityTest") `); })
+// The next test messes up the configurations causing other tests to fail if run before.
+test("kernel_ConfigServiceTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("kernel/ConfigServiceTest") `); })

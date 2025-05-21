@@ -29,20 +29,19 @@ foreach(_datafile ${TestDataFiles})
     file(COPY_FILE test_data/${_linkname} ${CURRENT_BINARY_DIR}/micromantid_test/data/${_datafile})
 endforeach()
 
-file(MAKE_DIRECTORY
-    ${CURRENT_BINARY_DIR}/mantid
-)
+file(MAKE_DIRECTORY ${CURRENT_BINARY_DIR}/mantid)
+file(MAKE_DIRECTORY ${CURRENT_BINARY_DIR}/mantid/api)
+file(MAKE_DIRECTORY ${CURRENT_BINARY_DIR}/mantid/kernel)
 
 file(WRITE ${CURRENT_BINARY_DIR}/mantid/__init__.py "from micromantid import *")
-file(WRITE ${CURRENT_BINARY_DIR}/mantid/api.py 
-    "from micromantid.api import *\n"
-    "from micromantid.api import _workspaceops\n"
-    "import sys; sys.modules[f'{__name__}._workspaceops'] = _workspaceops")
+file(WRITE ${CURRENT_BINARY_DIR}/mantid/api/__init__.py "from micromantid.api import *")
+file(WRITE ${CURRENT_BINARY_DIR}/mantid/api/_workspaceops.py "from micromantid.api._workspaceops import *")
 file(WRITE ${CURRENT_BINARY_DIR}/mantid/dataobjects.py "from micromantid.dataobjects import *")
 file(WRITE ${CURRENT_BINARY_DIR}/mantid/geometry.py "from micromantid.geometry import *")
-file(WRITE ${CURRENT_BINARY_DIR}/mantid/kernel.py 
+file(WRITE ${CURRENT_BINARY_DIR}/mantid/kernel/__init__.py
     "from micromantid.kernel import *\n"
     "import sys; sys.modules[f'{__name__}.funcinspect'] = funcinspect")
+file(WRITE ${CURRENT_BINARY_DIR}/mantid/kernel/plugins.py "from micromantid.kernel.plugins import *")
 file(WRITE ${CURRENT_BINARY_DIR}/mantid/simpleapi.py 
     "from micromantid.simpleapi import *\n"
     "from micromantid.simpleapi import _create_algorithm_function as _create_alg_fn\n"
