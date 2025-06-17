@@ -8,6 +8,15 @@ test("MaterialBuilder", () => {
   `);
 });
 
+test("MSliceImport", () => {
+  let result = global.pyodide.runPython(`
+from mantid.simpleapi import AddSampleLog, BinMD, CloneWorkspace, ConvertSpectrumAxis, ConvertToMD, CopyLogs, CreateMDHistoWorkspace, CreateSimulationWorkspace, DeleteWorkspace, IntegrateMDHistoWorkspace, Integration, PowerMD, PreprocessDetectorsToMD, Rebin, Rebin2D, RenameWorkspace, ScaleX, SliceMD, SofQW3, TransformMD, Transpose, _create_algorithm_function
+from mantid.api import AlgorithmFactory, AlgorithmManager, IMDEventWorkspace, IMDEventWorkspaceProperty, MatrixWorkspaceProperty, PythonAlgorithm, WorkspaceProperty, WorkspaceUnitValidator
+from mantid.dataobjects import Workspace2D
+from mantid.kernel import Direction, FloatArrayProperty, FloatMandatoryValidator, PropertyManagerProperty, StringMandatoryValidator, StringListValidator
+  `);
+});
+
 // This test needs to be run first...
 test("datobj_WorkspaceValidatorsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("dataobjects/WorkspaceValidatorsTest") `); })
 

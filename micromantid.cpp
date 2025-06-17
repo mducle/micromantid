@@ -481,6 +481,7 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::MDAlgorithms::register_alg_ImportMDHistoWorkspace();
   Mantid::MDAlgorithms::register_alg_ConvertToMDMinMaxGlobal();
   Mantid::MDAlgorithms::register_alg_PreprocessDetectorsToMD();
+  Mantid::MDAlgorithms::register_alg_IntegrateMDHistoWorkspace();
   Mantid::MDAlgorithms::register_alg_MagneticFormFactorCorrectionMD();
   Mantid::MDAlgorithms::register_alg_RecalculateTrajectoriesExtents();
   Mantid::MDAlgorithms::register_alg_ConvertMDHistoToMatrixWorkspace();

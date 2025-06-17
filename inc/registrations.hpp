@@ -478,6 +478,7 @@ namespace Mantid {
     void register_alg_ImportMDHistoWorkspace();
     void register_alg_ConvertToMDMinMaxGlobal();
     void register_alg_PreprocessDetectorsToMD();
+    void register_alg_IntegrateMDHistoWorkspace();
     void register_alg_MagneticFormFactorCorrectionMD();
     void register_alg_RecalculateTrajectoriesExtents();
     void register_alg_ConvertMDHistoToMatrixWorkspace();
