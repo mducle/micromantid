@@ -1,6 +1,7 @@
 include(api.cmake)
 include(algorithms.cmake)
 include(curvefitting.cmake)
+include(crystal.cmake)
 include(md_algos.cmake)
 include(beamline.cmake)
 include(dataobjects.cmake)
@@ -30,6 +31,7 @@ set(MICROMANTID_CXX_LIBRARIES
   Algorithms
   Beamline
   CurveFitting
+  Crystal
   DataObjects
   DataHandling
   Geometry

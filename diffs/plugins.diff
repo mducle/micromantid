@@ -1,0 +1,39 @@
+--- a/Framework/PythonInterface/plugins/algorithms/CalculateSampleTransmission.py
++++ b/Framework/PythonInterface/plugins/algorithms/CalculateSampleTransmission.py
+@@ -7,7 +7,8 @@
+ # pylint: disable=no-init,invalid-name
+ from mantid.api import mtd, AlgorithmFactory, MatrixWorkspaceProperty, PythonAlgorithm
+ from mantid.kernel import Direction, MaterialBuilder, StringListValidator, StringMandatoryValidator
+-from mantid.simpleapi import ConvertToPointData, CreateWorkspace, Rebin, SetSampleMaterial
++#from mantid.simpleapi import ConvertToPointData, CreateWorkspace, Rebin, SetSampleMaterial
++import mantid.simpleapi as s_api
+ import math
+ import numpy as np
+ 
+@@ -74,7 +75,7 @@ class CalculateSampleTransmission(PythonAlgorithm):
+         self._setup()
+ 
+         # Create the workspace and set the sample material
+-        CreateWorkspace(
++        s_api.CreateWorkspace(
+             OutputWorkspace=self._output_ws,
+             NSpec=2,
+             DataX=[0, 1],
+@@ -82,14 +83,14 @@ class CalculateSampleTransmission(PythonAlgorithm):
+             VerticalAxisUnit="Text",
+             VerticalAxisValues="Transmission,Scattering",
+         )
+-        Rebin(InputWorkspace=self._output_ws, OutputWorkspace=self._output_ws, Params=self._bin_params)
++        s_api.Rebin(InputWorkspace=self._output_ws, OutputWorkspace=self._output_ws, Params=self._bin_params)
+ 
+         if self._density_type == "Mass Density":
+             builder = MaterialBuilder()
+             mat = builder.setFormula(self._chemical_formula).setMassDensity(self._density).build()
+             self._density = mat.numberDensity
+-        SetSampleMaterial(InputWorkspace=self._output_ws, ChemicalFormula=self._chemical_formula, SampleNumberDensity=self._density)
+-        ConvertToPointData(InputWorkspace=self._output_ws, OutputWorkspace=self._output_ws)
++        s_api.SetSampleMaterial(InputWorkspace=self._output_ws, ChemicalFormula=self._chemical_formula, SampleNumberDensity=self._density)
++        s_api.ConvertToPointData(InputWorkspace=self._output_ws, OutputWorkspace=self._output_ws)
+ 
+         ws = mtd[self._output_ws]
+         wavelengths = ws.readX(0)
