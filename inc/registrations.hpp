@@ -346,6 +346,10 @@ namespace Mantid {
     }
   }
 
+  namespace Crystal {
+    void register_alg_SetUB();
+  }
+
   // DataHandling
   namespace DataHandling {
     void register_alg_Load();

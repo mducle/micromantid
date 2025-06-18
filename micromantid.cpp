@@ -354,6 +354,7 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::CurveFitting::Algorithms::register_alg_CalculateCostFunction();
   Mantid::CurveFitting::Algorithms::register_alg_EstimateFitParameters();
   Mantid::CurveFitting::Functions::register_alg_UserFunction1D();
+  Mantid::Crystal::register_alg_SetUB();
   Mantid::DataHandling::register_alg_Load();
   Mantid::DataHandling::register_alg_LoadLog();
   Mantid::DataHandling::register_alg_SaveCSV();

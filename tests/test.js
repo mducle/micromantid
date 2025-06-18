@@ -64,7 +64,7 @@ test("api_PythonAlgorithmTraitsTest", () => { let result = global.pyodide.runPyt
 test("api_PythonAlgorithmWorkspacePropertyTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/PythonAlgorithmWorkspacePropertyTest") `); })
 test("api_RunPythonScriptTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/RunPythonScriptTest") `); })
 test("api_RunTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/RunTest") `); })
-//test("api_SampleTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/SampleTest") `); })
+test("api_SampleTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/SampleTest") `); })
 test("api_SpectrumInfoTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/SpectrumInfoTest") `); })
 test("api_WorkspaceBinaryOpsTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceBinaryOpsTest") `); })
 test("api_WorkspaceFactoryTest", () => { let result = global.pyodide.runPython(` import micromantid_test; micromantid_test.run("api/WorkspaceFactoryTest") `); })
