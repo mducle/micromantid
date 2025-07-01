@@ -60,7 +60,7 @@ set(MDALGO_SRC_FILES
     #${MTDSRCDIR}/src/IntegrateEllipsoidsV1.cpp
     #${MTDSRCDIR}/src/IntegrateEllipsoidsV2.cpp
     #${MTDSRCDIR}/src/IntegrateFlux.cpp
-    #${MTDSRCDIR}/src/IntegrateMDHistoWorkspace.cpp
+    ${MTDSRCDIR}/src/IntegrateMDHistoWorkspace.cpp
     #${MTDSRCDIR}/src/IntegratePeaksCWSD.cpp
     #${MTDSRCDIR}/src/IntegratePeaksMD.cpp
     #${MTDSRCDIR}/src/IntegratePeaksMD2.cpp

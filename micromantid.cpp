@@ -354,6 +354,9 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::CurveFitting::Algorithms::register_alg_CalculateCostFunction();
   Mantid::CurveFitting::Algorithms::register_alg_EstimateFitParameters();
   Mantid::CurveFitting::Functions::register_alg_UserFunction1D();
+  Mantid::Crystal::register_alg_SetUB();
+  Mantid::Crystal::register_alg_LoadIsawUB();
+  Mantid::Crystal::register_alg_SetGoniometer();
   Mantid::DataHandling::register_alg_Load();
   Mantid::DataHandling::register_alg_LoadLog();
   Mantid::DataHandling::register_alg_SaveCSV();
@@ -481,6 +484,7 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::MDAlgorithms::register_alg_ImportMDHistoWorkspace();
   Mantid::MDAlgorithms::register_alg_ConvertToMDMinMaxGlobal();
   Mantid::MDAlgorithms::register_alg_PreprocessDetectorsToMD();
+  Mantid::MDAlgorithms::register_alg_IntegrateMDHistoWorkspace();
   Mantid::MDAlgorithms::register_alg_MagneticFormFactorCorrectionMD();
   Mantid::MDAlgorithms::register_alg_RecalculateTrajectoriesExtents();
   Mantid::MDAlgorithms::register_alg_ConvertMDHistoToMatrixWorkspace();
