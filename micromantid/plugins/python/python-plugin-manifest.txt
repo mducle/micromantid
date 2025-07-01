@@ -1,2 +1,3 @@
 algorithms/CalculateSampleTransmission.py
 algorithms/CreateEmptyTableWorkspace.py
+algorithms/LoadCIF.py

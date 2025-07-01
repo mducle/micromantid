@@ -35,7 +35,7 @@ set(CRYSTAL_SRC_FILES
     #${MTDSRCDIR}/src/LoadHKL.cpp
     #${MTDSRCDIR}/src/LoadIsawPeaks.cpp
     #${MTDSRCDIR}/src/LoadIsawSpectrum.cpp
-    #${MTDSRCDIR}/src/LoadIsawUB.cpp
+    ${MTDSRCDIR}/src/LoadIsawUB.cpp
     #${MTDSRCDIR}/src/MaskPeaksWorkspace.cpp
     #${MTDSRCDIR}/src/NormaliseVanadium.cpp
     #${MTDSRCDIR}/src/OptimizeCrystalPlacement.cpp
@@ -64,7 +64,7 @@ set(CRYSTAL_SRC_FILES
     #${MTDSRCDIR}/src/SelectCellOfType.cpp
     #${MTDSRCDIR}/src/SelectCellWithForm.cpp
     #${MTDSRCDIR}/src/SetCrystalLocation.cpp
-    #${MTDSRCDIR}/src/SetGoniometer.cpp
+    ${MTDSRCDIR}/src/SetGoniometer.cpp
     #${MTDSRCDIR}/src/SetSpecialCoordinates.cpp
     ${MTDSRCDIR}/src/SetUB.cpp
     #${MTDSRCDIR}/src/ShowPeakHKLOffsets.cpp
@@ -82,6 +82,7 @@ target_include_directories(Crystal PRIVATE
     ../mantid/Framework/API/inc
     ../mantid/Framework/DataObjects/inc
     ../mantid/Framework/Geometry/inc
+    ../mantid/Framework/HistogramData/inc
     ../mantid/Framework/Indexing/inc
     ../mantid/Framework/Kernel/inc
     ../mantid/Framework/Types/inc

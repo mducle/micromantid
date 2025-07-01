@@ -127,4 +127,5 @@ install(FILES
 install(FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/plugins/algorithms/CreateEmptyTableWorkspace.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/plugins/algorithms/CalculateSampleTransmission.py
+    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/plugins/algorithms/LoadCIF.py
     DESTINATION ${MICROMANTID_PACKAGE_NAME}/plugins/python/algorithms)

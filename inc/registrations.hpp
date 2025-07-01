@@ -348,6 +348,8 @@ namespace Mantid {
 
   namespace Crystal {
     void register_alg_SetUB();
+    void register_alg_LoadIsawUB();
+    void register_alg_SetGoniometer();
   }
 
   // DataHandling

@@ -14,6 +14,7 @@ from mantid.simpleapi import AddSampleLog, BinMD, CloneWorkspace, ConvertSpectru
 from mantid.api import AlgorithmFactory, AlgorithmManager, IMDEventWorkspace, IMDEventWorkspaceProperty, MatrixWorkspaceProperty, PythonAlgorithm, WorkspaceProperty, WorkspaceUnitValidator
 from mantid.dataobjects import Workspace2D
 from mantid.kernel import Direction, FloatArrayProperty, FloatMandatoryValidator, PropertyManagerProperty, StringMandatoryValidator, StringListValidator
+from mantid.simpleapi import SetUB, SetGoniometer, LoadIsawUB, LoadCIF
   `);
 });
 
