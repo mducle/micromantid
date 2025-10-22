@@ -9,9 +9,9 @@ index 6eedf204133..752b32c438f 100644
 +#include "MantidKernel/ConfigService.h"
  #include <fstream>
  #include <time.h>
-
+ 
 diff --git a/Framework/API/src/Algorithm.cpp b/Framework/API/src/Algorithm.cpp
-index d2dfcb7730e..fa75cdf5547 100644
+index 9405493b226..cd4a1bdba18 100644
 --- a/Framework/API/src/Algorithm.cpp
 +++ b/Framework/API/src/Algorithm.cpp
 @@ -24,7 +24,7 @@
@@ -37,8 +37,37 @@ index d2dfcb7730e..fa75cdf5547 100644
  }
  
  /** Enable or disable Logging of start and end messages
+diff --git a/Framework/API/src/IFunction.cpp b/Framework/API/src/IFunction.cpp
+index f95a0ae63e9..475855640d7 100644
+--- a/Framework/API/src/IFunction.cpp
++++ b/Framework/API/src/IFunction.cpp
+@@ -30,7 +30,7 @@
+ #include "MantidKernel/ProgressBase.h"
+ #include "MantidKernel/Strings.h"
+ #include "MantidKernel/UnitFactory.h"
+-#include "MantidKernel/UsageService.h"
++//#include "MantidKernel/UsageService.h"
+ 
+ #include <boost/lexical_cast.hpp>
+ 
+@@ -95,6 +95,7 @@ IFunction::~IFunction() { m_attrs.clear(); }
+ Registers the usage of the function with the UsageService
+  */
+ void IFunction::registerFunctionUsage(bool internal) {
++/*
+   if (!Kernel::UsageService::Instance().isEnabled()) {
+     return;
+   }
+@@ -102,6 +103,7 @@ void IFunction::registerFunctionUsage(bool internal) {
+     m_isRegistered = true;
+     Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, name(), internal);
+   }
++*/
+ }
+ /**
+  * Virtual copy constructor
 diff --git a/Framework/API/src/MatrixWorkspace.cpp b/Framework/API/src/MatrixWorkspace.cpp
-index 4d7b064ab2f..a1a22ce87aa 100644
+index 54b7170cd12..308ca5becd0 100644
 --- a/Framework/API/src/MatrixWorkspace.cpp
 +++ b/Framework/API/src/MatrixWorkspace.cpp
 @@ -382,9 +382,9 @@ void MatrixWorkspace::setMarkerStyle(const std::string &markerType) {
@@ -54,6 +83,34 @@ index 4d7b064ab2f..a1a22ce87aa 100644
      return m_marker;
  }
  
+diff --git a/Framework/CurveFitting/src/Algorithms/Fit.cpp b/Framework/CurveFitting/src/Algorithms/Fit.cpp
+index 8b77772ebb7..3aa73f190d7 100644
+--- a/Framework/CurveFitting/src/Algorithms/Fit.cpp
++++ b/Framework/CurveFitting/src/Algorithms/Fit.cpp
+@@ -22,7 +22,7 @@
+ #include "MantidKernel/BoundedValidator.h"
+ #include "MantidKernel/Exception.h"
+ #include "MantidKernel/StartsWithValidator.h"
+-#include "MantidKernel/UsageService.h"
++//#include "MantidKernel/UsageService.h"
+ 
+ #include <memory>
+ 
+@@ -375,12 +375,14 @@ void Fit::createOutput() {
+ Register usage of the minimizer and cost function with the UsageService
+ */
+ void Fit::registerMinimizerAndCostFuncUsage() {
++/*
+   std::stringstream ss;
+   ss << m_minimizer->name() << " Minimizer";
+   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
+   ss.str("");
+   ss << m_costFunction->name() << " Cost Function";
+   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
++*/
+ }
+ 
+ /** Executes the algorithm
 diff --git a/Framework/Kernel/inc/MantidKernel/ConfigService.h b/Framework/Kernel/inc/MantidKernel/ConfigService.h
 index d66e1ba8daa..c89c2fc2bf2 100644
 --- a/Framework/Kernel/inc/MantidKernel/ConfigService.h
@@ -155,7 +212,7 @@ index 4273e8811f9..02fafcf451e 100644
        std::string line;
        double minX = std::numeric_limits<double>::max();
 diff --git a/Framework/Kernel/src/ConfigService.cpp b/Framework/Kernel/src/ConfigService.cpp
-index 035071998e4..a387ab6cd62 100644
+index c661a36f639..b7f81652f9f 100644
 --- a/Framework/Kernel/src/ConfigService.cpp
 +++ b/Framework/Kernel/src/ConfigService.cpp
 @@ -15,7 +15,7 @@
@@ -167,7 +224,7 @@ index 035071998e4..a387ab6cd62 100644
  #include "MantidKernel/StdoutChannel.h"
  #include "MantidKernel/StringTokenizer.h"
  #include "MantidKernel/Strings.h"
-@@ -121,8 +121,8 @@ const std::string LOG_LEVEL_KEY("logging.loggers.root.level");
+@@ -123,8 +123,8 @@ const std::string LOG_LEVEL_KEY("logging.loggers.root.level");
  ConfigServiceImpl::ConfigServiceImpl()
      : m_pConf(nullptr), m_pSysConfig(new Poco::Util::SystemConfiguration()), m_changed_keys(), m_strBaseDir(""),
        m_propertyString(""), m_properties_file_name("Mantid.properties"),
@@ -178,7 +235,7 @@ index 035071998e4..a387ab6cd62 100644
    // Register StdChannel with Poco
    Poco::LoggingFactory::defaultFactory().registerChannelClass(
        "StdoutChannel", new Poco::Instantiator<Poco::StdoutChannel, Poco::Channel>);
-@@ -180,6 +180,7 @@ ConfigServiceImpl::ConfigServiceImpl()
+@@ -182,6 +182,7 @@ ConfigServiceImpl::ConfigServiceImpl()
                        << Types::Core::DateAndTime::getCurrentTime().toFormattedString("%Y-%m-%dT%H:%MZ") << "\n";
    g_log.information() << "Properties file(s) loaded: " << propertiesFilesList << '\n';
  
@@ -186,7 +243,7 @@ index 035071998e4..a387ab6cd62 100644
    // Assert that the appdata and the instrument subdirectory exists
    std::string appDataDir = getAppDataDir();
    Poco::Path path(appDataDir);
-@@ -1276,6 +1277,10 @@ std::string ConfigServiceImpl::getPathToExecutable() const {
+@@ -1284,6 +1285,10 @@ std::string ConfigServiceImpl::getPathToExecutable() const {
    const int success = _NSGetExecutablePath(pBuf, &bytes);
    if (success < 0)
      bytes = 1025;
@@ -197,7 +254,7 @@ index 035071998e4..a387ab6cd62 100644
  #endif
  
    if (bytes > 0 && bytes < 1024) {
-@@ -1381,7 +1386,7 @@ std::string ConfigServiceImpl::getPropertiesDir() const { return m_strBaseDir; }
+@@ -1389,7 +1394,7 @@ std::string ConfigServiceImpl::getPropertiesDir() const { return m_strBaseDir; }
   * @return the directory that Mantid should use for writing files
   */
  std::string ConfigServiceImpl::getUserPropertiesDir() const {
@@ -206,7 +263,7 @@ index 035071998e4..a387ab6cd62 100644
    return m_strBaseDir;
  #else
    Poco::Path datadir(m_pSysConfig->getString("system.homeDir"));
-@@ -1534,6 +1539,9 @@ void ConfigServiceImpl::cacheInstrumentPaths() {
+@@ -1542,6 +1547,9 @@ void ConfigServiceImpl::cacheInstrumentPaths() {
  #ifndef _WIN32
    addDirectoryifExists("/etc/mantid/instrument", m_instrumentDirs);
  #endif
@@ -216,7 +273,7 @@ index 035071998e4..a387ab6cd62 100644
  
    // Determine the search directory for XML instrument definition files (IDFs)
    std::string directoryName = getString("instrumentDefinition.directory", true);
-@@ -1555,18 +1563,16 @@ void ConfigServiceImpl::cacheInstrumentPaths() {
+@@ -1563,18 +1571,16 @@ void ConfigServiceImpl::cacheInstrumentPaths() {
   */
  bool ConfigServiceImpl::addDirectoryifExists(const std::string &directoryName,
                                               std::vector<std::string> &directoryList) {
@@ -239,7 +296,7 @@ index 035071998e4..a387ab6cd62 100644
      g_log.information("Unable to locate directory at: " + directoryName);
      return false;
    }
-@@ -1832,6 +1838,7 @@ Gets the system proxy information
+@@ -1840,6 +1846,7 @@ Gets the system proxy information
  @url A url to match the proxy to
  @return the proxy information.
  */
@@ -247,7 +304,7 @@ index 035071998e4..a387ab6cd62 100644
  Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
    if (!m_isProxySet) {
      // set the proxy
-@@ -1852,6 +1859,7 @@ Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
+@@ -1860,6 +1867,7 @@ Kernel::ProxyInfo &ConfigServiceImpl::getProxy(const std::string &url) {
    }
    return m_proxyInfo;
  }
@@ -255,60 +312,3 @@ index 035071998e4..a387ab6cd62 100644
  
  std::string ConfigServiceImpl::getFullPath(const std::string &filename, const bool ignoreDirs,
                                             const int options) const {
-diff --git a/Framework/API/src/IFunction.cpp b/Framework/API/src/IFunction.cpp
-index fc3e35e5d1a..24f21726d4b 100644
---- a/Framework/API/src/IFunction.cpp
-+++ b/Framework/API/src/IFunction.cpp
-@@ -30,7 +30,7 @@
- #include "MantidKernel/ProgressBase.h"
- #include "MantidKernel/Strings.h"
- #include "MantidKernel/UnitFactory.h"
--#include "MantidKernel/UsageService.h"
-+//#include "MantidKernel/UsageService.h"
- 
- #include <boost/lexical_cast.hpp>
- 
-@@ -95,6 +95,7 @@ IFunction::~IFunction() { m_attrs.clear(); }
- Registers the usage of the function with the UsageService
-  */
- void IFunction::registerFunctionUsage(bool internal) {
-+/*
-   if (!Kernel::UsageService::Instance().isEnabled()) {
-     return;
-   }
-@@ -102,6 +103,7 @@ void IFunction::registerFunctionUsage(bool internal) {
-     m_isRegistered = true;
-     Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, name(), internal);
-   }
-+*/
- }
- /**
-  * Virtual copy constructor
-diff --git a/Framework/CurveFitting/src/Algorithms/Fit.cpp b/Framework/CurveFitting/src/Algorithms/Fit.cpp
-index 8b77772ebb7..3aa73f190d7 100644
---- a/Framework/CurveFitting/src/Algorithms/Fit.cpp
-+++ b/Framework/CurveFitting/src/Algorithms/Fit.cpp
-@@ -22,7 +22,7 @@
- #include "MantidKernel/BoundedValidator.h"
- #include "MantidKernel/Exception.h"
- #include "MantidKernel/StartsWithValidator.h"
--#include "MantidKernel/UsageService.h"
-+//#include "MantidKernel/UsageService.h"
- 
- #include <memory>
- 
-@@ -375,12 +375,14 @@ void Fit::createOutput() {
- Register usage of the minimizer and cost function with the UsageService
- */
- void Fit::registerMinimizerAndCostFuncUsage() {
-+/*
-   std::stringstream ss;
-   ss << m_minimizer->name() << " Minimizer";
-   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
-   ss.str("");
-   ss << m_costFunction->name() << " Cost Function";
-   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
-+*/
- }
- 
- /** Executes the algorithm

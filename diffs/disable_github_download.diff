@@ -1,8 +1,8 @@
 diff --git a/Framework/DataHandling/inc/MantidDataHandling/CheckMantidVersion.h b/Framework/DataHandling/inc/MantidDataHandling/CheckMantidVersion.h
-index 31eb55e3a02..a1988f90228 100644
+index 7498386dc01..11f924ca1a7 100644
 --- a/Framework/DataHandling/inc/MantidDataHandling/CheckMantidVersion.h
 +++ b/Framework/DataHandling/inc/MantidDataHandling/CheckMantidVersion.h
-@@ -24,7 +24,7 @@ public:
+@@ -23,7 +23,7 @@ public:
    const std::string summary() const override;
  
  protected:
