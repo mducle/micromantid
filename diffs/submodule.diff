@@ -12,7 +12,7 @@ index 2175f7bb26a..22a192bf605 100644
  #include <numpy/arrayobject.h>
  
 diff --git a/Framework/PythonInterface/mantid/api/src/Exports/Axis.cpp b/Framework/PythonInterface/mantid/api/src/Exports/Axis.cpp
-index c14f3028de2..e26acbf11fe 100644
+index b79d5515599..7f1c3f9ba0d 100644
 --- a/Framework/PythonInterface/mantid/api/src/Exports/Axis.cpp
 +++ b/Framework/PythonInterface/mantid/api/src/Exports/Axis.cpp
 @@ -21,7 +21,7 @@
@@ -25,7 +25,7 @@ index c14f3028de2..e26acbf11fe 100644
  #include <numpy/arrayobject.h>
  
 diff --git a/Framework/PythonInterface/mantid/api/src/Exports/IMDHistoWorkspace.cpp b/Framework/PythonInterface/mantid/api/src/Exports/IMDHistoWorkspace.cpp
-index c3eea994db0..f25ac35198c 100644
+index fd28896be34..0cfb5ef5f30 100644
 --- a/Framework/PythonInterface/mantid/api/src/Exports/IMDHistoWorkspace.cpp
 +++ b/Framework/PythonInterface/mantid/api/src/Exports/IMDHistoWorkspace.cpp
 @@ -13,7 +13,7 @@
@@ -38,7 +38,7 @@ index c3eea994db0..f25ac35198c 100644
  #include <numpy/arrayobject.h>
  
 diff --git a/Framework/PythonInterface/mantid/api/src/Exports/ITableWorkspace.cpp b/Framework/PythonInterface/mantid/api/src/Exports/ITableWorkspace.cpp
-index b1dddec1940..27ac61f4b4d 100644
+index 40abfa42b91..53a91ddb28b 100644
 --- a/Framework/PythonInterface/mantid/api/src/Exports/ITableWorkspace.cpp
 +++ b/Framework/PythonInterface/mantid/api/src/Exports/ITableWorkspace.cpp
 @@ -35,7 +35,7 @@
@@ -51,10 +51,10 @@ index b1dddec1940..27ac61f4b4d 100644
  #include <numpy/arrayobject.h>
  
 diff --git a/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp b/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
-index d0076a0c95f..1f96f4dd692 100644
+index 543a009f4d4..1f79ef9999e 100644
 --- a/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
 +++ b/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
-@@ -32,7 +32,7 @@
+@@ -33,7 +33,7 @@
  #include <boost/python/suite/indexing/map_indexing_suite.hpp>
  #include <boost/python/tuple.hpp>
  
@@ -90,7 +90,7 @@ index 65bc1613a8c..d9fcf3443f2 100644
  #include <numpy/arrayobject.h>
  
 diff --git a/Framework/PythonInterface/mantid/api/src/api.cpp.in b/Framework/PythonInterface/mantid/api/src/api.cpp.in
-index 7653f701b24..6dcc341bcde 100644
+index 7653f701b24..03b6b1ccd24 100644
 --- a/Framework/PythonInterface/mantid/api/src/api.cpp.in
 +++ b/Framework/PythonInterface/mantid/api/src/api.cpp.in
 @@ -15,8 +15,8 @@
@@ -125,11 +125,44 @@ index 7653f701b24..6dcc341bcde 100644
  
    // Workspace address comparison
    boost::python::def("isSameWorkspaceObject",
+diff --git a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
+index 7d1f31fcc30..68f0b8c71e8 100644
+--- a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
++++ b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
+@@ -13,18 +13,24 @@
+ #include <boost/python/docstring_options.hpp>
+ 
+ // See http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
+-#include <numpy/arrayobject.h>
++//#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
++//#include <numpy/arrayobject.h>
+ 
+ // Forward declare
+ @EXPORT_DECLARE@
+ 
+-BOOST_PYTHON_MODULE(_dataobjects)
++//BOOST_PYTHON_MODULE(_dataobjects)
++void init_dataobjects()
+ {
++  // https://linuxtut.com/en/038bf30933d56cb845af/
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("_micromantid._dataobjects"))));
++  boost::python::scope().attr("_dataobjects") = module;
++  boost::python::scope scope1 = module;
++
+   // Doc string options - User defined, python arguments, C++ call signatures
+   boost::python::docstring_options docstrings(true, true, false);
+   // Import numpy
+-  _import_array();
++//_import_array();
+ 
+ @EXPORT_FUNCTIONS@
+ }
 diff --git a/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp b/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
-index 39c0bd5a6e4..3601b144121 100644
+index b7ecb7cf057..b193925cee9 100644
 --- a/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
 +++ b/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
-@@ -18,7 +18,7 @@
+@@ -19,7 +19,7 @@
  
  #include <numpy/arrayobject.h>
  
@@ -139,7 +172,7 @@ index 39c0bd5a6e4..3601b144121 100644
  
  using Mantid::Geometry::IObject;
 diff --git a/Framework/PythonInterface/mantid/geometry/src/Exports/MeshObject.cpp b/Framework/PythonInterface/mantid/geometry/src/Exports/MeshObject.cpp
-index 8ca68573e99..1ce74e5f3fe 100644
+index f6c296df54f..86aa5d6e543 100644
 --- a/Framework/PythonInterface/mantid/geometry/src/Exports/MeshObject.cpp
 +++ b/Framework/PythonInterface/mantid/geometry/src/Exports/MeshObject.cpp
 @@ -15,7 +15,7 @@
@@ -152,7 +185,7 @@ index 8ca68573e99..1ce74e5f3fe 100644
  #include <numpy/arrayobject.h>
  
 diff --git a/Framework/PythonInterface/mantid/geometry/src/geometry.cpp.in b/Framework/PythonInterface/mantid/geometry/src/geometry.cpp.in
-index 7a20d061d34..3a64982ffd3 100644
+index 7a20d061d34..c3b988f868c 100644
 --- a/Framework/PythonInterface/mantid/geometry/src/geometry.cpp.in
 +++ b/Framework/PythonInterface/mantid/geometry/src/geometry.cpp.in
 @@ -13,18 +13,24 @@
@@ -185,7 +218,7 @@ index 7a20d061d34..3a64982ffd3 100644
  @EXPORT_FUNCTIONS@
  }
 diff --git a/Framework/PythonInterface/mantid/kernel/src/Exports/Statistics.cpp b/Framework/PythonInterface/mantid/kernel/src/Exports/Statistics.cpp
-index c7240ef6ad5..e9fecf3dc37 100644
+index 67f9027c8a9..84f73927707 100644
 --- a/Framework/PythonInterface/mantid/kernel/src/Exports/Statistics.cpp
 +++ b/Framework/PythonInterface/mantid/kernel/src/Exports/Statistics.cpp
 @@ -18,7 +18,7 @@
@@ -211,7 +244,7 @@ index 92bd888dc51..b11c4cd120c 100644
  #include <numpy/arrayobject.h>
  
 diff --git a/Framework/PythonInterface/mantid/kernel/src/kernel.cpp.in b/Framework/PythonInterface/mantid/kernel/src/kernel.cpp.in
-index 7128996f6ed..222513a8147 100644
+index 7128996f6ed..1bfb0008bba 100644
 --- a/Framework/PythonInterface/mantid/kernel/src/kernel.cpp.in
 +++ b/Framework/PythonInterface/mantid/kernel/src/kernel.cpp.in
 @@ -23,8 +23,8 @@
@@ -247,36 +280,3 @@ index 7128996f6ed..222513a8147 100644
    // register the python logger with poco
    Poco::LoggingFactory::defaultFactory().registerChannelClass(
      "PythonLoggingChannel",
-diff --git a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
-index 7d1f31fcc30..7ee27f12ebd 100644
---- a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
-+++ b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
-@@ -13,18 +13,24 @@
- #include <boost/python/docstring_options.hpp>
- 
- // See http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
--#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
--#include <numpy/arrayobject.h>
-+//#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
-+//#include <numpy/arrayobject.h>
- 
- // Forward declare
- @EXPORT_DECLARE@
- 
--BOOST_PYTHON_MODULE(_dataobjects)
-+//BOOST_PYTHON_MODULE(_dataobjects)
-+void init_dataobjects()
- {
-+  // https://linuxtut.com/en/038bf30933d56cb845af/
-+  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("_micromantid._dataobjects"))));
-+  boost::python::scope().attr("_dataobjects") = module;
-+  boost::python::scope scope1 = module;
-+
-   // Doc string options - User defined, python arguments, C++ call signatures
-   boost::python::docstring_options docstrings(true, true, false);
-   // Import numpy
--  _import_array();
-+//_import_array();
- 
- @EXPORT_FUNCTIONS@
- }

@@ -1,20 +1,20 @@
 diff --git a/Framework/API/inc/MantidAPI/FrameworkManager.h b/Framework/API/inc/MantidAPI/FrameworkManager.h
-index 5e2db1b8439..19f5d6d0031 100644
+index 2027b833ea5..8a5aee2ba6d 100644
 --- a/Framework/API/inc/MantidAPI/FrameworkManager.h
 +++ b/Framework/API/inc/MantidAPI/FrameworkManager.h
 @@ -13,6 +13,10 @@
  #include "MantidKernel/SingletonHolder.h"
  #include <memory>
-
+ 
 +#ifndef PROJECT_NAME
 +#define PROJECT_NAME mantid
 +#endif
 +
  namespace Mantid {
-
+ 
  namespace API {
 diff --git a/Framework/API/src/FrameworkManager.cpp b/Framework/API/src/FrameworkManager.cpp
-index 7c08dbb6c58..eb925c79e3e 100644
+index 998d23c79bb..5e46fa99aec 100644
 --- a/Framework/API/src/FrameworkManager.cpp
 +++ b/Framework/API/src/FrameworkManager.cpp
 @@ -15,7 +15,7 @@
@@ -23,10 +23,10 @@ index 7c08dbb6c58..eb925c79e3e 100644
  #include "MantidKernel/PropertyManagerDataService.h"
 -#include "MantidKernel/UsageService.h"
 +//#include "MantidKernel/UsageService.h"
- #include "MantidNexusCpp/NeXusFile.hpp"
  
  #include <boost/algorithm/string/classification.hpp>
-@@ -27,7 +27,7 @@
+ #include <boost/algorithm/string/split.hpp>
+@@ -26,7 +26,7 @@
  #include <cstdarg>
  #include <memory>
  
@@ -35,7 +35,7 @@ index 7c08dbb6c58..eb925c79e3e 100644
  
  #ifdef _WIN32
  #include <winsock2.h>
-@@ -46,14 +46,14 @@ namespace {
+@@ -45,14 +45,14 @@ namespace {
  // We have technically introduced a leak by not deleting this object in the situation where
  // `FrameworkManager::shutdown` is not called but the memory cannot be used again by the program since
  // it survives for the duration of the program. It will ultimately be reclaimed by the OS.
@@ -52,7 +52,7 @@ index 7c08dbb6c58..eb925c79e3e 100644
  namespace API {
  namespace {
  /// static logger
-@@ -162,6 +162,7 @@ void FrameworkManagerImpl::setNumOMPThreadsToConfigValue() {
+@@ -151,6 +151,7 @@ void FrameworkManagerImpl::setNumOMPThreadsToConfigValue() {
   * @param nthreads :: The maximum number of threads to use
   */
  void FrameworkManagerImpl::setNumOMPThreads(const int nthreads) {
@@ -60,7 +60,7 @@ index 7c08dbb6c58..eb925c79e3e 100644
    g_log.debug() << "Setting maximum number of threads to " << nthreads << "\n";
    PARALLEL_SET_NUM_THREADS(nthreads);
    if (GLOBAL_TBB_CONTROL) {
-@@ -169,6 +170,7 @@ void FrameworkManagerImpl::setNumOMPThreads(const int nthreads) {
+@@ -158,6 +159,7 @@ void FrameworkManagerImpl::setNumOMPThreads(const int nthreads) {
    }
  
    GLOBAL_TBB_CONTROL = new tbb::global_control(tbb::global_control::max_allowed_parallelism, nthreads);
@@ -68,7 +68,7 @@ index 7c08dbb6c58..eb925c79e3e 100644
  }
  
  /**
-@@ -190,9 +192,9 @@ void FrameworkManagerImpl::clear() {
+@@ -179,9 +181,9 @@ void FrameworkManagerImpl::clear() {
  }
  
  void FrameworkManagerImpl::shutdown() {
@@ -80,7 +80,7 @@ index 7c08dbb6c58..eb925c79e3e 100644
    clear();
  }
  
-@@ -360,9 +362,9 @@ void FrameworkManagerImpl::asynchronousStartupTasks() {
+@@ -346,9 +348,9 @@ void FrameworkManagerImpl::asynchronousStartupTasks() {
      g_log.information() << "Version check disabled.\n";
    }
  
@@ -92,7 +92,7 @@ index 7c08dbb6c58..eb925c79e3e 100644
  void FrameworkManagerImpl::setupUsageReporting() {
    auto &configSvc = ConfigService::Instance();
    auto interval = configSvc.getValue<int>("Usage.BufferCheckInterval");
-@@ -374,9 +376,10 @@ void FrameworkManagerImpl::setupUsageReporting() {
+@@ -360,9 +362,10 @@ void FrameworkManagerImpl::setupUsageReporting() {
    usageSvc.setEnabled(enabled.value_or(false));
    usageSvc.registerStartup();
  }
@@ -104,7 +104,7 @@ index 7c08dbb6c58..eb925c79e3e 100644
    try {
      auto algDownloadInstrument = Mantid::API::AlgorithmManager::Instance().create("DownloadInstrument");
      algDownloadInstrument->setAlgStartupLogging(false);
-@@ -385,10 +388,12 @@ void FrameworkManagerImpl::updateInstrumentDefinitions() {
+@@ -371,10 +374,12 @@ void FrameworkManagerImpl::updateInstrumentDefinitions() {
      g_log.debug() << "DowndloadInstrument algorithm is not available - cannot "
                       "update instrument definitions.\n";
    }
@@ -117,7 +117,7 @@ index 7c08dbb6c58..eb925c79e3e 100644
    try {
      auto algCheckVersion = Mantid::API::AlgorithmManager::Instance().create("CheckMantidVersion");
      algCheckVersion->setAlgStartupLogging(false);
-@@ -397,6 +402,7 @@ void FrameworkManagerImpl::checkIfNewerVersionIsAvailable() {
+@@ -383,6 +388,7 @@ void FrameworkManagerImpl::checkIfNewerVersionIsAvailable() {
      g_log.debug() << "CheckMantidVersion algorithm is not available - cannot "
                       "check if a newer version is available.\n";
    }
@@ -126,19 +126,10 @@ index 7c08dbb6c58..eb925c79e3e 100644
  
  } // namespace API
 diff --git a/Framework/PythonInterface/mantid/api/src/Exports/FrameworkManager.cpp b/Framework/PythonInterface/mantid/api/src/Exports/FrameworkManager.cpp
-index 8250e410498..178317681e5 100644
+index c76812513d7..ba3b7b0f268 100644
 --- a/Framework/PythonInterface/mantid/api/src/Exports/FrameworkManager.cpp
 +++ b/Framework/PythonInterface/mantid/api/src/Exports/FrameworkManager.cpp
-@@ -43,7 +43,7 @@ void declareCPPAlgorithms() { AlgorithmFactory::Instance().subscribe<Mantid::Pyt
-  * pythonscripts.directories
-  */
- void updatePythonPaths() {
--  auto packagesetup = import("mantid.kernel.packagesetup");
-+  auto packagesetup = import(BOOST_PP_STRINGIZE(PROJECT_NAME) ".kernel.packagesetup");
-   packagesetup.attr("update_sys_paths")(ConfigService::Instance().getValue<std::string>(PYTHONPATHS_KEY).value_or(""));
- }
- 
-@@ -70,14 +70,14 @@ FrameworkManagerImpl &instance() {
+@@ -94,14 +94,14 @@ FrameworkManagerImpl &instance() {
      INSTANCE_CALLED = true;
      declareCPPAlgorithms();
      updatePythonPaths();

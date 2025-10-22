@@ -1,93 +1,18 @@
-diff --git a/Framework/PythonInterface/mantid/simpleapi.py b/Framework/PythonInterface/mantid/simpleapi.py
-index 66b5b3727c7..f4d9f63d1a1 100644
---- a/Framework/PythonInterface/mantid/simpleapi.py
-+++ b/Framework/PythonInterface/mantid/simpleapi.py
-@@ -36,28 +36,28 @@ from dateutil.parser import parse as parse_date
- import os
- import sys
+diff --git a/Framework/PythonInterface/mantid/api/_adsimports.py b/Framework/PythonInterface/mantid/api/_adsimports.py
+index 7d9b61ee09e..dfe3b2e2f56 100644
+--- a/Framework/PythonInterface/mantid/api/_adsimports.py
++++ b/Framework/PythonInterface/mantid/api/_adsimports.py
+@@ -15,7 +15,7 @@ The function is also attached to the AnalysisDataService and named importAll.
  
--import mantid
-+#import mantid
+ """
  
- # This is a simple API so give access to the aliases by default as well
--from mantid import api as _api, kernel as _kernel
--from mantid import apiVersion  # noqa: F401
--from mantid.kernel import plugins as _plugin_helper
--from mantid.kernel.funcinspect import (
-+from . import api as _api, kernel as _kernel
-+from . import apiVersion  # noqa: F401
-+from .kernel import plugins as _plugin_helper
-+from .kernel.funcinspect import (
-     customise_func as _customise_func,
-     lhs_info as _lhs_info,
-     LazyFunctionSignature,
- )
- 
- # register matplotlib projection
--try:
--    from mantid import plots  # noqa
--    from mantid.plots._compatability import plotSpectrum, plotBin  # noqa
--except ImportError:
--    pass  # matplotlib is unavailable
-+#try:
-+#    from mantid import plots  # noqa
-+#    from mantid.plots._compatability import plotSpectrum, plotBin  # noqa
-+#except ImportError:
-+#    pass  # matplotlib is unavailable
- 
--from mantid.kernel._aliases import *
--from mantid.api._aliases import *
--from mantid.fitfunctions import *
-+from .kernel import *
-+from .api import *
-+from .fitfunctions import *
- 
- MODULE_NAME = "simpleapi"
- 
-@@ -1122,6 +1123,7 @@ def _create_algorithm_object(name, version=-1, startProgress=None, endProgress=N
-     :param version A int version number
-     """
-     import inspect
-+    from .api import AlgorithmManager
- 
-     parent = _find_parent_pythonalgorithm(inspect.currentframe())
-     if parent is not None:
-@@ -1225,7 +1227,7 @@ def _translate():
-     for each of them
-     :returns: a list of the name of new function calls
-     """
--    from mantid.api import AlgorithmFactory, AlgorithmManager
-+    from .api import AlgorithmFactory, AlgorithmManager
- 
-     new_func_attrs = []
-     # Method names mapped to their algorithm names. Used to detect multiple copies of same method name
-@@ -1311,7 +1313,7 @@ _translate()
- 
- # Load the Python plugins
- # The exported C++ plugins
--from . import _plugins  # noqa
-+#from . import _plugins  # noqa
- 
- # Now the algorithms
- # There is a chicken and egg problem with what we want to achieve here.
-@@ -1326,7 +1327,7 @@ from . import _plugins  # noqa
- # Set the .simpleapi attribute on the 'mantid' module before importing
- # the plugins. Python usual does this once the module has been fully imported
- # but we need to do this earlier
--setattr(mantid, MODULE_NAME, sys.modules["mantid.{}".format(MODULE_NAME)])
-+#setattr(micromantid, MODULE_NAME, sys.modules["micromantid.{}".format(MODULE_NAME)])
- try:
-     _user_key = "user.python.plugins.directories"
-     _user_plugin_dirs = _plugin_helper.get_plugin_paths_as_set(_user_key)
-@@ -1379,5 +1380,5 @@ try:
- except Exception:
-     # If an error gets raised remove the attribute to be consistent
-     # with standard python behaviour and reraise the exception
--    delattr(mantid, MODULE_NAME)
-+    #delattr(mantid, MODULE_NAME)
-     raise
+-from mantid.api import AnalysisDataServiceImpl
++from . import AnalysisDataServiceImpl
+ import inspect as _inspect
+ import keyword as _keyword
+ import re as _re
 diff --git a/Framework/PythonInterface/mantid/api/_workspaceops.py b/Framework/PythonInterface/mantid/api/_workspaceops.py
-index 919408d4a81..bb5272e04cc 100644
+index 919408d4a81..3c2da1e5796 100644
 --- a/Framework/PythonInterface/mantid/api/_workspaceops.py
 +++ b/Framework/PythonInterface/mantid/api/_workspaceops.py
 @@ -13,8 +13,8 @@ It is intended for internal use.
@@ -119,19 +44,6 @@ index 919408d4a81..bb5272e04cc 100644
  
          for typename in workspace_types:
              cls = getattr(api, typename)
-diff --git a/Framework/PythonInterface/mantid/api/_adsimports.py b/Framework/PythonInterface/mantid/api/_adsimports.py
-index 7d9b61ee09e..fcf99d5c080 100644
---- a/Framework/PythonInterface/mantid/api/_adsimports.py
-+++ b/Framework/PythonInterface/mantid/api/_adsimports.py
-@@ -15,7 +15,7 @@ The function is also attached to the AnalysisDataService and named importAll.
-
- """
-
--from mantid.api import AnalysisDataServiceImpl
-+from . import AnalysisDataServiceImpl
- import inspect as _inspect
- import keyword as _keyword
- import re as _re
 diff --git a/Framework/PythonInterface/mantid/fitfunctions.py b/Framework/PythonInterface/mantid/fitfunctions.py
 index cddb03917a9..c4e502f1be0 100644
 --- a/Framework/PythonInterface/mantid/fitfunctions.py
@@ -158,3 +70,103 @@ index 6f9a9cce80a..6127fd46521 100644
  from . import logger
  
  
+diff --git a/Framework/PythonInterface/mantid/simpleapi.py b/Framework/PythonInterface/mantid/simpleapi.py
+index 56fa350cb66..9e1ad60e668 100644
+--- a/Framework/PythonInterface/mantid/simpleapi.py
++++ b/Framework/PythonInterface/mantid/simpleapi.py
+@@ -36,34 +36,34 @@ from dateutil.parser import parse as parse_date
+ import os
+ import sys
+ 
+-import mantid
++#import mantid
+ 
+ # This is a simple API so give access to the aliases by default as well
+-from mantid import api as _api, kernel as _kernel
+-from mantid import apiVersion  # noqa: F401
+-from mantid.kernel import plugins as _plugin_helper
+-from mantid.kernel.funcinspect import (
++from . import api as _api, kernel as _kernel
++from . import apiVersion  # noqa: F401
++from .kernel import plugins as _plugin_helper
++from .kernel.funcinspect import (
+     customise_func as _customise_func,
+     lhs_info as _lhs_info,
+     LazyFunctionSignature,
+ )
+ 
+ # register matplotlib projection
+-try:
+-    from mantid import plots
+-    from mantid.plots._compatability import plotSpectrum, plotBin
+-except ImportError:
+-
+-    def notSupported(*args, **kwargs):
+-        raise ModuleNotFoundError("Plotting is not supported by default. Please install matplotlib to enable plotting.")
+-
+-    plots = notSupported
+-    plotSpectrum = notSupported
+-    plotBin = notSupported
++#try:
++#    from mantid import plots
++#    from mantid.plots._compatability import plotSpectrum, plotBin
++#except ImportError:
++#
++#    def notSupported(*args, **kwargs):
++#        raise ModuleNotFoundError("Plotting is not supported by default. Please install matplotlib to enable plotting.")
++#
++#    plots = notSupported
++#    plotSpectrum = notSupported
++#    plotBin = notSupported
+ 
+-from mantid.kernel._aliases import *
+-from mantid.api._aliases import *
+-from mantid.fitfunctions import *
++from .kernel._aliases import *
++from .api._aliases import *
++from .fitfunctions import *
+ 
+ MODULE_NAME = "simpleapi"
+ 
+@@ -1128,6 +1128,7 @@ def _create_algorithm_object(name, version=-1, startProgress=None, endProgress=N
+     :param version A int version number
+     """
+     import inspect
++    from .api import AlgorithmManager
+ 
+     parent = _find_parent_pythonalgorithm(inspect.currentframe())
+     if parent is not None:
+@@ -1231,7 +1232,7 @@ def _translate():
+     for each of them
+     :returns: a list of the name of new function calls
+     """
+-    from mantid.api import AlgorithmFactory, AlgorithmManager
++    from .api import AlgorithmFactory, AlgorithmManager
+ 
+     new_func_attrs = []
+     # Method names mapped to their algorithm names. Used to detect multiple copies of same method name
+@@ -1317,7 +1318,7 @@ _translate()
+ 
+ # Load the Python plugins
+ # The exported C++ plugins
+-from . import _plugins  # noqa
++#from . import _plugins  # noqa
+ 
+ # Now the algorithms
+ # There is a chicken and egg problem with what we want to achieve here.
+@@ -1332,7 +1333,7 @@ from . import _plugins  # noqa
+ # Set the .simpleapi attribute on the 'mantid' module before importing
+ # the plugins. Python usual does this once the module has been fully imported
+ # but we need to do this earlier
+-setattr(mantid, MODULE_NAME, sys.modules["mantid.{}".format(MODULE_NAME)])
++#setattr(micromantid, MODULE_NAME, sys.modules["micromantid.{}".format(MODULE_NAME)])
+ try:
+     _user_key = "user.python.plugins.directories"
+     _user_plugin_dirs = _plugin_helper.get_plugin_paths_as_set(_user_key)
+@@ -1385,5 +1386,5 @@ try:
+ except Exception:
+     # If an error gets raised remove the attribute to be consistent
+     # with standard python behaviour and reraise the exception
+-    delattr(mantid, MODULE_NAME)
++    #delattr(mantid, MODULE_NAME)
+     raise

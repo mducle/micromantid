@@ -1,13 +1,13 @@
 diff --git a/Framework/PythonInterface/test/testhelpers/WorkspaceCreationHelper/WorkspaceCreationHelperModule.cpp b/Framework/PythonInterface/test/testhelpers/WorkspaceCreationHelper/WorkspaceCreationHelperModule.cpp
-index 1b1aebfdd83..f2275501957 100644
+index 48c3f4561f0..ee3680b44f1 100644
 --- a/Framework/PythonInterface/test/testhelpers/WorkspaceCreationHelper/WorkspaceCreationHelperModule.cpp
 +++ b/Framework/PythonInterface/test/testhelpers/WorkspaceCreationHelper/WorkspaceCreationHelperModule.cpp
-@@ -46,7 +46,7 @@ BOOST_PYTHON_FUNCTION_OVERLOADS(create2DWorkspaceWithGeographicalDetectors_overl
+@@ -47,7 +47,7 @@ BOOST_PYTHON_FUNCTION_OVERLOADS(create2DWorkspaceWithGeographicalDetectors_overl
  GNU_DIAG_ON("conversion")
  GNU_DIAG_ON("unused-local-typedef")
-
+ 
 -BOOST_PYTHON_MODULE(_WorkspaceCreationHelper) {
 +BOOST_PYTHON_MODULE(WorkspaceCreationHelper) {
    using namespace boost::python;
-
+ 
    // Doc string options - User defined, python arguments, C++ call signatures
