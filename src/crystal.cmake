@@ -86,7 +86,7 @@ target_include_directories(Crystal PRIVATE
     ../mantid/Framework/Indexing/inc
     ../mantid/Framework/Kernel/inc
     ../mantid/Framework/Types/inc
-    ../mantid/Framework/NexusCpp/inc
+    ../mantid/Framework/Nexus/inc
     ${Boost_INCLUDE_DIRS}
 )
 set_property(TARGET Crystal PROPERTY POSITION_INDEPENDENT_CODE ON)

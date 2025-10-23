@@ -68,7 +68,7 @@ target_include_directories(DataObjects PUBLIC
     ../mantid/Framework/Indexing/inc
     ../mantid/Framework/Kernel/inc
     ../mantid/Framework/Json/inc
-    ../mantid/Framework/NexusCpp/inc
+    ../mantid/Framework/Nexus/inc
     ../mantid/Framework/Types/inc
     ${Boost_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIR}

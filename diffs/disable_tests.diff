@@ -1,25 +1,3 @@
-diff --git a/Framework/PythonInterface/test/python/mantid/api/AlgoRegisterTest.py b/Framework/PythonInterface/test/python/mantid/api/AlgoRegisterTest.py
-index 370235476ce..d3382ee32db 100644
---- a/Framework/PythonInterface/test/python/mantid/api/AlgoRegisterTest.py
-+++ b/Framework/PythonInterface/test/python/mantid/api/AlgoRegisterTest.py
-@@ -181,7 +181,7 @@ class AlgoTimeRegisterAddTimeTest(unittest.TestCase):
-             # check the values
-             self.assertEqual(entry_name, rec_entry_name)
-             self.assertEqual(rec_thread_id, threading.get_ident())
--
-+"""
-     def test_addTime_threading(self):
-         with amend_config(**self.performance_config):
-             # time entry
-@@ -189,7 +189,7 @@ class AlgoTimeRegisterAddTimeTest(unittest.TestCase):
-             x = threading.Thread(target=self.test_addTime_algo)
-             x.start()
-             x.join()
--
-+"""
- 
- class AlgoTimeRegisterStartTest(unittest.TestCase):
-     @classmethod
 diff --git a/Framework/PythonInterface/test/python/mantid/api/AlgorithmManagerTest.py b/Framework/PythonInterface/test/python/mantid/api/AlgorithmManagerTest.py
 index 6d5676c3f96..39e611567d8 100644
 --- a/Framework/PythonInterface/test/python/mantid/api/AlgorithmManagerTest.py
@@ -64,55 +42,6 @@ index 31c1254b8fb..653a77c2dbd 100644
      def test_default_table_columns_are_editable(self):
          test_table = self._create_test_table()
          self.assertFalse(test_table.isColumnReadOnly(0))
-diff --git a/Framework/PythonInterface/test/python/mantid/api/MatrixWorkspaceTest.py b/Framework/PythonInterface/test/python/mantid/api/MatrixWorkspaceTest.py
-index 38e818e29f2..22ea2e1e55c 100644
---- a/Framework/PythonInterface/test/python/mantid/api/MatrixWorkspaceTest.py
-+++ b/Framework/PythonInterface/test/python/mantid/api/MatrixWorkspaceTest.py
-@@ -410,7 +410,7 @@ class MatrixWorkspaceTest(unittest.TestCase):
-         # test valid takes
-         ws1.setPlotType("marker")
-         self.assertEqual("marker", ws1.getPlotType())
--
-+    """
-     def test_setMarkerStyle(self):
-         run_algorithm("CreateWorkspace", OutputWorkspace="ws1", DataX=[1.0, 2.0, 3.0], DataY=[2.0, 3.0], DataE=[2.0, 3.0], UnitX="TOF")
-         ws1 = AnalysisDataService["ws1"]
-@@ -425,7 +425,7 @@ class MatrixWorkspaceTest(unittest.TestCase):
-         # test valid takes
-         ws1.setMarkerStyle("square")
-         self.assertEqual("square", ws1.getMarkerStyle())
--
-+    """
-     def test_setGetMonitorWS(self):
-         run_algorithm("CreateWorkspace", OutputWorkspace="ws1", DataX=[1.0, 2.0, 3.0], DataY=[2.0, 3.0], DataE=[2.0, 3.0], UnitX="TOF")
-         run_algorithm("CreateWorkspace", OutputWorkspace="ws_mon", DataX=[1.0, 2.0, 3.0], DataY=[2.0, 3.0], DataE=[2.0, 3.0], UnitX="TOF")
-diff --git a/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py b/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
-index 09200e410a0..f06fb3f921b 100644
---- a/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
-+++ b/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
-@@ -14,14 +14,17 @@ import json
- 
- 
- class IPeakTest(unittest.TestCase):
--    def setUp(self):
-+    @classmethod
-+    def setUpClass(cls):
-         # IPeak cannot currently be instatiated so this is a quick way
-         # getting a handle to a peak object
--        ws = CreateSimulationWorkspace("SXD", BinParams="1,1,10")
-+        cls._ws = CreateSimulationWorkspace("SXD", BinParams="1,1,10", OutputWorkspace='ws')
-         # load IDF pre cycle 19_1 when bank 1 upgraded and position was changed
--        LoadInstrument(Workspace=ws, Filename="SXD_Definition.xml", RewriteSpectraMap=False)
--        peaks = CreatePeaksWorkspace(ws, 1)
--        self._peak = peaks.getPeak(0)
-+        LoadInstrument(Workspace=cls._ws, Filename="SXD_Definition.xml", RewriteSpectraMap=False)
-+
-+    def setUp(self):
-+        _peaks = CreatePeaksWorkspace(self._ws, 1)
-+        self._peak = _peaks.getPeak(0)
- 
-         # tolerance for differences in q vectors that a recomputed
-         # on every call.
 diff --git a/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py b/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py
 index 29c50b7a1d8..dcfe442c36a 100644
 --- a/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py
@@ -144,3 +73,74 @@ index 29c50b7a1d8..dcfe442c36a 100644
      def test_contains(self):
          # verify check against None
          self.assertFalse(None in ConfigService)
+diff --git a/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py b/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
+index 09200e410a0..f06fb3f921b 100644
+--- a/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
++++ b/Framework/PythonInterface/test/python/mantid/geometry/IPeakTest.py
+@@ -14,14 +14,17 @@ import json
+ 
+ 
+ class IPeakTest(unittest.TestCase):
+-    def setUp(self):
++    @classmethod
++    def setUpClass(cls):
+         # IPeak cannot currently be instatiated so this is a quick way
+         # getting a handle to a peak object
+-        ws = CreateSimulationWorkspace("SXD", BinParams="1,1,10")
++        cls._ws = CreateSimulationWorkspace("SXD", BinParams="1,1,10", OutputWorkspace='ws')
+         # load IDF pre cycle 19_1 when bank 1 upgraded and position was changed
+-        LoadInstrument(Workspace=ws, Filename="SXD_Definition.xml", RewriteSpectraMap=False)
+-        peaks = CreatePeaksWorkspace(ws, 1)
+-        self._peak = peaks.getPeak(0)
++        LoadInstrument(Workspace=cls._ws, Filename="SXD_Definition.xml", RewriteSpectraMap=False)
++
++    def setUp(self):
++        _peaks = CreatePeaksWorkspace(self._ws, 1)
++        self._peak = _peaks.getPeak(0)
+ 
+         # tolerance for differences in q vectors that a recomputed
+         # on every call.
+diff --git a/Framework/PythonInterface/test/python/mantid/api/MatrixWorkspaceTest.py b/Framework/PythonInterface/test/python/mantid/api/MatrixWorkspaceTest.py
+index 38e818e29f2..22ea2e1e55c 100644
+--- a/Framework/PythonInterface/test/python/mantid/api/MatrixWorkspaceTest.py
++++ b/Framework/PythonInterface/test/python/mantid/api/MatrixWorkspaceTest.py
+@@ -410,7 +410,7 @@ class MatrixWorkspaceTest(unittest.TestCase):
+         # test valid takes
+         ws1.setPlotType("marker")
+         self.assertEqual("marker", ws1.getPlotType())
+-
++    """
+     def test_setMarkerStyle(self):
+         run_algorithm("CreateWorkspace", OutputWorkspace="ws1", DataX=[1.0, 2.0, 3.0], DataY=[2.0, 3.0], DataE=[2.0, 3.0], UnitX="TOF")
+         ws1 = AnalysisDataService["ws1"]
+@@ -425,7 +425,7 @@ class MatrixWorkspaceTest(unittest.TestCase):
+         # test valid takes
+         ws1.setMarkerStyle("square")
+         self.assertEqual("square", ws1.getMarkerStyle())
+-
++    """
+     def test_setGetMonitorWS(self):
+         run_algorithm("CreateWorkspace", OutputWorkspace="ws1", DataX=[1.0, 2.0, 3.0], DataY=[2.0, 3.0], DataE=[2.0, 3.0], UnitX="TOF")
+         run_algorithm("CreateWorkspace", OutputWorkspace="ws_mon", DataX=[1.0, 2.0, 3.0], DataY=[2.0, 3.0], DataE=[2.0, 3.0], UnitX="TOF")
+diff --git a/Framework/PythonInterface/test/python/mantid/api/AlgoRegisterTest.py b/Framework/PythonInterface/test/python/mantid/api/AlgoRegisterTest.py
+index 370235476ce..d3382ee32db 100644
+--- a/Framework/PythonInterface/test/python/mantid/api/AlgoRegisterTest.py
++++ b/Framework/PythonInterface/test/python/mantid/api/AlgoRegisterTest.py
+@@ -181,7 +181,7 @@ class AlgoTimeRegisterAddTimeTest(unittest.TestCase):
+             # check the values
+             self.assertEqual(entry_name, rec_entry_name)
+             self.assertEqual(rec_thread_id, threading.get_ident())
+-
++"""
+     def test_addTime_threading(self):
+         with amend_config(**self.performance_config):
+             # time entry
+@@ -189,7 +189,7 @@ class AlgoTimeRegisterAddTimeTest(unittest.TestCase):
+             x = threading.Thread(target=self.test_addTime_algo)
+             x.start()
+             x.join()
+-
++"""
+ 
+ class AlgoTimeRegisterStartTest(unittest.TestCase):
+     @classmethod

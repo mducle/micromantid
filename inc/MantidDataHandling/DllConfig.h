@@ -25,5 +25,6 @@
 #endif
 
 #include <cstdint>
+#include "MantidKernel/System.h"
 
 #endif /* MANTID_DATAHANDLING_DLL_H */

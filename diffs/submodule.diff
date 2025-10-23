@@ -125,39 +125,6 @@ index 7653f701b24..03b6b1ccd24 100644
  
    // Workspace address comparison
    boost::python::def("isSameWorkspaceObject",
-diff --git a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
-index 7d1f31fcc30..68f0b8c71e8 100644
---- a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
-+++ b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
-@@ -13,18 +13,24 @@
- #include <boost/python/docstring_options.hpp>
- 
- // See http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
--#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
--#include <numpy/arrayobject.h>
-+//#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
-+//#include <numpy/arrayobject.h>
- 
- // Forward declare
- @EXPORT_DECLARE@
- 
--BOOST_PYTHON_MODULE(_dataobjects)
-+//BOOST_PYTHON_MODULE(_dataobjects)
-+void init_dataobjects()
- {
-+  // https://linuxtut.com/en/038bf30933d56cb845af/
-+  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("_micromantid._dataobjects"))));
-+  boost::python::scope().attr("_dataobjects") = module;
-+  boost::python::scope scope1 = module;
-+
-   // Doc string options - User defined, python arguments, C++ call signatures
-   boost::python::docstring_options docstrings(true, true, false);
-   // Import numpy
--  _import_array();
-+//_import_array();
- 
- @EXPORT_FUNCTIONS@
- }
 diff --git a/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp b/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
 index b7ecb7cf057..b193925cee9 100644
 --- a/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
@@ -280,3 +247,36 @@ index 7128996f6ed..1bfb0008bba 100644
    // register the python logger with poco
    Poco::LoggingFactory::defaultFactory().registerChannelClass(
      "PythonLoggingChannel",
+diff --git a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
+index 7d1f31fcc30..68f0b8c71e8 100644
+--- a/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
++++ b/Framework/PythonInterface/mantid/dataobjects/src/dataobjects.cpp.in
+@@ -13,18 +13,24 @@
+ #include <boost/python/docstring_options.hpp>
+ 
+ // See http://docs.scipy.org/doc/numpy/reference/c-api.array.html#PY_ARRAY_UNIQUE_SYMBOL
+-#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
+-#include <numpy/arrayobject.h>
++//#define PY_ARRAY_UNIQUE_SYMBOL DATAOBJECTS_ARRAY_API
++//#include <numpy/arrayobject.h>
+ 
+ // Forward declare
+ @EXPORT_DECLARE@
+ 
+-BOOST_PYTHON_MODULE(_dataobjects)
++//BOOST_PYTHON_MODULE(_dataobjects)
++void init_dataobjects()
+ {
++  // https://linuxtut.com/en/038bf30933d56cb845af/
++  boost::python::object module(boost::python::handle<>(boost::python::borrowed(PyImport_AddModule("_micromantid._dataobjects"))));
++  boost::python::scope().attr("_dataobjects") = module;
++  boost::python::scope scope1 = module;
++
+   // Doc string options - User defined, python arguments, C++ call signatures
+   boost::python::docstring_options docstrings(true, true, false);
+   // Import numpy
+-  _import_array();
++//_import_array();
+ 
+ @EXPORT_FUNCTIONS@
+ }

@@ -1,75 +1,3 @@
-diff --git a/Framework/PythonInterface/mantid/api/_adsimports.py b/Framework/PythonInterface/mantid/api/_adsimports.py
-index 7d9b61ee09e..dfe3b2e2f56 100644
---- a/Framework/PythonInterface/mantid/api/_adsimports.py
-+++ b/Framework/PythonInterface/mantid/api/_adsimports.py
-@@ -15,7 +15,7 @@ The function is also attached to the AnalysisDataService and named importAll.
- 
- """
- 
--from mantid.api import AnalysisDataServiceImpl
-+from . import AnalysisDataServiceImpl
- import inspect as _inspect
- import keyword as _keyword
- import re as _re
-diff --git a/Framework/PythonInterface/mantid/api/_workspaceops.py b/Framework/PythonInterface/mantid/api/_workspaceops.py
-index 919408d4a81..3c2da1e5796 100644
---- a/Framework/PythonInterface/mantid/api/_workspaceops.py
-+++ b/Framework/PythonInterface/mantid/api/_workspaceops.py
-@@ -13,8 +13,8 @@ It is intended for internal use.
- 
- import inspect as _inspect
- 
--from mantid.api import AnalysisDataServiceImpl, ITableWorkspace, Workspace, WorkspaceGroup, performBinaryOp
--from mantid.kernel.funcinspect import customise_func, lhs_info, LazyMethodSignature
-+from . import AnalysisDataServiceImpl, ITableWorkspace, Workspace, WorkspaceGroup, performBinaryOp
-+from ..kernel.funcinspect import customise_func, lhs_info, LazyMethodSignature
- 
- 
- # ------------------------------------------------------------------------------
-@@ -155,7 +155,7 @@ def _do_unary_operation(op, self, lhs_vars):
-             their names as the first and second element respectively
-     """
-     global _workspace_op_tmps
--    import mantid.simpleapi as simpleapi
-+    from .. import simpleapi
- 
-     if lhs_vars[0] > 0:
-         # Assume the first and clear the temporaries as this
-@@ -240,7 +240,7 @@ def attach_func_as_method(name, func_obj, self_param_name, algm_name, workspace_
-     customise_func(_method_impl, func_obj.__name__, LazyMethodSignature(alg_name=algm_name), func_obj.__doc__)
- 
-     if workspace_types or len(workspace_types) > 0:
--        from mantid import api
-+        from .. import api
- 
-         for typename in workspace_types:
-             cls = getattr(api, typename)
-diff --git a/Framework/PythonInterface/mantid/fitfunctions.py b/Framework/PythonInterface/mantid/fitfunctions.py
-index cddb03917a9..c4e502f1be0 100644
---- a/Framework/PythonInterface/mantid/fitfunctions.py
-+++ b/Framework/PythonInterface/mantid/fitfunctions.py
-@@ -4,7 +4,7 @@
- #   NScD Oak Ridge National Laboratory, European Spallation Source,
- #   Institut Laue - Langevin & CSNS, Institute of High Energy Physics, CAS
- # SPDX - License - Identifier: GPL - 3.0 +
--from mantid.api import FunctionFactory, Workspace, AlgorithmManager, IFunction1D
-+from .api import FunctionFactory, Workspace, AlgorithmManager, IFunction1D
- import numpy as np
- 
- 
-diff --git a/Framework/PythonInterface/mantid/kernel/AmendConfig.py b/Framework/PythonInterface/mantid/kernel/AmendConfig.py
-index 6f9a9cce80a..6127fd46521 100644
---- a/Framework/PythonInterface/mantid/kernel/AmendConfig.py
-+++ b/Framework/PythonInterface/mantid/kernel/AmendConfig.py
-@@ -9,7 +9,7 @@ from contextlib import contextmanager
- from copy import deepcopy
- from typing import Union
- 
--from mantid.kernel import ConfigService
-+from . import ConfigService
- from . import logger
- 
- 
 diff --git a/Framework/PythonInterface/mantid/simpleapi.py b/Framework/PythonInterface/mantid/simpleapi.py
 index 56fa350cb66..9e1ad60e668 100644
 --- a/Framework/PythonInterface/mantid/simpleapi.py
@@ -170,3 +98,75 @@ index 56fa350cb66..9e1ad60e668 100644
 -    delattr(mantid, MODULE_NAME)
 +    #delattr(mantid, MODULE_NAME)
      raise
+diff --git a/Framework/PythonInterface/mantid/api/_workspaceops.py b/Framework/PythonInterface/mantid/api/_workspaceops.py
+index 919408d4a81..3c2da1e5796 100644
+--- a/Framework/PythonInterface/mantid/api/_workspaceops.py
++++ b/Framework/PythonInterface/mantid/api/_workspaceops.py
+@@ -13,8 +13,8 @@ It is intended for internal use.
+ 
+ import inspect as _inspect
+ 
+-from mantid.api import AnalysisDataServiceImpl, ITableWorkspace, Workspace, WorkspaceGroup, performBinaryOp
+-from mantid.kernel.funcinspect import customise_func, lhs_info, LazyMethodSignature
++from . import AnalysisDataServiceImpl, ITableWorkspace, Workspace, WorkspaceGroup, performBinaryOp
++from ..kernel.funcinspect import customise_func, lhs_info, LazyMethodSignature
+ 
+ 
+ # ------------------------------------------------------------------------------
+@@ -155,7 +155,7 @@ def _do_unary_operation(op, self, lhs_vars):
+             their names as the first and second element respectively
+     """
+     global _workspace_op_tmps
+-    import mantid.simpleapi as simpleapi
++    from .. import simpleapi
+ 
+     if lhs_vars[0] > 0:
+         # Assume the first and clear the temporaries as this
+@@ -240,7 +240,7 @@ def attach_func_as_method(name, func_obj, self_param_name, algm_name, workspace_
+     customise_func(_method_impl, func_obj.__name__, LazyMethodSignature(alg_name=algm_name), func_obj.__doc__)
+ 
+     if workspace_types or len(workspace_types) > 0:
+-        from mantid import api
++        from .. import api
+ 
+         for typename in workspace_types:
+             cls = getattr(api, typename)
+diff --git a/Framework/PythonInterface/mantid/api/_adsimports.py b/Framework/PythonInterface/mantid/api/_adsimports.py
+index 7d9b61ee09e..dfe3b2e2f56 100644
+--- a/Framework/PythonInterface/mantid/api/_adsimports.py
++++ b/Framework/PythonInterface/mantid/api/_adsimports.py
+@@ -15,7 +15,7 @@ The function is also attached to the AnalysisDataService and named importAll.
+ 
+ """
+ 
+-from mantid.api import AnalysisDataServiceImpl
++from . import AnalysisDataServiceImpl
+ import inspect as _inspect
+ import keyword as _keyword
+ import re as _re
+diff --git a/Framework/PythonInterface/mantid/fitfunctions.py b/Framework/PythonInterface/mantid/fitfunctions.py
+index cddb03917a9..c4e502f1be0 100644
+--- a/Framework/PythonInterface/mantid/fitfunctions.py
++++ b/Framework/PythonInterface/mantid/fitfunctions.py
+@@ -4,7 +4,7 @@
+ #   NScD Oak Ridge National Laboratory, European Spallation Source,
+ #   Institut Laue - Langevin & CSNS, Institute of High Energy Physics, CAS
+ # SPDX - License - Identifier: GPL - 3.0 +
+-from mantid.api import FunctionFactory, Workspace, AlgorithmManager, IFunction1D
++from .api import FunctionFactory, Workspace, AlgorithmManager, IFunction1D
+ import numpy as np
+ 
+ 
+diff --git a/Framework/PythonInterface/mantid/kernel/AmendConfig.py b/Framework/PythonInterface/mantid/kernel/AmendConfig.py
+index 6f9a9cce80a..6127fd46521 100644
+--- a/Framework/PythonInterface/mantid/kernel/AmendConfig.py
++++ b/Framework/PythonInterface/mantid/kernel/AmendConfig.py
+@@ -9,7 +9,7 @@ from contextlib import contextmanager
+ from copy import deepcopy
+ from typing import Union
+ 
+-from mantid.kernel import ConfigService
++from . import ConfigService
+ from . import logger
+ 
+ 

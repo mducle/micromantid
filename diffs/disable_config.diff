@@ -37,35 +37,6 @@ index 9405493b226..cd4a1bdba18 100644
  }
  
  /** Enable or disable Logging of start and end messages
-diff --git a/Framework/API/src/IFunction.cpp b/Framework/API/src/IFunction.cpp
-index f95a0ae63e9..475855640d7 100644
---- a/Framework/API/src/IFunction.cpp
-+++ b/Framework/API/src/IFunction.cpp
-@@ -30,7 +30,7 @@
- #include "MantidKernel/ProgressBase.h"
- #include "MantidKernel/Strings.h"
- #include "MantidKernel/UnitFactory.h"
--#include "MantidKernel/UsageService.h"
-+//#include "MantidKernel/UsageService.h"
- 
- #include <boost/lexical_cast.hpp>
- 
-@@ -95,6 +95,7 @@ IFunction::~IFunction() { m_attrs.clear(); }
- Registers the usage of the function with the UsageService
-  */
- void IFunction::registerFunctionUsage(bool internal) {
-+/*
-   if (!Kernel::UsageService::Instance().isEnabled()) {
-     return;
-   }
-@@ -102,6 +103,7 @@ void IFunction::registerFunctionUsage(bool internal) {
-     m_isRegistered = true;
-     Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, name(), internal);
-   }
-+*/
- }
- /**
-  * Virtual copy constructor
 diff --git a/Framework/API/src/MatrixWorkspace.cpp b/Framework/API/src/MatrixWorkspace.cpp
 index 54b7170cd12..308ca5becd0 100644
 --- a/Framework/API/src/MatrixWorkspace.cpp
@@ -83,34 +54,6 @@ index 54b7170cd12..308ca5becd0 100644
      return m_marker;
  }
  
-diff --git a/Framework/CurveFitting/src/Algorithms/Fit.cpp b/Framework/CurveFitting/src/Algorithms/Fit.cpp
-index 8b77772ebb7..3aa73f190d7 100644
---- a/Framework/CurveFitting/src/Algorithms/Fit.cpp
-+++ b/Framework/CurveFitting/src/Algorithms/Fit.cpp
-@@ -22,7 +22,7 @@
- #include "MantidKernel/BoundedValidator.h"
- #include "MantidKernel/Exception.h"
- #include "MantidKernel/StartsWithValidator.h"
--#include "MantidKernel/UsageService.h"
-+//#include "MantidKernel/UsageService.h"
- 
- #include <memory>
- 
-@@ -375,12 +375,14 @@ void Fit::createOutput() {
- Register usage of the minimizer and cost function with the UsageService
- */
- void Fit::registerMinimizerAndCostFuncUsage() {
-+/*
-   std::stringstream ss;
-   ss << m_minimizer->name() << " Minimizer";
-   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
-   ss.str("");
-   ss << m_costFunction->name() << " Cost Function";
-   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
-+*/
- }
- 
- /** Executes the algorithm
 diff --git a/Framework/Kernel/inc/MantidKernel/ConfigService.h b/Framework/Kernel/inc/MantidKernel/ConfigService.h
 index d66e1ba8daa..c89c2fc2bf2 100644
 --- a/Framework/Kernel/inc/MantidKernel/ConfigService.h
@@ -312,3 +255,60 @@ index c661a36f639..b7f81652f9f 100644
  
  std::string ConfigServiceImpl::getFullPath(const std::string &filename, const bool ignoreDirs,
                                             const int options) const {
+diff --git a/Framework/API/src/IFunction.cpp b/Framework/API/src/IFunction.cpp
+index f95a0ae63e9..475855640d7 100644
+--- a/Framework/API/src/IFunction.cpp
++++ b/Framework/API/src/IFunction.cpp
+@@ -30,7 +30,7 @@
+ #include "MantidKernel/ProgressBase.h"
+ #include "MantidKernel/Strings.h"
+ #include "MantidKernel/UnitFactory.h"
+-#include "MantidKernel/UsageService.h"
++//#include "MantidKernel/UsageService.h"
+ 
+ #include <boost/lexical_cast.hpp>
+ 
+@@ -95,6 +95,7 @@ IFunction::~IFunction() { m_attrs.clear(); }
+ Registers the usage of the function with the UsageService
+  */
+ void IFunction::registerFunctionUsage(bool internal) {
++/*
+   if (!Kernel::UsageService::Instance().isEnabled()) {
+     return;
+   }
+@@ -102,6 +103,7 @@ void IFunction::registerFunctionUsage(bool internal) {
+     m_isRegistered = true;
+     Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, name(), internal);
+   }
++*/
+ }
+ /**
+  * Virtual copy constructor
+diff --git a/Framework/CurveFitting/src/Algorithms/Fit.cpp b/Framework/CurveFitting/src/Algorithms/Fit.cpp
+index 8b77772ebb7..3aa73f190d7 100644
+--- a/Framework/CurveFitting/src/Algorithms/Fit.cpp
++++ b/Framework/CurveFitting/src/Algorithms/Fit.cpp
+@@ -22,7 +22,7 @@
+ #include "MantidKernel/BoundedValidator.h"
+ #include "MantidKernel/Exception.h"
+ #include "MantidKernel/StartsWithValidator.h"
+-#include "MantidKernel/UsageService.h"
++//#include "MantidKernel/UsageService.h"
+ 
+ #include <memory>
+ 
+@@ -375,12 +375,14 @@ void Fit::createOutput() {
+ Register usage of the minimizer and cost function with the UsageService
+ */
+ void Fit::registerMinimizerAndCostFuncUsage() {
++/*
+   std::stringstream ss;
+   ss << m_minimizer->name() << " Minimizer";
+   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
+   ss.str("");
+   ss << m_costFunction->name() << " Cost Function";
+   Kernel::UsageService::Instance().registerFeatureUsage(Kernel::FeatureType::Function, ss.str(), false);
++*/
+ }
+ 
+ /** Executes the algorithm

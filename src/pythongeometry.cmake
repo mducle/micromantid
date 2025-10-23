@@ -73,7 +73,7 @@ target_include_directories(PythonGeometryModule PRIVATE
   ../mantid/Framework/Geometry/inc
   ../mantid/Framework/Kernel/inc
   ../mantid/Framework/Beamline/inc
-  ../mantid/Framework/NexusCpp/inc
+  ../mantid/Framework/Nexus/inc
   ../mantid/Framework/Types/inc
   ../mantid/Framework/PythonInterface/core/inc
   ${Boost_INCLUDE_DIRS}

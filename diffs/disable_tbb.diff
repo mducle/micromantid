@@ -1,3 +1,263 @@
+diff --git a/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h b/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
+index 623dc2f3677..8f547a3d2e0 100644
+--- a/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
++++ b/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
+@@ -12,11 +12,10 @@
+ #include "MantidGeometry/IDetector.h"
+ #include "MantidGeometry/Instrument/Parameter.h"
+ 
+-#include "tbb/concurrent_unordered_map.h"
+-
+ #include <memory>
+ #include <typeinfo>
+ #include <vector>
++#include <unordered_map>
+ 
+ namespace Mantid {
+ namespace Kernel {
+@@ -37,17 +36,17 @@ class Instrument;
+   @date 2/12/2008
+ */
+ /// Parameter map iterator typedef
+-using component_map_it = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
+-using component_map_cit = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
++using component_map_it = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
++using component_map_cit = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
+ 
+ class MANTID_GEOMETRY_DLL ParameterMap {
+ public:
+   /// Parameter map typedef
+-  using pmap = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>;
++  using pmap = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>;
+   /// Parameter map iterator typedef
+-  using pmap_it = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
++  using pmap_it = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
+   /// Parameter map iterator typedef
+-  using pmap_cit = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
++  using pmap_cit = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
+   /// Default constructor
+   ParameterMap();
+   /// Const constructor
+diff --git a/Framework/Geometry/src/Instrument/ParameterMap.cpp b/Framework/Geometry/src/Instrument/ParameterMap.cpp
+index 7f6b03d6cd1..53ffcbdb355 100644
+--- a/Framework/Geometry/src/Instrument/ParameterMap.cpp
++++ b/Framework/Geometry/src/Instrument/ParameterMap.cpp
+@@ -298,7 +298,8 @@ void ParameterMap::clearParametersByName(const std::string &name) {
+   // Key is component ID so have to search through whole lot
+   for (auto itr = m_map.begin(); itr != m_map.end();) {
+     if (itr->second->name() == name) {
+-      PARALLEL_CRITICAL(unsafe_erase) { itr = m_map.unsafe_erase(itr); }
++      //PARALLEL_CRITICAL(unsafe_erase) { itr = m_map.unsafe_erase(itr); }
++      itr = m_map.erase(itr);
+     } else {
+       ++itr;
+     }
+@@ -320,7 +321,8 @@ void ParameterMap::clearParametersByName(const std::string &name, const ICompone
+     auto itrs = m_map.equal_range(id);
+     for (auto it = itrs.first; it != itrs.second;) {
+       if (it->second->name() == name) {
+-        PARALLEL_CRITICAL(unsafe_erase) { it = m_map.unsafe_erase(it); }
++        //PARALLEL_CRITICAL(unsafe_erase) { it = m_map.unsafe_erase(it); }
++        it = m_map.erase(it);
+       } else {
+         ++it;
+       }
+diff --git a/Framework/Kernel/inc/MantidKernel/Unit.h b/Framework/Kernel/inc/MantidKernel/Unit.h
+index 0844fc2aafd..c7816a99a59 100644
+--- a/Framework/Kernel/inc/MantidKernel/Unit.h
++++ b/Framework/Kernel/inc/MantidKernel/Unit.h
+@@ -11,6 +11,7 @@
+ //----------------------------------------------------------------------
+ #include "MantidKernel/UnitLabel.h"
+ #include <utility>
++#include <algorithm>
+ 
+ #include <unordered_map>
+ #include <vector>
+@@ -18,8 +19,6 @@
+ #include <memory>
+ #endif
+ 
+-#include "tbb/concurrent_unordered_map.h"
+-
+ namespace Mantid {
+ namespace Kernel {
+ 
+@@ -182,10 +181,10 @@ private:
+   using ConstantAndPower = std::pair<double, double>;
+   /// Lists, for a given starting unit, the units to which a 'quick conversion'
+   /// can be made
+-  using UnitConversions = tbb::concurrent_unordered_map<std::string, ConstantAndPower>;
++  using UnitConversions = std::unordered_map<std::string, ConstantAndPower>;
+   /// The possible 'quick conversions' are held in a map with the starting unit
+   /// as the key
+-  using ConversionsMap = tbb::concurrent_unordered_map<std::string, UnitConversions>;
++  using ConversionsMap = std::unordered_map<std::string, UnitConversions>;
+   /// The table of possible 'quick conversions'
+   static ConversionsMap s_conversionFactors;
+ };
+diff --git a/Framework/DataObjects/src/EventList.cpp b/Framework/DataObjects/src/EventList.cpp
+index 88b440478e5..ad1adf2b864 100644
+--- a/Framework/DataObjects/src/EventList.cpp
++++ b/Framework/DataObjects/src/EventList.cpp
+@@ -18,7 +18,7 @@
+ // qualifier applied to function type has no meaning; ignored
+ #pragma warning(disable : 4180)
+ #endif
+-#include "tbb/parallel_sort.h"
++//#include "tbb/parallel_sort.h"
+ #ifdef _MSC_VER
+ #pragma warning(default : 4180)
+ #endif
+@@ -1086,20 +1086,20 @@ template <class RandomIt> void switchable_sort(RandomIt first, RandomIt last) {
+   const auto vec_size = static_cast<size_t>(std::distance(first, last));
+   if (vec_size < 2)
+     return;
+-  else if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
++  else //if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
+     std::sort(first, last);
+-  else
+-    tbb::parallel_sort(first, last);
++  //else
++  //  tbb::parallel_sort(first, last);
+ }
+ 
+ template <class RandomIt, class Compare> void switchable_sort(RandomIt first, RandomIt last, Compare comp) {
+   const auto vec_size = static_cast<size_t>(std::distance(first, last));
+   if (vec_size < 2)
+     return;
+-  else if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
++  else //if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
+     std::sort(first, last, std::move(comp));
+-  else
+-    tbb::parallel_sort(first, last, comp);
++  //else
++  //  tbb::parallel_sort(first, last, comp);
+ }
+ } // anonymous namespace
+ 
+diff --git a/Framework/DataObjects/src/EventWorkspace.cpp b/Framework/DataObjects/src/EventWorkspace.cpp
+index 909b0a114b6..d3870631aaa 100644
+--- a/Framework/DataObjects/src/EventWorkspace.cpp
++++ b/Framework/DataObjects/src/EventWorkspace.cpp
+@@ -24,7 +24,7 @@
+ #include "MantidKernel/MultiThreaded.h"
+ #include "MantidKernel/TimeSeriesProperty.h"
+ 
+-#include "tbb/parallel_for.h"
++//#include "tbb/parallel_for.h"
+ #include <algorithm>
+ #include <limits>
+ #include <numeric>
+@@ -623,6 +623,7 @@ void EventWorkspace::resetAllXToSingleBin() {
+ }
+ 
+ /** Task for sorting an event list */
++/*
+ class EventSortingTask {
+ public:
+   /// ctor
+@@ -653,6 +654,7 @@ private:
+   /// Optional Progress dialog.
+   Mantid::API::Progress *prog;
+ };
++*/
+ 
+ /*
+  * Review each event list to get the sort type
+@@ -680,12 +682,20 @@ void EventWorkspace::sortAll(EventSortType sortType, Mantid::API::Progress *prog
+     }
+     return;
+   }
+-
++/*
+   // Create the thread pool using tbb
+   EventSortingTask task(this, sortType, prog);
+   constexpr size_t GRAINSIZE_DEFAULT{100}; // somewhat arbitrary
+   const size_t grainsize = std::min<size_t>(GRAINSIZE_DEFAULT, (this->getNumberHistograms() / GRAINSIZE_DEFAULT) + 1);
+   tbb::parallel_for(tbb::blocked_range<size_t>(0, data.size(), grainsize), task);
++*/
++  for (size_t wi = 0; wi < data.size(); ++wi) {
++    const auto &spectrum = this->getSpectrum(wi); // follow the method signature
++    spectrum.sort(sortType);
++  }
++  // Report progress
++  if (prog != nullptr)
++    prog->report("Sorting");
+ }
+ 
+ /** Integrate all the spectra in the matrix workspace within the range given.
+diff --git a/Framework/DataObjects/src/FakeMD.cpp b/Framework/DataObjects/src/FakeMD.cpp
+index 4eb29b6e763..670a851c617 100644
+--- a/Framework/DataObjects/src/FakeMD.cpp
++++ b/Framework/DataObjects/src/FakeMD.cpp
+@@ -13,8 +13,8 @@
+ #include "MantidDataObjects/MDEventFactory.h"
+ #include "MantidDataObjects/MDEventInserter.h"
+ #include "MantidGeometry/Instrument.h"
+-#include "MantidKernel/ThreadPool.h"
+-#include "MantidKernel/ThreadScheduler.h"
++//#include "MantidKernel/ThreadPool.h"
++//#include "MantidKernel/ThreadScheduler.h"
+ #include "MantidKernel/Utils.h"
+ #include "MantidKernel/normal_distribution.h"
+ 
+@@ -22,8 +22,8 @@
+ 
+ namespace Mantid::DataObjects {
+ 
+-using Kernel::ThreadPool;
+-using Kernel::ThreadSchedulerFIFO;
++//using Kernel::ThreadPool;
++//using Kernel::ThreadSchedulerFIFO;
+ 
+ /**
+  * Constructor
+@@ -141,10 +141,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakePeak(typename MDEventWork
+   }
+ 
+   ws->splitBox();
+-  auto *ts = new ThreadSchedulerFIFO();
+-  ThreadPool tp(ts);
+-  ws->splitAllIfNeeded(ts);
+-  tp.joinAll();
++//auto *ts = new ThreadSchedulerFIFO();
++//ThreadPool tp(ts);
++  ws->splitAllIfNeeded(nullptr);
++//tp.joinAll();
+   ws->refreshCache();
+ }
+ 
+@@ -250,10 +250,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakeEllipsoid(typename MDEven
+   }
+ 
+   ws->splitBox();
+-  auto *ts = new ThreadSchedulerFIFO();
+-  ThreadPool tp(ts);
+-  ws->splitAllIfNeeded(ts);
+-  tp.joinAll();
++//auto *ts = new ThreadSchedulerFIFO();
++//ThreadPool tp(ts);
++  ws->splitAllIfNeeded(nullptr);
++//tp.joinAll();
+   ws->refreshCache();
+ }
+ 
+@@ -309,10 +309,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakeUniformData(typename MDEv
+     addFakeRegularData<MDE, nd>(m_uniformParams, ws);
+ 
+   ws->splitBox();
+-  auto *ts = new ThreadSchedulerFIFO();
+-  ThreadPool tp(ts);
+-  ws->splitAllIfNeeded(ts);
+-  tp.joinAll();
++//auto *ts = new ThreadSchedulerFIFO();
++//ThreadPool tp(ts);
++  ws->splitAllIfNeeded(nullptr);
++//tp.joinAll();
+   ws->refreshCache();
+ }
+ 
 diff --git a/Framework/API/inc/MantidAPI/BoxController.h b/Framework/API/inc/MantidAPI/BoxController.h
 index fad187e8808..592522af696 100644
 --- a/Framework/API/inc/MantidAPI/BoxController.h
@@ -230,6 +490,15 @@ diff --git a/Framework/DataHandling/src/LoadBankFromDiskTask.cpp b/Framework/Dat
 index a7dbd96750c..dfd5c19f7f3 100644
 --- a/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
 +++ b/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
+@@ -10,7 +10,7 @@
+ #include "MantidDataHandling/LoadEventNexus.h"
+ #include "MantidDataHandling/ProcessBankCompressed.h"
+ #include "MantidDataHandling/ProcessBankData.h"
+-#include "MantidKernel/ParallelMinMax.h"
++//#include "MantidKernel/ParallelMinMax.h"
+ #include "MantidKernel/Timer.h"
+ #include "MantidKernel/Unit.h"
+ #include "MantidKernel/VectorHelper.h"
 @@ -42,12 +42,12 @@ namespace Mantid::DataHandling {
   */
  LoadBankFromDiskTask::LoadBankFromDiskTask(DefaultEventLoader &loader, std::string entry_name, std::string entry_type,
@@ -247,6 +516,36 @@ index a7dbd96750c..dfd5c19f7f3 100644
    m_cost = static_cast<double>(numEvents);
  
    // some field names changed over time
+@@ -188,9 +188,9 @@ std::unique_ptr<std::vector<uint32_t>> LoadBankFromDiskTask::loadEventId(Nexus::
+
+     // determine the range of pixel ids
+     {
+-      const auto [min_id, max_id] = Mantid::Kernel::parallel_minmax<uint32_t>(event_id);
+-      m_min_id = min_id;
+-      m_max_id = max_id;
++      const auto [min_id, max_id] = std::minmax_element(event_id.get()->cbegin(), event_id.get()->cend());
++      m_min_id = static_cast<uint32_t>(*min_id);
++      m_max_id = static_cast<uint32_t>(*max_id);
+     }
+
+     if (m_min_id > static_cast<uint32_t>(m_loader.eventid_max)) {
+@@ -462,13 +462,13 @@ void LoadBankFromDiskTask::run() {
+     // this method is for unweighted events that the user wants compressed on load
+
+     // TODO should this be created elsewhere?
+-    const auto [tof_min, tof_max] = Mantid::Kernel::parallel_minmax(event_time_of_flight);
++    const auto [tof_min, tof_max] = std::minmax_element(event_time_of_flight.get()->cbegin(), event_time_of_flight.get()->cend());
+
+     const bool log_compression = (m_loader.alg->compressTolerance < 0);
+
+     // reduce tof range if filtering was requested
+-    auto tof_min_fixed = tof_min;
+-    auto tof_max_fixed = tof_max;
++    auto tof_min_fixed = *tof_min;
++    auto tof_max_fixed = *tof_max;
+     if (m_loader.alg->filter_tof_range) {
+       if (m_loader.alg->filter_tof_max != EMPTY_DBL())
+         tof_max_fixed = std::min<float>(tof_max_fixed, static_cast<float>(m_loader.alg->filter_tof_max));
 @@ -505,27 +505,31 @@ void LoadBankFromDiskTask::run() {
                                                              *histogram_bin_edges);
  
@@ -382,266 +681,6 @@ index 68822e195b9..feb3d6f5d1a 100644
    }
  
  #ifndef _WIN32
-diff --git a/Framework/DataObjects/src/EventList.cpp b/Framework/DataObjects/src/EventList.cpp
-index 88b440478e5..ad1adf2b864 100644
---- a/Framework/DataObjects/src/EventList.cpp
-+++ b/Framework/DataObjects/src/EventList.cpp
-@@ -18,7 +18,7 @@
- // qualifier applied to function type has no meaning; ignored
- #pragma warning(disable : 4180)
- #endif
--#include "tbb/parallel_sort.h"
-+//#include "tbb/parallel_sort.h"
- #ifdef _MSC_VER
- #pragma warning(default : 4180)
- #endif
-@@ -1086,20 +1086,20 @@ template <class RandomIt> void switchable_sort(RandomIt first, RandomIt last) {
-   const auto vec_size = static_cast<size_t>(std::distance(first, last));
-   if (vec_size < 2)
-     return;
--  else if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
-+  else //if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
-     std::sort(first, last);
--  else
--    tbb::parallel_sort(first, last);
-+  //else
-+  //  tbb::parallel_sort(first, last);
- }
- 
- template <class RandomIt, class Compare> void switchable_sort(RandomIt first, RandomIt last, Compare comp) {
-   const auto vec_size = static_cast<size_t>(std::distance(first, last));
-   if (vec_size < 2)
-     return;
--  else if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
-+  else //if (vec_size < MIN_VEC_LENGTH_PARALLEL_SORT)
-     std::sort(first, last, std::move(comp));
--  else
--    tbb::parallel_sort(first, last, comp);
-+  //else
-+  //  tbb::parallel_sort(first, last, comp);
- }
- } // anonymous namespace
- 
-diff --git a/Framework/DataObjects/src/EventWorkspace.cpp b/Framework/DataObjects/src/EventWorkspace.cpp
-index 909b0a114b6..d3870631aaa 100644
---- a/Framework/DataObjects/src/EventWorkspace.cpp
-+++ b/Framework/DataObjects/src/EventWorkspace.cpp
-@@ -24,7 +24,7 @@
- #include "MantidKernel/MultiThreaded.h"
- #include "MantidKernel/TimeSeriesProperty.h"
- 
--#include "tbb/parallel_for.h"
-+//#include "tbb/parallel_for.h"
- #include <algorithm>
- #include <limits>
- #include <numeric>
-@@ -623,6 +623,7 @@ void EventWorkspace::resetAllXToSingleBin() {
- }
- 
- /** Task for sorting an event list */
-+/*
- class EventSortingTask {
- public:
-   /// ctor
-@@ -653,6 +654,7 @@ private:
-   /// Optional Progress dialog.
-   Mantid::API::Progress *prog;
- };
-+*/
- 
- /*
-  * Review each event list to get the sort type
-@@ -680,12 +682,20 @@ void EventWorkspace::sortAll(EventSortType sortType, Mantid::API::Progress *prog
-     }
-     return;
-   }
--
-+/*
-   // Create the thread pool using tbb
-   EventSortingTask task(this, sortType, prog);
-   constexpr size_t GRAINSIZE_DEFAULT{100}; // somewhat arbitrary
-   const size_t grainsize = std::min<size_t>(GRAINSIZE_DEFAULT, (this->getNumberHistograms() / GRAINSIZE_DEFAULT) + 1);
-   tbb::parallel_for(tbb::blocked_range<size_t>(0, data.size(), grainsize), task);
-+*/
-+  for (size_t wi = 0; wi < data.size(); ++wi) {
-+    const auto &spectrum = this->getSpectrum(wi); // follow the method signature
-+    spectrum.sort(sortType);
-+  }
-+  // Report progress
-+  if (prog != nullptr)
-+    prog->report("Sorting");
- }
- 
- /** Integrate all the spectra in the matrix workspace within the range given.
-diff --git a/Framework/DataObjects/src/FakeMD.cpp b/Framework/DataObjects/src/FakeMD.cpp
-index 4eb29b6e763..670a851c617 100644
---- a/Framework/DataObjects/src/FakeMD.cpp
-+++ b/Framework/DataObjects/src/FakeMD.cpp
-@@ -13,8 +13,8 @@
- #include "MantidDataObjects/MDEventFactory.h"
- #include "MantidDataObjects/MDEventInserter.h"
- #include "MantidGeometry/Instrument.h"
--#include "MantidKernel/ThreadPool.h"
--#include "MantidKernel/ThreadScheduler.h"
-+//#include "MantidKernel/ThreadPool.h"
-+//#include "MantidKernel/ThreadScheduler.h"
- #include "MantidKernel/Utils.h"
- #include "MantidKernel/normal_distribution.h"
- 
-@@ -22,8 +22,8 @@
- 
- namespace Mantid::DataObjects {
- 
--using Kernel::ThreadPool;
--using Kernel::ThreadSchedulerFIFO;
-+//using Kernel::ThreadPool;
-+//using Kernel::ThreadSchedulerFIFO;
- 
- /**
-  * Constructor
-@@ -141,10 +141,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakePeak(typename MDEventWork
-   }
- 
-   ws->splitBox();
--  auto *ts = new ThreadSchedulerFIFO();
--  ThreadPool tp(ts);
--  ws->splitAllIfNeeded(ts);
--  tp.joinAll();
-+//auto *ts = new ThreadSchedulerFIFO();
-+//ThreadPool tp(ts);
-+  ws->splitAllIfNeeded(nullptr);
-+//tp.joinAll();
-   ws->refreshCache();
- }
- 
-@@ -250,10 +250,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakeEllipsoid(typename MDEven
-   }
- 
-   ws->splitBox();
--  auto *ts = new ThreadSchedulerFIFO();
--  ThreadPool tp(ts);
--  ws->splitAllIfNeeded(ts);
--  tp.joinAll();
-+//auto *ts = new ThreadSchedulerFIFO();
-+//ThreadPool tp(ts);
-+  ws->splitAllIfNeeded(nullptr);
-+//tp.joinAll();
-   ws->refreshCache();
- }
- 
-@@ -309,10 +309,10 @@ template <typename MDE, size_t nd> void FakeMD::addFakeUniformData(typename MDEv
-     addFakeRegularData<MDE, nd>(m_uniformParams, ws);
- 
-   ws->splitBox();
--  auto *ts = new ThreadSchedulerFIFO();
--  ThreadPool tp(ts);
--  ws->splitAllIfNeeded(ts);
--  tp.joinAll();
-+//auto *ts = new ThreadSchedulerFIFO();
-+//ThreadPool tp(ts);
-+  ws->splitAllIfNeeded(nullptr);
-+//tp.joinAll();
-   ws->refreshCache();
- }
- 
-diff --git a/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h b/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
-index 623dc2f3677..8f547a3d2e0 100644
---- a/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
-+++ b/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
-@@ -12,11 +12,10 @@
- #include "MantidGeometry/IDetector.h"
- #include "MantidGeometry/Instrument/Parameter.h"
- 
--#include "tbb/concurrent_unordered_map.h"
--
- #include <memory>
- #include <typeinfo>
- #include <vector>
-+#include <unordered_map>
- 
- namespace Mantid {
- namespace Kernel {
-@@ -37,17 +36,17 @@ class Instrument;
-   @date 2/12/2008
- */
- /// Parameter map iterator typedef
--using component_map_it = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
--using component_map_cit = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
-+using component_map_it = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
-+using component_map_cit = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
- 
- class MANTID_GEOMETRY_DLL ParameterMap {
- public:
-   /// Parameter map typedef
--  using pmap = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>;
-+  using pmap = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>;
-   /// Parameter map iterator typedef
--  using pmap_it = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
-+  using pmap_it = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::iterator;
-   /// Parameter map iterator typedef
--  using pmap_cit = tbb::concurrent_unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
-+  using pmap_cit = std::unordered_multimap<ComponentID, std::shared_ptr<Parameter>>::const_iterator;
-   /// Default constructor
-   ParameterMap();
-   /// Const constructor
-diff --git a/Framework/Geometry/src/Instrument/ParameterMap.cpp b/Framework/Geometry/src/Instrument/ParameterMap.cpp
-index 7f6b03d6cd1..53ffcbdb355 100644
---- a/Framework/Geometry/src/Instrument/ParameterMap.cpp
-+++ b/Framework/Geometry/src/Instrument/ParameterMap.cpp
-@@ -298,7 +298,8 @@ void ParameterMap::clearParametersByName(const std::string &name) {
-   // Key is component ID so have to search through whole lot
-   for (auto itr = m_map.begin(); itr != m_map.end();) {
-     if (itr->second->name() == name) {
--      PARALLEL_CRITICAL(unsafe_erase) { itr = m_map.unsafe_erase(itr); }
-+      //PARALLEL_CRITICAL(unsafe_erase) { itr = m_map.unsafe_erase(itr); }
-+      itr = m_map.erase(itr);
-     } else {
-       ++itr;
-     }
-@@ -320,7 +321,8 @@ void ParameterMap::clearParametersByName(const std::string &name, const ICompone
-     auto itrs = m_map.equal_range(id);
-     for (auto it = itrs.first; it != itrs.second;) {
-       if (it->second->name() == name) {
--        PARALLEL_CRITICAL(unsafe_erase) { it = m_map.unsafe_erase(it); }
-+        //PARALLEL_CRITICAL(unsafe_erase) { it = m_map.unsafe_erase(it); }
-+        it = m_map.erase(it);
-       } else {
-         ++it;
-       }
-diff --git a/Framework/Kernel/inc/MantidKernel/Unit.h b/Framework/Kernel/inc/MantidKernel/Unit.h
-index 0844fc2aafd..c7816a99a59 100644
---- a/Framework/Kernel/inc/MantidKernel/Unit.h
-+++ b/Framework/Kernel/inc/MantidKernel/Unit.h
-@@ -11,6 +11,7 @@
- //----------------------------------------------------------------------
- #include "MantidKernel/UnitLabel.h"
- #include <utility>
-+#include <algorithm>
- 
- #include <unordered_map>
- #include <vector>
-@@ -18,8 +19,6 @@
- #include <memory>
- #endif
- 
--#include "tbb/concurrent_unordered_map.h"
--
- namespace Mantid {
- namespace Kernel {
- 
-@@ -182,10 +181,10 @@ private:
-   using ConstantAndPower = std::pair<double, double>;
-   /// Lists, for a given starting unit, the units to which a 'quick conversion'
-   /// can be made
--  using UnitConversions = tbb::concurrent_unordered_map<std::string, ConstantAndPower>;
-+  using UnitConversions = std::unordered_map<std::string, ConstantAndPower>;
-   /// The possible 'quick conversions' are held in a map with the starting unit
-   /// as the key
--  using ConversionsMap = tbb::concurrent_unordered_map<std::string, UnitConversions>;
-+  using ConversionsMap = std::unordered_map<std::string, UnitConversions>;
-   /// The table of possible 'quick conversions'
-   static ConversionsMap s_conversionFactors;
- };
 diff --git a/Framework/MDAlgorithms/inc/MantidMDAlgorithms/MDEventTreeBuilder.h b/Framework/MDAlgorithms/inc/MantidMDAlgorithms/MDEventTreeBuilder.h
 index e8480e8f868..797377496fe 100644
 --- a/Framework/MDAlgorithms/inc/MantidMDAlgorithms/MDEventTreeBuilder.h

@@ -1,15 +1,3 @@
-diff --git a/Framework/DataObjects/inc/MantidDataObjects/EventList.h b/Framework/DataObjects/inc/MantidDataObjects/EventList.h
-index c13c33f5352..764eb403bbb 100644
---- a/Framework/DataObjects/inc/MantidDataObjects/EventList.h
-+++ b/Framework/DataObjects/inc/MantidDataObjects/EventList.h
-@@ -14,6 +14,7 @@
- 
- #include <iosfwd>
- #include <vector>
-+#include <optional>
- 
- namespace Mantid {
- namespace Types {
 diff --git a/Framework/Kernel/inc/MantidKernel/ListValidator.h b/Framework/Kernel/inc/MantidKernel/ListValidator.h
 index fcc261f5cc7..317431a043f 100644
 --- a/Framework/Kernel/inc/MantidKernel/ListValidator.h
@@ -19,18 +7,6 @@ index fcc261f5cc7..317431a043f 100644
  #include <unordered_set>
  #include <vector>
 +#include <algorithm>
- 
- namespace Mantid {
- namespace Kernel {
-diff --git a/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h b/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
-index 24fb94a8550..6781b4ff5f3 100644
---- a/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
-+++ b/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
-@@ -10,6 +10,7 @@
- // Includes
- //-----------------------------------------------------------------------------
- #include "MantidKernel/DllConfig.h"
-+#include <iterator>
  
  namespace Mantid {
  namespace Kernel {
@@ -79,6 +55,33 @@ index cda55fc6ddd..cc663adafee 100644
  const std::string LIB_SUFFIX = ".so";
  #elif defined __APPLE__
  const std::string LIB_SUFFIX = ".dylib";
+diff --git a/Framework/LegacyNexus/inc/MantidLegacyNexus/napiconfig.h b/Framework/LegacyNexus/inc/MantidLegacyNexus/napiconfig.h
+index 9b6c505bf7d..3e6beac9197 100644
+--- a/Framework/LegacyNexus/inc/MantidLegacyNexus/napiconfig.h
++++ b/Framework/LegacyNexus/inc/MantidLegacyNexus/napiconfig.h
+@@ -4,8 +4,8 @@
+ #include <windows.h>
+ #endif /* _WIN32 */
+ 
+-#define HAVE_HDF4
+-#define WITH_HDF4
++//#define HAVE_HDF4
++//#define WITH_HDF4
+ 
+ #define HAVE_HDF5
+ #define WITH_HDF5
+diff --git a/Framework/DataObjects/inc/MantidDataObjects/EventList.h b/Framework/DataObjects/inc/MantidDataObjects/EventList.h
+index c13c33f5352..764eb403bbb 100644
+--- a/Framework/DataObjects/inc/MantidDataObjects/EventList.h
++++ b/Framework/DataObjects/inc/MantidDataObjects/EventList.h
+@@ -14,6 +14,7 @@
+ 
+ #include <iosfwd>
+ #include <vector>
++#include <optional>
+ 
+ namespace Mantid {
+ namespace Types {
 diff --git a/Framework/PythonInterface/mantid/dataobjects/src/Exports/WorkspaceValidators.cpp b/Framework/PythonInterface/mantid/dataobjects/src/Exports/WorkspaceValidators.cpp
 index 193daa3bb7d..0ac26cca2ba 100644
 --- a/Framework/PythonInterface/mantid/dataobjects/src/Exports/WorkspaceValidators.cpp
@@ -92,3 +95,15 @@ index 193daa3bb7d..0ac26cca2ba 100644
    using namespace Mantid::DataObjects;
  
    EXPORT_WKSP_VALIDATOR_NO_ARG(TableWorkspaceNotEmptyValidator, "Checks that the workspace is not empty");
+diff --git a/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h b/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
+index 24fb94a8550..6781b4ff5f3 100644
+--- a/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
++++ b/Framework/Kernel/inc/MantidKernel/Math/Distributions/ChebyshevPolynomial.h
+@@ -10,6 +10,7 @@
+ // Includes
+ //-----------------------------------------------------------------------------
+ #include "MantidKernel/DllConfig.h"
++#include <iterator>
+ 
+ namespace Mantid {
+ namespace Kernel {

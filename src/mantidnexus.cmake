@@ -1,9 +1,9 @@
 set(MTDSRCDIR ../mantid/Framework)
 set(NEX_SRC_FILES 
-    ${MTDSRCDIR}/Nexus/src/H5Util.cpp 
-    ${MTDSRCDIR}/Nexus/src/MuonNexusReader.cpp 
-    ${MTDSRCDIR}/Nexus/src/NexusClasses.cpp 
-    ${MTDSRCDIR}/Nexus/src/NexusFileIO.cpp
+    #${MTDSRCDIR}/Nexus/src/H5Util.cpp 
+    #${MTDSRCDIR}/Nexus/src/MuonNexusReader.cpp 
+    #${MTDSRCDIR}/Nexus/src/NexusClasses.cpp 
+    #${MTDSRCDIR}/Nexus/src/NexusFileIO.cpp
     #${MTDSRCDIR}/NexusGeometry/src/H5ForwardCompatibility.cpp
     ${MTDSRCDIR}/NexusGeometry/src/Hdf5Version.cpp
     ${MTDSRCDIR}/NexusGeometry/src/InstrumentBuilder.cpp
@@ -27,7 +27,7 @@ target_include_directories(MantidNexus PUBLIC
     ../mantid/Framework/Indexing/inc
     ../mantid/Framework/Kernel/inc
     ../mantid/Framework/Json/inc
-    ../mantid/Framework/NexusCpp/inc
+    ../mantid/Framework/LegacyNexus/inc
     ../mantid/Framework/Nexus/inc
     ../mantid/Framework/NexusGeometry/inc
     ../mantid/Framework/Types/inc

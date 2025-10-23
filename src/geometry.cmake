@@ -138,7 +138,7 @@ target_include_directories(Geometry PRIVATE
     ../mantid/Framework/Beamline/inc
     ../mantid/Framework/Json/inc
     ../mantid/Framework/Kernel/inc
-    ../mantid/Framework/NexusCpp/inc
+    ../mantid/Framework/Nexus/inc
     ../mantid/Framework/Types/inc
     ${Boost_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIRS}

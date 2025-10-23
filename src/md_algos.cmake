@@ -133,8 +133,7 @@ target_include_directories(MDAlgorithms PUBLIC
     #../mantid/Framework/Indexing/inc
     ../mantid/Framework/Kernel/inc
     #../mantid/Framework/Json/inc
-    ../mantid/Framework/NexusCpp/inc
-    #../mantid/Framework/Nexus/inc
+    ../mantid/Framework/Nexus/inc
     #../mantid/Framework/NexusGeometry/inc
     ../mantid/Framework/Types/inc
     ${Boost_INCLUDE_DIRS}
