@@ -289,7 +289,7 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/SANSCollimationLengthEstimator.cpp
     ${MTDSRCDIR}/src/SampleCorrections/CircularBeamProfile.cpp
     ${MTDSRCDIR}/src/SampleCorrections/DetectorGridDefinition.cpp
-#   ${MTDSRCDIR}/src/SampleCorrections/IBeamProfile.cpp
+    ${MTDSRCDIR}/src/SampleCorrections/IBeamProfile.cpp
     ${MTDSRCDIR}/src/SampleCorrections/MCAbsorptionStrategy.cpp
     ${MTDSRCDIR}/src/SampleCorrections/MCInteractionStatistics.cpp
     ${MTDSRCDIR}/src/SampleCorrections/MCInteractionVolume.cpp

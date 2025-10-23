@@ -115,7 +115,6 @@ install(FILES
 install(FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/funcinspect.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/AmendConfig.py
-    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/packagesetup.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/plugins.py
     DESTINATION ${MICROMANTID_PACKAGE_NAME}/kernel)
 

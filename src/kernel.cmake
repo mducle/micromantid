@@ -77,7 +77,7 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/LegacyNexusDescriptor.cpp
     ../mantid/Framework/Kernel/src/NullValidator.cpp
     ../mantid/Framework/Kernel/src/OptionalBool.cpp
-#   ../mantid/Framework/Kernel/src/SpinStateHelpers.cpp
+    ../mantid/Framework/Kernel/src/SpinStateHelpers.cpp
 #   ../mantid/Framework/Kernel/src/ParallelMinMax.cpp
     ../mantid/Framework/Kernel/src/ProgressBase.cpp
     ../mantid/Framework/Kernel/src/Property.cpp
@@ -99,7 +99,7 @@ set(KERNEL_SRC_FILES
 #   ../mantid/Framework/Kernel/src/SetValueWhenProperty.cpp
     ../mantid/Framework/Kernel/src/SingletonHolder.cpp
 #   ../mantid/Framework/Kernel/src/SobolSequence.cpp
-#   ../mantid/Framework/Kernel/src/SpinStateValidator.cpp
+    ../mantid/Framework/Kernel/src/SpinStateValidator.cpp
     ../mantid/Framework/Kernel/src/SplittingInterval.cpp
     ../mantid/Framework/Kernel/src/StartsWithValidator.cpp
     ../mantid/Framework/Kernel/src/Statistics.cpp

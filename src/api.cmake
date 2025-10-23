@@ -124,7 +124,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/ParameterReference.cpp
     ../mantid/Framework/API/src/ParameterTie.cpp
     ../mantid/Framework/API/src/PeakFunctionIntegrator.cpp
-#   ../mantid/Framework/API/src/PolSANSWorkspaceValidator.cpp
+    ../mantid/Framework/API/src/PolSANSWorkspaceValidator.cpp
     ../mantid/Framework/API/src/PreviewManager.cpp
     ../mantid/Framework/API/src/Progress.cpp
     ../mantid/Framework/API/src/Projection.cpp
