@@ -149,8 +149,43 @@ cd $wd
 rsync -av ${SYSROOT} ${EMSDK}/upstream/emscripten/cache
 
 wget https://ftp.gnu.org/gnu/gsl/gsl-2.8.tar.gz && tar zxf gsl-2.8.tar.gz && rm gsl-2.8.tar.gz && cd gsl-2.8
+cat <<EOF > disable_progs.patch
+--- gsl-2.8/Makefile.in	2024-05-25 14:26:32.000000000 +0100
++++ gsl-2.8/Makefile.in	2025-10-23 21:44:37.061488497 +0100
+@@ -94,7 +94,7 @@
+ POST_UNINSTALL = :
+ build_triplet = @build@
+ host_triplet = @host@
+-bin_PROGRAMS = gsl-randist\$(EXEEXT) gsl-histogram\$(EXEEXT)
++bin_PROGRAMS = 
+ subdir = .
+ ACLOCAL_M4 = \$(top_srcdir)/aclocal.m4
+ am__aclocal_m4_deps = \$(top_srcdir)/configure.ac
+--- gsl-2.8/configure	2024-05-25 14:26:49.000000000 +0100
++++ gsl-2.8/configure	2025-10-23 23:14:36.955089054 +0100
+@@ -10634,7 +10634,7 @@
+     && test no = "\$tmp_diet"
+       then
+    tmp_addflag=' \$pic_flag'
+-   tmp_sharedflag='-shared'
++   tmp_sharedflag='-s WASM_BIGINT -s SIDE_MODULE=1'
+    case \$cc_basename,\$host_cpu in
+         pgcc*)             # Portland Group C compiler
+      whole_archive_flag_spec=
+@@ -11733,7 +11733,7 @@
+      then
+        lt_cv_archive_cmds_need_lc=no
+      else
+-       lt_cv_archive_cmds_need_lc=yes
++       lt_cv_archive_cmds_need_lc=no
+      fi
+      allow_undefined_flag=\$lt_save_allow_undefined_flag
+    else
+EOF
+patch -p1 --ignore-whitespace < disable_progs.patch
 emconfigure ./configure CFLAGS="-fPIC" \
-                        --enable-shared=no \
+                        --enable-shared=yes \
+                        --disable-dependency-tracking \
                         --prefix=${SYSROOT} && \
 emmake make -j 8 && \
 emmake make install

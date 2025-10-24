@@ -50,8 +50,8 @@ index 56fa350cb66..9e1ad60e668 100644
 -from mantid.kernel._aliases import *
 -from mantid.api._aliases import *
 -from mantid.fitfunctions import *
-+from .kernel._aliases import *
-+from .api._aliases import *
++from .kernel import *
++from .api import *
 +from .fitfunctions import *
  
  MODULE_NAME = "simpleapi"
