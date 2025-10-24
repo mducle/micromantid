@@ -43,7 +43,7 @@ index 31c1254b8fb..653a77c2dbd 100644
          test_table = self._create_test_table()
          self.assertFalse(test_table.isColumnReadOnly(0))
 diff --git a/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py b/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py
-index 29c50b7a1d8..dcfe442c36a 100644
+index aa81b30e343..a9f4f8ae73c 100644
 --- a/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py
 +++ b/Framework/PythonInterface/test/python/mantid/kernel/ConfigServiceTest.py
 @@ -96,7 +96,7 @@ class ConfigServiceTest(unittest.TestCase):

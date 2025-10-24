@@ -1,5 +1,5 @@
 diff --git a/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h b/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
-index 623dc2f3677..8f547a3d2e0 100644
+index 1f00c813276..bb6bb49d439 100644
 --- a/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
 +++ b/Framework/Geometry/inc/MantidGeometry/Instrument/ParameterMap.h
 @@ -12,11 +12,10 @@
@@ -39,7 +39,7 @@ index 623dc2f3677..8f547a3d2e0 100644
    ParameterMap();
    /// Const constructor
 diff --git a/Framework/Geometry/src/Instrument/ParameterMap.cpp b/Framework/Geometry/src/Instrument/ParameterMap.cpp
-index 7f6b03d6cd1..53ffcbdb355 100644
+index 030bf314eff..994d2475713 100644
 --- a/Framework/Geometry/src/Instrument/ParameterMap.cpp
 +++ b/Framework/Geometry/src/Instrument/ParameterMap.cpp
 @@ -298,7 +298,8 @@ void ParameterMap::clearParametersByName(const std::string &name) {
@@ -63,7 +63,7 @@ index 7f6b03d6cd1..53ffcbdb355 100644
          ++it;
        }
 diff --git a/Framework/Kernel/inc/MantidKernel/Unit.h b/Framework/Kernel/inc/MantidKernel/Unit.h
-index 0844fc2aafd..c7816a99a59 100644
+index 88f6947b44c..68217fabda2 100644
 --- a/Framework/Kernel/inc/MantidKernel/Unit.h
 +++ b/Framework/Kernel/inc/MantidKernel/Unit.h
 @@ -11,6 +11,7 @@
@@ -97,7 +97,7 @@ index 0844fc2aafd..c7816a99a59 100644
    static ConversionsMap s_conversionFactors;
  };
 diff --git a/Framework/DataObjects/src/EventList.cpp b/Framework/DataObjects/src/EventList.cpp
-index 88b440478e5..ad1adf2b864 100644
+index 229e3732618..111da590353 100644
 --- a/Framework/DataObjects/src/EventList.cpp
 +++ b/Framework/DataObjects/src/EventList.cpp
 @@ -18,7 +18,7 @@
@@ -137,7 +137,7 @@ index 88b440478e5..ad1adf2b864 100644
  } // anonymous namespace
  
 diff --git a/Framework/DataObjects/src/EventWorkspace.cpp b/Framework/DataObjects/src/EventWorkspace.cpp
-index 909b0a114b6..d3870631aaa 100644
+index ea571d63db1..36c53928a26 100644
 --- a/Framework/DataObjects/src/EventWorkspace.cpp
 +++ b/Framework/DataObjects/src/EventWorkspace.cpp
 @@ -24,7 +24,7 @@
@@ -259,7 +259,7 @@ index 4eb29b6e763..670a851c617 100644
  }
  
 diff --git a/Framework/API/inc/MantidAPI/BoxController.h b/Framework/API/inc/MantidAPI/BoxController.h
-index fad187e8808..592522af696 100644
+index 38a05e1598f..c5f4bc8334a 100644
 --- a/Framework/API/inc/MantidAPI/BoxController.h
 +++ b/Framework/API/inc/MantidAPI/BoxController.h
 @@ -44,7 +44,7 @@ public:
@@ -272,7 +272,7 @@ index fad187e8808..592522af696 100644
      resetNumBoxes();
    }
 diff --git a/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h b/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h
-index f03defdb7b0..4934485e317 100644
+index a10dbe86874..54dc107fb13 100644
 --- a/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h
 +++ b/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h
 @@ -9,10 +9,11 @@
@@ -487,7 +487,7 @@ index fde3472383c..af9cf4c2dbf 100644
 +*/
  } // namespace Mantid::DataHandling
 diff --git a/Framework/DataHandling/src/LoadBankFromDiskTask.cpp b/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
-index a7dbd96750c..dfd5c19f7f3 100644
+index 134892bc2be..3922080e316 100644
 --- a/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
 +++ b/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
 @@ -10,7 +10,7 @@

@@ -271,7 +271,7 @@ index 0797cd21c51..2510344abfa 100644
      // Set a marker that the file-back-end needs updating if the # of events
      // changed.
 diff --git a/Framework/MDAlgorithms/src/MergeMDFiles.cpp b/Framework/MDAlgorithms/src/MergeMDFiles.cpp
-index 732b064b5f4..6c40ff62a40 100644
+index 3b69f423748..03af2d38cb5 100644
 --- a/Framework/MDAlgorithms/src/MergeMDFiles.cpp
 +++ b/Framework/MDAlgorithms/src/MergeMDFiles.cpp
 @@ -230,8 +230,8 @@ void MergeMDFiles::doExecByCloning(const Mantid::API::IMDEventWorkspace_sptr &ws

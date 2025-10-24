@@ -1,5 +1,5 @@
 diff --git a/Framework/Kernel/inc/MantidKernel/ListValidator.h b/Framework/Kernel/inc/MantidKernel/ListValidator.h
-index fcc261f5cc7..317431a043f 100644
+index 8ba6159b59a..bdb96f6c967 100644
 --- a/Framework/Kernel/inc/MantidKernel/ListValidator.h
 +++ b/Framework/Kernel/inc/MantidKernel/ListValidator.h
 @@ -17,6 +17,7 @@
@@ -11,7 +11,7 @@ index fcc261f5cc7..317431a043f 100644
  namespace Mantid {
  namespace Kernel {
 diff --git a/Framework/Kernel/inc/MantidKernel/Strings.h b/Framework/Kernel/inc/MantidKernel/Strings.h
-index 5978039328e..3fd9a502c89 100644
+index 90f7d8c5859..bfc2a338d8c 100644
 --- a/Framework/Kernel/inc/MantidKernel/Strings.h
 +++ b/Framework/Kernel/inc/MantidKernel/Strings.h
 @@ -23,6 +23,7 @@
@@ -71,7 +71,7 @@ index 9b6c505bf7d..3e6beac9197 100644
  #define HAVE_HDF5
  #define WITH_HDF5
 diff --git a/Framework/DataObjects/inc/MantidDataObjects/EventList.h b/Framework/DataObjects/inc/MantidDataObjects/EventList.h
-index c13c33f5352..764eb403bbb 100644
+index 20c9c9a6827..71f6189c0f4 100644
 --- a/Framework/DataObjects/inc/MantidDataObjects/EventList.h
 +++ b/Framework/DataObjects/inc/MantidDataObjects/EventList.h
 @@ -14,6 +14,7 @@

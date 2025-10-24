@@ -1,5 +1,5 @@
 diff --git a/Framework/PythonInterface/mantid/api/src/Exports/WorkspaceFactory.cpp b/Framework/PythonInterface/mantid/api/src/Exports/WorkspaceFactory.cpp
-index 9442f7dd251..cd1ca27c605 100644
+index 0deb98ded92..a24c507f3e1 100644
 --- a/Framework/PythonInterface/mantid/api/src/Exports/WorkspaceFactory.cpp
 +++ b/Framework/PythonInterface/mantid/api/src/Exports/WorkspaceFactory.cpp
 @@ -58,7 +58,7 @@ GNU_DIAG_OFF("conversion")
@@ -23,6 +23,6 @@ index 9442f7dd251..cd1ca27c605 100644
 +           (arg("self"), arg("className") = "PeaksWorkspace"),
 +           return_value_policy<AsType<Workspace_sptr>>(),
 +           "Creates an empty PeaksWorkspace")
- 
+
        .def("Instance", &WorkspaceFactory::Instance, return_value_policy<reference_existing_object>(),
             "Returns the single instance of this class.")

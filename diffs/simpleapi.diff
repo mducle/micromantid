@@ -1,5 +1,5 @@
 diff --git a/Framework/PythonInterface/mantid/simpleapi.py b/Framework/PythonInterface/mantid/simpleapi.py
-index 56fa350cb66..9e1ad60e668 100644
+index 66b5b3727c7..f4d9f63d1a1 100644
 --- a/Framework/PythonInterface/mantid/simpleapi.py
 +++ b/Framework/PythonInterface/mantid/simpleapi.py
 @@ -36,34 +36,34 @@ from dateutil.parser import parse as parse_date
@@ -99,7 +99,7 @@ index 56fa350cb66..9e1ad60e668 100644
 +    #delattr(mantid, MODULE_NAME)
      raise
 diff --git a/Framework/PythonInterface/mantid/api/_workspaceops.py b/Framework/PythonInterface/mantid/api/_workspaceops.py
-index 919408d4a81..3c2da1e5796 100644
+index 919408d4a81..bb5272e04cc 100644
 --- a/Framework/PythonInterface/mantid/api/_workspaceops.py
 +++ b/Framework/PythonInterface/mantid/api/_workspaceops.py
 @@ -13,8 +13,8 @@ It is intended for internal use.
@@ -132,13 +132,13 @@ index 919408d4a81..3c2da1e5796 100644
          for typename in workspace_types:
              cls = getattr(api, typename)
 diff --git a/Framework/PythonInterface/mantid/api/_adsimports.py b/Framework/PythonInterface/mantid/api/_adsimports.py
-index 7d9b61ee09e..dfe3b2e2f56 100644
+index 7d9b61ee09e..fcf99d5c080 100644
 --- a/Framework/PythonInterface/mantid/api/_adsimports.py
 +++ b/Framework/PythonInterface/mantid/api/_adsimports.py
 @@ -15,7 +15,7 @@ The function is also attached to the AnalysisDataService and named importAll.
- 
+
  """
- 
+
 -from mantid.api import AnalysisDataServiceImpl
 +from . import AnalysisDataServiceImpl
  import inspect as _inspect

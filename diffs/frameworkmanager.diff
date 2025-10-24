@@ -1,20 +1,20 @@
 diff --git a/Framework/API/inc/MantidAPI/FrameworkManager.h b/Framework/API/inc/MantidAPI/FrameworkManager.h
-index 2027b833ea5..8a5aee2ba6d 100644
+index 5e2db1b8439..19f5d6d0031 100644
 --- a/Framework/API/inc/MantidAPI/FrameworkManager.h
 +++ b/Framework/API/inc/MantidAPI/FrameworkManager.h
 @@ -13,6 +13,10 @@
  #include "MantidKernel/SingletonHolder.h"
  #include <memory>
- 
+
 +#ifndef PROJECT_NAME
 +#define PROJECT_NAME mantid
 +#endif
 +
  namespace Mantid {
- 
+
  namespace API {
 diff --git a/Framework/API/src/FrameworkManager.cpp b/Framework/API/src/FrameworkManager.cpp
-index 998d23c79bb..5e46fa99aec 100644
+index 7c08dbb6c58..eb925c79e3e 100644
 --- a/Framework/API/src/FrameworkManager.cpp
 +++ b/Framework/API/src/FrameworkManager.cpp
 @@ -15,7 +15,7 @@

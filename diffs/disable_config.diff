@@ -9,9 +9,9 @@ index 6eedf204133..752b32c438f 100644
 +#include "MantidKernel/ConfigService.h"
  #include <fstream>
  #include <time.h>
- 
+
 diff --git a/Framework/API/src/Algorithm.cpp b/Framework/API/src/Algorithm.cpp
-index 9405493b226..cd4a1bdba18 100644
+index d2dfcb7730e..fa75cdf5547 100644
 --- a/Framework/API/src/Algorithm.cpp
 +++ b/Framework/API/src/Algorithm.cpp
 @@ -24,7 +24,7 @@
@@ -38,7 +38,7 @@ index 9405493b226..cd4a1bdba18 100644
  
  /** Enable or disable Logging of start and end messages
 diff --git a/Framework/API/src/MatrixWorkspace.cpp b/Framework/API/src/MatrixWorkspace.cpp
-index 54b7170cd12..308ca5becd0 100644
+index 4d7b064ab2f..a1a22ce87aa 100644
 --- a/Framework/API/src/MatrixWorkspace.cpp
 +++ b/Framework/API/src/MatrixWorkspace.cpp
 @@ -382,9 +382,9 @@ void MatrixWorkspace::setMarkerStyle(const std::string &markerType) {
@@ -155,7 +155,7 @@ index 4273e8811f9..02fafcf451e 100644
        std::string line;
        double minX = std::numeric_limits<double>::max();
 diff --git a/Framework/Kernel/src/ConfigService.cpp b/Framework/Kernel/src/ConfigService.cpp
-index c661a36f639..b7f81652f9f 100644
+index 035071998e4..a387ab6cd62 100644
 --- a/Framework/Kernel/src/ConfigService.cpp
 +++ b/Framework/Kernel/src/ConfigService.cpp
 @@ -15,7 +15,7 @@
@@ -256,7 +256,7 @@ index c661a36f639..b7f81652f9f 100644
  std::string ConfigServiceImpl::getFullPath(const std::string &filename, const bool ignoreDirs,
                                             const int options) const {
 diff --git a/Framework/API/src/IFunction.cpp b/Framework/API/src/IFunction.cpp
-index f95a0ae63e9..475855640d7 100644
+index fc3e35e5d1a..24f21726d4b 100644
 --- a/Framework/API/src/IFunction.cpp
 +++ b/Framework/API/src/IFunction.cpp
 @@ -30,7 +30,7 @@
