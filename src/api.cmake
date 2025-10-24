@@ -124,6 +124,7 @@ set(API_SRC_FILES
     ../mantid/Framework/API/src/ParameterReference.cpp
     ../mantid/Framework/API/src/ParameterTie.cpp
     ../mantid/Framework/API/src/PeakFunctionIntegrator.cpp
+    ../mantid/Framework/API/src/PolSANSWorkspaceValidator.cpp
     ../mantid/Framework/API/src/PreviewManager.cpp
     ../mantid/Framework/API/src/Progress.cpp
     ../mantid/Framework/API/src/Projection.cpp
@@ -171,7 +172,7 @@ target_include_directories(MantidAPI PRIVATE
     ../mantid/Framework/Json/inc
     ../mantid/Framework/Kernel/inc
     ../mantid/Framework/Types/inc
-    ../mantid/Framework/NexusCpp/inc
+    ../mantid/Framework/Nexus/inc
     ${Boost_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIR}
 )

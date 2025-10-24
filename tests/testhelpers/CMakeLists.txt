@@ -90,7 +90,7 @@ target_include_directories(${TESTHELPERS_PYTHON_MODULE} PUBLIC
     ${FRAMEWORK_DIR}/Geometry/inc
     ${FRAMEWORK_DIR}/HistogramData/inc
     ${FRAMEWORK_DIR}/Indexing/inc
-    ${FRAMEWORK_DIR}/NexusCpp/inc
+    ${FRAMEWORK_DIR}/Nexus/inc
     ${FRAMEWORK_DIR}/Types/inc
     ${FRAMEWORK_DIR}/PythonInterface/core/inc
     ${EIGEN3_INCLUDE_DIR}

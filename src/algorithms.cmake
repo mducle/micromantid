@@ -7,7 +7,6 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/AddPeak.cpp
     ${MTDSRCDIR}/src/AddSampleLog.cpp
     ${MTDSRCDIR}/src/AddTimeSeriesLog.cpp
-    ${MTDSRCDIR}/src/AlignDetectors.cpp
     ${MTDSRCDIR}/src/AnnularRingAbsorption.cpp
     ${MTDSRCDIR}/src/AnyShapeAbsorption.cpp
     ${MTDSRCDIR}/src/ApodizationFunctions.cpp
@@ -49,6 +48,7 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/ClearMaskFlag.cpp
     ${MTDSRCDIR}/src/CloneWorkspace.cpp
     ${MTDSRCDIR}/src/CombineDiffCal.cpp
+#   ${MTDSRCDIR}/src/CombineTableWorkspaces.cpp
     ${MTDSRCDIR}/src/Comment.cpp
     ${MTDSRCDIR}/src/CommutativeBinaryOperation.cpp
     ${MTDSRCDIR}/src/CompareWorkspaces.cpp
@@ -68,7 +68,6 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/ConvertToMatrixWorkspace.cpp
     ${MTDSRCDIR}/src/ConvertToPointData.cpp
     ${MTDSRCDIR}/src/ConvertUnits.cpp
-    ${MTDSRCDIR}/src/ConvertUnitsUsingDetectorTable.cpp
     ${MTDSRCDIR}/src/CopyDataRange.cpp
     ${MTDSRCDIR}/src/CopyDetectorMapping.cpp
     ${MTDSRCDIR}/src/CopyInstrumentParameters.cpp
@@ -80,6 +79,7 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/CorrectKiKf.cpp
     ${MTDSRCDIR}/src/CorrectTOFAxis.cpp
     ${MTDSRCDIR}/src/CorrectToFile.cpp
+#   ${MTDSRCDIR}/src/CreateBootstrapWorkspaces.cpp
     ${MTDSRCDIR}/src/CreateCalFileByNames.cpp
     ${MTDSRCDIR}/src/CreateDetectorTable.cpp
     ${MTDSRCDIR}/src/CreateDummyCalFile.cpp
@@ -110,6 +110,7 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/DetectorEfficiencyCor.cpp
     ${MTDSRCDIR}/src/DetectorEfficiencyCorUser.cpp
     ${MTDSRCDIR}/src/DetectorEfficiencyVariation.cpp
+#   ${MTDSRCDIR}/src/DetermineSpinStateOrder.cpp
     ${MTDSRCDIR}/src/DiffractionEventCalibrateDetectors.cpp
     ${MTDSRCDIR}/src/DiffractionFocussing.cpp
     ${MTDSRCDIR}/src/DiffractionFocussing2.cpp
@@ -123,6 +124,7 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/ElasticWindow.cpp
     ${MTDSRCDIR}/src/EstimateDivergence.cpp
     ${MTDSRCDIR}/src/EstimateResolutionDiffraction.cpp
+#   ${MTDSRCDIR}/src/EstimateScatteringVolumeCentreOfMass.cpp
     ${MTDSRCDIR}/src/EventWorkspaceAccess.cpp
     ${MTDSRCDIR}/src/Exponential.cpp
     ${MTDSRCDIR}/src/ExponentialCorrection.cpp
@@ -242,10 +244,10 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/PolarizationCorrections/DepolarizedAnalyserTransmission.cpp
     ${MTDSRCDIR}/src/PolarizationCorrections/FlipperEfficiency.cpp
     ${MTDSRCDIR}/src/PolarizationCorrections/HeliumAnalyserEfficiency.cpp
+#   ${MTDSRCDIR}/src/PolarizationCorrections/HeliumAnalyserEfficiencyTime.cpp
     ${MTDSRCDIR}/src/PolarizationCorrections/PolarizationCorrectionsHelpers.cpp
     ${MTDSRCDIR}/src/PolarizationCorrections/PolarizationEfficienciesWildes.cpp
     ${MTDSRCDIR}/src/PolarizationCorrections/PolarizerEfficiency.cpp
-    ${MTDSRCDIR}/src/PolarizationCorrections/SpinStateValidator.cpp
     ${MTDSRCDIR}/src/PolarizationEfficiencyCor.cpp
     ${MTDSRCDIR}/src/PolynomialCorrection.cpp
     ${MTDSRCDIR}/src/Power.cpp
@@ -287,6 +289,7 @@ set(SRC_FILES
     ${MTDSRCDIR}/src/SANSCollimationLengthEstimator.cpp
     ${MTDSRCDIR}/src/SampleCorrections/CircularBeamProfile.cpp
     ${MTDSRCDIR}/src/SampleCorrections/DetectorGridDefinition.cpp
+    ${MTDSRCDIR}/src/SampleCorrections/IBeamProfile.cpp
     ${MTDSRCDIR}/src/SampleCorrections/MCAbsorptionStrategy.cpp
     ${MTDSRCDIR}/src/SampleCorrections/MCInteractionStatistics.cpp
     ${MTDSRCDIR}/src/SampleCorrections/MCInteractionVolume.cpp
@@ -363,7 +366,7 @@ target_include_directories(Algorithms PRIVATE
     ../mantid/Framework/HistogramData/inc
     ../mantid/Framework/Indexing/inc
     ../mantid/Framework/Kernel/inc
-    ../mantid/Framework/NexusCpp/inc
+    ../mantid/Framework/Nexus/inc
     ../mantid/Framework/Types/inc
     ${Boost_INCLUDE_DIRS}
     ${EIGEN3_INCLUDE_DIR}

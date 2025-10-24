@@ -1,7 +1,7 @@
-diff --git a/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.tcc b/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.tcc
-index 192619771ca..407479b0f3d 100644
---- a/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.tcc
-+++ b/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.tcc
+diff --git a/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.hxx b/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.hxx
+index 8827fa0a468..7c7d46f16a1 100644
+--- a/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.hxx
++++ b/Framework/DataObjects/inc/MantidDataObjects/MDEventWorkspace.hxx
 @@ -22,7 +22,7 @@
  #include "MantidKernel/Memory.h"
  #include "MantidKernel/ProgressBase.h"
@@ -11,10 +11,10 @@ index 192619771ca..407479b0f3d 100644
  #include "MantidKernel/ThreadScheduler.h"
  #include "MantidKernel/Timer.h"
  #include "MantidKernel/Utils.h"
-diff --git a/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.tcc b/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.tcc
-index 7099d63e8c0..791e1f6c162 100644
---- a/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.tcc
-+++ b/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.tcc
+diff --git a/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.hxx b/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.hxx
+index 8a8e8921a30..3d9eef42f4a 100644
+--- a/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.hxx
++++ b/Framework/DataObjects/inc/MantidDataObjects/MDGridBox.hxx
 @@ -11,7 +11,7 @@
  #include "MantidKernel/FunctionTask.h"
  #include "MantidKernel/Strings.h"

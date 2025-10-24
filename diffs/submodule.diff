@@ -51,10 +51,10 @@ index b1dddec1940..27ac61f4b4d 100644
  #include <numpy/arrayobject.h>
  
 diff --git a/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp b/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
-index d0076a0c95f..1f96f4dd692 100644
+index 543a009f4d4..1f79ef9999e 100644
 --- a/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
 +++ b/Framework/PythonInterface/mantid/api/src/Exports/MatrixWorkspace.cpp
-@@ -32,7 +32,7 @@
+@@ -33,7 +33,7 @@
  #include <boost/python/suite/indexing/map_indexing_suite.hpp>
  #include <boost/python/tuple.hpp>
  
@@ -126,10 +126,10 @@ index 7653f701b24..6dcc341bcde 100644
    // Workspace address comparison
    boost::python::def("isSameWorkspaceObject",
 diff --git a/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp b/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
-index 39c0bd5a6e4..3601b144121 100644
+index b7ecb7cf057..b193925cee9 100644
 --- a/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
 +++ b/Framework/PythonInterface/mantid/geometry/src/Exports/CSGObject.cpp
-@@ -18,7 +18,7 @@
+@@ -19,7 +19,7 @@
  
  #include <numpy/arrayobject.h>
  

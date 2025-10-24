@@ -2,7 +2,7 @@ diff --git a/Framework/Kernel/inc/MantidKernel/ListValidator.h b/Framework/Kerne
 index 8ba6159b59a..bdb96f6c967 100644
 --- a/Framework/Kernel/inc/MantidKernel/ListValidator.h
 +++ b/Framework/Kernel/inc/MantidKernel/ListValidator.h
-@@ -16,6 +16,7 @@
+@@ -17,6 +17,7 @@
  #include <set>
  #include <unordered_set>
  #include <vector>
@@ -55,11 +55,11 @@ index cda55fc6ddd..cc663adafee 100644
  const std::string LIB_SUFFIX = ".so";
  #elif defined __APPLE__
  const std::string LIB_SUFFIX = ".dylib";
-diff --git a/Framework/NexusCpp/inc/MantidNexusCpp/napiconfig.h b/Framework/NexusCpp/inc/MantidNexusCpp/napiconfig.h
-index c79fdc73d42..a0922158e1e 100644
---- a/Framework/NexusCpp/inc/MantidNexusCpp/napiconfig.h
-+++ b/Framework/NexusCpp/inc/MantidNexusCpp/napiconfig.h
-@@ -5,8 +5,8 @@
+diff --git a/Framework/LegacyNexus/inc/MantidLegacyNexus/napiconfig.h b/Framework/LegacyNexus/inc/MantidLegacyNexus/napiconfig.h
+index 9b6c505bf7d..3e6beac9197 100644
+--- a/Framework/LegacyNexus/inc/MantidLegacyNexus/napiconfig.h
++++ b/Framework/LegacyNexus/inc/MantidLegacyNexus/napiconfig.h
+@@ -4,8 +4,8 @@
  #include <windows.h>
  #endif /* _WIN32 */
  

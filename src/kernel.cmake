@@ -74,12 +74,14 @@ set(KERNEL_SRC_FILES
     ../mantid/Framework/Kernel/src/MultiFileValidator.cpp
     ../mantid/Framework/Kernel/src/NDRandomNumberGenerator.cpp
     ../mantid/Framework/Kernel/src/NeutronAtom.cpp
-    ../mantid/Framework/Kernel/src/NexusDescriptor.cpp
-    ../mantid/Framework/Kernel/src/NexusHDF5Descriptor.cpp
+    ../mantid/Framework/Kernel/src/LegacyNexusDescriptor.cpp
     ../mantid/Framework/Kernel/src/NullValidator.cpp
     ../mantid/Framework/Kernel/src/OptionalBool.cpp
+    ../mantid/Framework/Kernel/src/SpinStateHelpers.cpp
+#   ../mantid/Framework/Kernel/src/ParallelMinMax.cpp
     ../mantid/Framework/Kernel/src/ProgressBase.cpp
     ../mantid/Framework/Kernel/src/Property.cpp
+    ../mantid/Framework/Kernel/src/PropertyHelper.cpp
     ../mantid/Framework/Kernel/src/PropertyHistory.cpp
     ../mantid/Framework/Kernel/src/PropertyManager.cpp
     ../mantid/Framework/Kernel/src/PropertyManagerDataService.cpp
@@ -97,6 +99,7 @@ set(KERNEL_SRC_FILES
 #   ../mantid/Framework/Kernel/src/SetValueWhenProperty.cpp
     ../mantid/Framework/Kernel/src/SingletonHolder.cpp
 #   ../mantid/Framework/Kernel/src/SobolSequence.cpp
+    ../mantid/Framework/Kernel/src/SpinStateValidator.cpp
     ../mantid/Framework/Kernel/src/SplittingInterval.cpp
     ../mantid/Framework/Kernel/src/StartsWithValidator.cpp
     ../mantid/Framework/Kernel/src/Statistics.cpp
@@ -133,7 +136,8 @@ target_include_directories(Kernel PRIVATE
     ../mantid/Framework/Kernel/inc
     ../mantid/Framework/Json/inc
     ../mantid/Framework/Types/inc
-    ../mantid/Framework/NexusCpp/inc
+    ../mantid/Framework/LegacyNexus/inc
+    ../mantid/Framework/Nexus/inc
     ${Boost_INCLUDE_DIRS}
 )
 set_property(TARGET Kernel PROPERTY POSITION_INDEPENDENT_CODE ON)

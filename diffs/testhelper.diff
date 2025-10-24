@@ -2,7 +2,7 @@ diff --git a/Framework/PythonInterface/test/testhelpers/WorkspaceCreationHelper/
 index 1b1aebfdd83..f2275501957 100644
 --- a/Framework/PythonInterface/test/testhelpers/WorkspaceCreationHelper/WorkspaceCreationHelperModule.cpp
 +++ b/Framework/PythonInterface/test/testhelpers/WorkspaceCreationHelper/WorkspaceCreationHelperModule.cpp
-@@ -46,7 +46,7 @@ BOOST_PYTHON_FUNCTION_OVERLOADS(create2DWorkspaceWithGeographicalDetectors_overl
+@@ -47,7 +47,7 @@ BOOST_PYTHON_FUNCTION_OVERLOADS(create2DWorkspaceWithGeographicalDetectors_overl
  GNU_DIAG_ON("conversion")
  GNU_DIAG_ON("unused-local-typedef")
 

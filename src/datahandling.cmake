@@ -1,6 +1,7 @@
 set(MTDSRCDIR ../mantid/Framework/DataHandling)
 
 set(DATAHANDLING_SRC_FILES
+    #${MTDSRCDIR}/src/AlignAndFocusPowderSlim.cpp
     ${MTDSRCDIR}/src/ApplyDiffCal.cpp
     ${MTDSRCDIR}/src/BankPulseTimes.cpp
     ${MTDSRCDIR}/src/CheckMantidVersion.cpp
@@ -39,6 +40,7 @@ set(DATAHANDLING_SRC_FILES
     ${MTDSRCDIR}/src/LoadAscii2.cpp
     #${MTDSRCDIR}/src/LoadAsciiStl.cpp
     #${MTDSRCDIR}/src/LoadBBY.cpp
+    #${MTDSRCDIR}/src/LoadBBY2.cpp
     ${MTDSRCDIR}/src/LoadBankFromDiskTask.cpp
     #${MTDSRCDIR}/src/LoadBinaryStl.cpp
     #${MTDSRCDIR}/src/LoadCSNSNexus.cpp
@@ -50,7 +52,6 @@ set(DATAHANDLING_SRC_FILES
     ${MTDSRCDIR}/src/LoadDetectorInfo.cpp
     ${MTDSRCDIR}/src/LoadDetectorsGroupingFile.cpp
     #${MTDSRCDIR}/src/LoadDiffCal.cpp
-    #${MTDSRCDIR}/src/LoadDspacemap.cpp
     #${MTDSRCDIR}/src/LoadEMU.cpp
     ${MTDSRCDIR}/src/LoadEmptyInstrument.cpp
     ${MTDSRCDIR}/src/LoadErrorEventsNexus.cpp
@@ -75,21 +76,19 @@ set(DATAHANDLING_SRC_FILES
     #${MTDSRCDIR}/src/LoadILLSALSA.cpp
     #${MTDSRCDIR}/src/LoadILLSANS.cpp
     #${MTDSRCDIR}/src/LoadILLTOF2.cpp
+    #${MTDSRCDIR}/src/LoadILLTOF3.cpp
     ${MTDSRCDIR}/src/LoadISISNexus2.cpp
     ${MTDSRCDIR}/src/LoadISISNexusHelper.cpp
     ${MTDSRCDIR}/src/LoadISISPolarizationEfficiencies.cpp
     ${MTDSRCDIR}/src/LoadInstrument.cpp
-    ${MTDSRCDIR}/src/LoadInstrumentFromNexus.cpp
     ${MTDSRCDIR}/src/LoadInstrumentFromRaw.cpp
     #${MTDSRCDIR}/src/LoadIsawDetCal.cpp
-    #${MTDSRCDIR}/src/LoadLLB.cpp
     ${MTDSRCDIR}/src/LoadLog.cpp
     #${MTDSRCDIR}/src/LoadMLZ.cpp
     ${MTDSRCDIR}/src/LoadMappingTable.cpp
     ${MTDSRCDIR}/src/LoadMask.cpp
     ${MTDSRCDIR}/src/LoadMcStas.cpp
     ${MTDSRCDIR}/src/LoadMcStasNexus.cpp
-    #${MTDSRCDIR}/src/LoadMuonLog.cpp
     #${MTDSRCDIR}/src/LoadMuonNexusV2.cpp
     #${MTDSRCDIR}/src/LoadMuonNexusV2NexusHelper.cpp
     #${MTDSRCDIR}/src/LoadMuonStrategy.cpp
@@ -98,7 +97,6 @@ set(DATAHANDLING_SRC_FILES
     #${MTDSRCDIR}/src/LoadNXcanSAS.cpp
     ${MTDSRCDIR}/src/LoadNexus.cpp
     ${MTDSRCDIR}/src/LoadNexusLogs.cpp
-    ${MTDSRCDIR}/src/LoadNexusMonitors.cpp
     ${MTDSRCDIR}/src/LoadNexusMonitors2.cpp
     ${MTDSRCDIR}/src/LoadNexusProcessed.cpp
     ${MTDSRCDIR}/src/LoadNexusProcessed2.cpp
@@ -122,7 +120,6 @@ set(DATAHANDLING_SRC_FILES
     ${MTDSRCDIR}/src/LoadRawSpectrum0.cpp
     #${MTDSRCDIR}/src/LoadSESANS.cpp
     #${MTDSRCDIR}/src/LoadSINQFocus.cpp
-    #${MTDSRCDIR}/src/LoadSNSspec.cpp
     ${MTDSRCDIR}/src/LoadSPE.cpp
     ${MTDSRCDIR}/src/LoadSampleDetailsFromRaw.cpp
     #${MTDSRCDIR}/src/LoadSampleEnvironment.cpp
@@ -144,11 +141,9 @@ set(DATAHANDLING_SRC_FILES
     ${MTDSRCDIR}/src/ModifyDetectorDotDatFile.cpp
     ${MTDSRCDIR}/src/MoveInstrumentComponent.cpp
     #${MTDSRCDIR}/src/MultiPeriodLoadMuonStrategy.cpp
-    #${MTDSRCDIR}/src/NXcanSASHelper.cpp
-    ${MTDSRCDIR}/src/NexusTester.cpp
+    #${MTDSRCDIR}/src/NXcanSASUtil.cpp
     ##${MTDSRCDIR}/src/ORNLDataArchive.cpp
     #${MTDSRCDIR}/src/PDLoadCharacterizations.cpp
-    ##${MTDSRCDIR}/src/ParallelEventLoader.cpp
     #${MTDSRCDIR}/src/PatchBBY.cpp
     ${MTDSRCDIR}/src/ProcessBankCompressed.cpp
     ${MTDSRCDIR}/src/ProcessBankData.cpp
@@ -173,14 +168,12 @@ set(DATAHANDLING_SRC_FILES
     #${MTDSRCDIR}/src/SaveDaveGrp.cpp
     ${MTDSRCDIR}/src/SaveDetectorsGrouping.cpp
     #${MTDSRCDIR}/src/SaveDiffCal.cpp
-    #${MTDSRCDIR}/src/SaveDspacemap.cpp
     #${MTDSRCDIR}/src/SaveFITS.cpp
     ${MTDSRCDIR}/src/SaveFocusedXYE.cpp
     #${MTDSRCDIR}/src/SaveFullprofResolution.cpp
     #${MTDSRCDIR}/src/SaveGDA.cpp
     #${MTDSRCDIR}/src/SaveGSASInstrumentFile.cpp
     #${MTDSRCDIR}/src/SaveGSS.cpp
-    ${MTDSRCDIR}/src/SaveISISNexus.cpp
     #${MTDSRCDIR}/src/SaveIsawDetCal.cpp
     ${MTDSRCDIR}/src/SaveMask.cpp
     #${MTDSRCDIR}/src/SaveNISTDAT.cpp
@@ -188,15 +181,18 @@ set(DATAHANDLING_SRC_FILES
     #${MTDSRCDIR}/src/SaveNXTomo.cpp
     #${MTDSRCDIR}/src/SaveNXcanSAS.cpp
     #${MTDSRCDIR}/src/SaveNXcanSASBase.cpp
+    #${MTDSRCDIR}/src/SaveNXcanSASHelper.cpp
     ${MTDSRCDIR}/src/SaveNexus.cpp
     #${MTDSRCDIR}/src/SaveNexusESS.cpp
     #${MTDSRCDIR}/src/SaveNexusGeometry.cpp
     ${MTDSRCDIR}/src/SaveNexusProcessed.cpp
+    ${MTDSRCDIR}/src/SaveNexusProcessedHelper.cpp
     #${MTDSRCDIR}/src/SaveOpenGenieAscii.cpp
     ${MTDSRCDIR}/src/SavePAR.cpp
     #${MTDSRCDIR}/src/SavePDFGui.cpp
     ${MTDSRCDIR}/src/SavePHX.cpp
     ${MTDSRCDIR}/src/SaveParameterFile.cpp
+    #${MTDSRCDIR}/src/SavePolarizedNXcanSAS.cpp
     #${MTDSRCDIR}/src/SaveRKH.cpp
     #${MTDSRCDIR}/src/SaveRMCProfile.cpp
     #${MTDSRCDIR}/src/SaveReflectometryAscii.cpp
@@ -205,7 +201,6 @@ set(DATAHANDLING_SRC_FILES
     #${MTDSRCDIR}/src/SaveSampleEnvironmentAndShape.cpp
     #${MTDSRCDIR}/src/SaveStl.cpp
     #${MTDSRCDIR}/src/SaveTBL.cpp
-    #${MTDSRCDIR}/src/SaveToSNSHistogramNexus.cpp
     #${MTDSRCDIR}/src/SaveVTK.cpp
     ${MTDSRCDIR}/src/ScaleInstrumentComponent.cpp
     ${MTDSRCDIR}/src/SetBeam.cpp
@@ -218,6 +213,11 @@ set(DATAHANDLING_SRC_FILES
     ${MTDSRCDIR}/src/UpdateInstrumentFromFile.cpp
     ${MTDSRCDIR}/src/XmlHandler.cpp
     ${MTDSRCDIR}/src/RotateSampleShape.cpp
+    #${MTDSRCDIR}/src/AlignAndFocusPowderSlim/NexusLoader.cpp
+    #${MTDSRCDIR}/src/AlignAndFocusPowderSlim/ProcessBankTask.cpp
+    #${MTDSRCDIR}/src/AlignAndFocusPowderSlim/ProcessEventsTask.cpp
+    #${MTDSRCDIR}/src/AlignAndFocusPowderSlim/BankCalibration.cpp
+
 )
 
 add_library(DataHandling OBJECT ${DATAHANDLING_SRC_FILES})
@@ -232,7 +232,7 @@ target_include_directories(DataHandling PUBLIC
     ../mantid/Framework/Indexing/inc
     ../mantid/Framework/Kernel/inc
     ../mantid/Framework/Json/inc
-    ../mantid/Framework/NexusCpp/inc
+    ../mantid/Framework/LegacyNexus/inc
     ../mantid/Framework/Nexus/inc
     ../mantid/Framework/NexusGeometry/inc
     ../mantid/Framework/Types/inc

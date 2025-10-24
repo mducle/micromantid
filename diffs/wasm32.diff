@@ -41,7 +41,7 @@ diff --git a/Framework/Kernel/src/PropertyWithValue.cpp b/Framework/Kernel/src/P
 index 5f18e4c4b4c..b83d0f09868 100644
 --- a/Framework/Kernel/src/PropertyWithValue.cpp
 +++ b/Framework/Kernel/src/PropertyWithValue.cpp
-@@ -62,6 +62,8 @@ template <> void PropertyWithValue<long>::saveProperty(::NeXus::File *file) {
+@@ -62,6 +62,8 @@ template <> void PropertyWithValue<long>::saveProperty(Nexus::File *file) {
    file->closeData();
    file->closeGroup();
  }
@@ -83,7 +83,7 @@ index f545d13116f..e6ed9df1dd8 100644
  #endif
  }
  
-@@ -265,6 +271,9 @@ void MemoryStats::process_mem_system(size_t &sys_avail, size_t &sys_total) {
+@@ -270,6 +276,9 @@ void MemoryStats::process_mem_system(size_t &sys_avail, size_t &sys_total) {
      sys_avail = static_cast<size_t>(memStatus.ullAvailVirtual / 1024);
      sys_total = static_cast<size_t>(memStatus.ullTotalVirtual / 1024);
    }

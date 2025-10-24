@@ -147,7 +147,7 @@ target_include_directories(PythonAPIModule PRIVATE
   ../mantid/Framework/Indexing/inc
   ../mantid/Framework/Kernel/inc
   ../mantid/Framework/Types/inc
-  ../mantid/Framework/NexusCpp/inc
+  ../mantid/Framework/Nexus/inc
   ../mantid/Framework/PythonInterface/core/inc
   ../mantid/Framework/PythonInterface/mantid/kernel/inc
   ${Boost_INCLUDE_DIRS}

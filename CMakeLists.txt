@@ -63,8 +63,8 @@ if (EMSCRIPTEN)
     set(JSON_LIBS $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libjsoncpp.a)
     set(MUPARSER_LIBS $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libmuparser.a)
     set(GSL_LIBS
-        $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgsl.a
-        $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgslcblas.a)
+        $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgsl.so.28.0.0
+        $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libgslcblas.so.0.0.0)
     file(GLOB LIBBOOSTPYTHON $ENV{EMSDK}/upstream/emscripten/cache/sysroot/lib/libboost_python*.so.*)
     if (LIBBOOSTPYTHON STREQUAL "")
         message(FATAL_ERROR "libboost_python.so not found - please build and install Boost::Python")
@@ -110,12 +110,12 @@ install(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/fitfunctions.py
     ${LIBBOOSTPYTHON}
     ${POCOLIBS}
+    ${GSL_LIBS}
     DESTINATION ${MICROMANTID_PACKAGE_NAME})
 
 install(FILES 
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/funcinspect.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/AmendConfig.py
-    ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/packagesetup.py
     ${CMAKE_CURRENT_SOURCE_DIR}/mantid/Framework/PythonInterface/mantid/kernel/plugins.py
     DESTINATION ${MICROMANTID_PACKAGE_NAME}/kernel)
 

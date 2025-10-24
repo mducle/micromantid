@@ -2,7 +2,7 @@ diff --git a/Framework/PythonInterface/mantid/simpleapi.py b/Framework/PythonInt
 index 66b5b3727c7..f4d9f63d1a1 100644
 --- a/Framework/PythonInterface/mantid/simpleapi.py
 +++ b/Framework/PythonInterface/mantid/simpleapi.py
-@@ -36,28 +36,28 @@ from dateutil.parser import parse as parse_date
+@@ -36,34 +36,34 @@ from dateutil.parser import parse as parse_date
  import os
  import sys
  
@@ -25,15 +25,27 @@ index 66b5b3727c7..f4d9f63d1a1 100644
  
  # register matplotlib projection
 -try:
--    from mantid import plots  # noqa
--    from mantid.plots._compatability import plotSpectrum, plotBin  # noqa
+-    from mantid import plots
+-    from mantid.plots._compatability import plotSpectrum, plotBin
 -except ImportError:
--    pass  # matplotlib is unavailable
+-
+-    def notSupported(*args, **kwargs):
+-        raise ModuleNotFoundError("Plotting is not supported by default. Please install matplotlib to enable plotting.")
+-
+-    plots = notSupported
+-    plotSpectrum = notSupported
+-    plotBin = notSupported
 +#try:
-+#    from mantid import plots  # noqa
-+#    from mantid.plots._compatability import plotSpectrum, plotBin  # noqa
++#    from mantid import plots
++#    from mantid.plots._compatability import plotSpectrum, plotBin
 +#except ImportError:
-+#    pass  # matplotlib is unavailable
++#
++#    def notSupported(*args, **kwargs):
++#        raise ModuleNotFoundError("Plotting is not supported by default. Please install matplotlib to enable plotting.")
++#
++#    plots = notSupported
++#    plotSpectrum = notSupported
++#    plotBin = notSupported
  
 -from mantid.kernel._aliases import *
 -from mantid.api._aliases import *
@@ -44,7 +56,7 @@ index 66b5b3727c7..f4d9f63d1a1 100644
  
  MODULE_NAME = "simpleapi"
  
-@@ -1122,6 +1123,7 @@ def _create_algorithm_object(name, version=-1, startProgress=None, endProgress=N
+@@ -1128,6 +1128,7 @@ def _create_algorithm_object(name, version=-1, startProgress=None, endProgress=N
      :param version A int version number
      """
      import inspect
@@ -52,7 +64,7 @@ index 66b5b3727c7..f4d9f63d1a1 100644
  
      parent = _find_parent_pythonalgorithm(inspect.currentframe())
      if parent is not None:
-@@ -1225,7 +1227,7 @@ def _translate():
+@@ -1231,7 +1232,7 @@ def _translate():
      for each of them
      :returns: a list of the name of new function calls
      """
@@ -61,7 +73,7 @@ index 66b5b3727c7..f4d9f63d1a1 100644
  
      new_func_attrs = []
      # Method names mapped to their algorithm names. Used to detect multiple copies of same method name
-@@ -1311,7 +1313,7 @@ _translate()
+@@ -1317,7 +1318,7 @@ _translate()
  
  # Load the Python plugins
  # The exported C++ plugins
@@ -70,7 +82,7 @@ index 66b5b3727c7..f4d9f63d1a1 100644
  
  # Now the algorithms
  # There is a chicken and egg problem with what we want to achieve here.
-@@ -1326,7 +1327,7 @@ from . import _plugins  # noqa
+@@ -1332,7 +1333,7 @@ from . import _plugins  # noqa
  # Set the .simpleapi attribute on the 'mantid' module before importing
  # the plugins. Python usual does this once the module has been fully imported
  # but we need to do this earlier
@@ -79,7 +91,7 @@ index 66b5b3727c7..f4d9f63d1a1 100644
  try:
      _user_key = "user.python.plugins.directories"
      _user_plugin_dirs = _plugin_helper.get_plugin_paths_as_set(_user_key)
-@@ -1379,5 +1380,5 @@ try:
+@@ -1385,5 +1386,5 @@ try:
  except Exception:
      # If an error gets raised remove the attribute to be consistent
      # with standard python behaviour and reraise the exception

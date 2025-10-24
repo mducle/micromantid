@@ -39,7 +39,7 @@ set(MICROMANTID_CXX_LIBRARIES
   Indexing
   Json
   Kernel
-  NexusCpp
+  LegacyNexus
   MantidNexus
   MDAlgorithms
   Types

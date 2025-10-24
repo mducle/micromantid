@@ -60,7 +60,7 @@ target_include_directories(PythonDataObjectsModule PRIVATE
   ../mantid/Framework/HistogramData/inc
   ../mantid/Framework/Indexing/inc
   ../mantid/Framework/Kernel/inc
-  ../mantid/Framework/NexusCpp/inc
+  ../mantid/Framework/Nexus/inc
   ../mantid/Framework/Types/inc
   ../mantid/Framework/PythonInterface/core/inc
   ../mantid/Framework/PythonInterface/mantid/api/inc

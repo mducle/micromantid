@@ -275,19 +275,20 @@ diff --git a/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.
 index a10dbe86874..54dc107fb13 100644
 --- a/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h
 +++ b/Framework/DataHandling/inc/MantidDataHandling/LoadBankFromDiskTask.h
-@@ -9,9 +9,10 @@
+@@ -9,10 +9,11 @@
  #include "MantidAPI/Progress.h"
  #include "MantidDataHandling/DllConfig.h"
  #include "MantidKernel/Task.h"
 -#include "MantidKernel/ThreadScheduler.h"
 +//#include "MantidKernel/ThreadScheduler.h"
+ #include "MantidNexus/NexusFile_fwd.h"
  
  #include <cstdint>
 +#include <vector>
  
- namespace NeXus {
+ namespace Mantid::Nexus {
  class File;
-@@ -30,7 +31,7 @@ class MANTID_DATAHANDLING_DLL LoadBankFromDiskTask : public Kernel::Task {
+@@ -31,7 +32,7 @@ class MANTID_DATAHANDLING_DLL LoadBankFromDiskTask : public Kernel::Task {
  public:
    LoadBankFromDiskTask(DefaultEventLoader &loader, std::string entry_name, std::string entry_type,
                         const std::size_t numEvents, const bool oldNeXusFileNames, API::Progress *prog,
@@ -296,7 +297,7 @@ index a10dbe86874..54dc107fb13 100644
                         std::vector<int> framePeriodNumbers);
  
    void run() override;
-@@ -54,7 +55,7 @@ private:
+@@ -55,7 +56,7 @@ private:
    /// Progress reporting
    API::Progress *prog;
    /// ThreadScheduler running this task
@@ -305,17 +306,6 @@ index a10dbe86874..54dc107fb13 100644
    /// Object with the pulse times for this bank
    std::shared_ptr<BankPulseTimes> thisBankPulseTimes;
    /// Did we get an error in loading
-diff --git a/Framework/DataHandling/inc/MantidDataHandling/ParallelEventLoader.h b/Framework/DataHandling/inc/MantidDataHandling/ParallelEventLoader.h
-index 2fdd90fa451..8c8232a7c21 100644
---- a/Framework/DataHandling/inc/MantidDataHandling/ParallelEventLoader.h
-+++ b/Framework/DataHandling/inc/MantidDataHandling/ParallelEventLoader.h
-@@ -31,6 +31,5 @@ public:
-                                const std::string &groupName, const std::vector<std::string> &bankNames,
-                                const bool eventIDIsSpectrumNumber, const bool precalcEvents);
- };
--
- } // namespace DataHandling
- } // namespace Mantid
 diff --git a/Framework/DataHandling/src/CompressEventAccumulator.cpp b/Framework/DataHandling/src/CompressEventAccumulator.cpp
 index bd26f7b238e..aa54ecf95f9 100644
 --- a/Framework/DataHandling/src/CompressEventAccumulator.cpp
@@ -500,7 +490,16 @@ diff --git a/Framework/DataHandling/src/LoadBankFromDiskTask.cpp b/Framework/Dat
 index 134892bc2be..3922080e316 100644
 --- a/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
 +++ b/Framework/DataHandling/src/LoadBankFromDiskTask.cpp
-@@ -41,12 +41,12 @@ namespace Mantid::DataHandling {
+@@ -10,7 +10,7 @@
+ #include "MantidDataHandling/LoadEventNexus.h"
+ #include "MantidDataHandling/ProcessBankCompressed.h"
+ #include "MantidDataHandling/ProcessBankData.h"
+-#include "MantidKernel/ParallelMinMax.h"
++//#include "MantidKernel/ParallelMinMax.h"
+ #include "MantidKernel/Timer.h"
+ #include "MantidKernel/Unit.h"
+ #include "MantidKernel/VectorHelper.h"
+@@ -42,12 +42,12 @@ namespace Mantid::DataHandling {
   */
  LoadBankFromDiskTask::LoadBankFromDiskTask(DefaultEventLoader &loader, std::string entry_name, std::string entry_type,
                                             const std::size_t numEvents, const bool oldNeXusFileNames,
@@ -517,26 +516,56 @@ index 134892bc2be..3922080e316 100644
    m_cost = static_cast<double>(numEvents);
  
    // some field names changed over time
-@@ -514,27 +514,31 @@ void LoadBankFromDiskTask::run() {
+@@ -188,9 +188,9 @@ std::unique_ptr<std::vector<uint32_t>> LoadBankFromDiskTask::loadEventId(Nexus::
+
+     // determine the range of pixel ids
+     {
+-      const auto [min_id, max_id] = Mantid::Kernel::parallel_minmax<uint32_t>(event_id);
+-      m_min_id = min_id;
+-      m_max_id = max_id;
++      const auto [min_id, max_id] = std::minmax_element(event_id.get()->cbegin(), event_id.get()->cend());
++      m_min_id = static_cast<uint32_t>(*min_id);
++      m_max_id = static_cast<uint32_t>(*max_id);
+     }
+
+     if (m_min_id > static_cast<uint32_t>(m_loader.eventid_max)) {
+@@ -462,13 +462,13 @@ void LoadBankFromDiskTask::run() {
+     // this method is for unweighted events that the user wants compressed on load
+
+     // TODO should this be created elsewhere?
+-    const auto [tof_min, tof_max] = Mantid::Kernel::parallel_minmax(event_time_of_flight);
++    const auto [tof_min, tof_max] = std::minmax_element(event_time_of_flight.get()->cbegin(), event_time_of_flight.get()->cend());
+
+     const bool log_compression = (m_loader.alg->compressTolerance < 0);
+
+     // reduce tof range if filtering was requested
+-    auto tof_min_fixed = tof_min;
+-    auto tof_max_fixed = tof_max;
++    auto tof_min_fixed = *tof_min;
++    auto tof_max_fixed = *tof_max;
+     if (m_loader.alg->filter_tof_range) {
+       if (m_loader.alg->filter_tof_max != EMPTY_DBL())
+         tof_max_fixed = std::min<float>(tof_max_fixed, static_cast<float>(m_loader.alg->filter_tof_max));
+@@ -505,27 +505,31 @@ void LoadBankFromDiskTask::run() {
                                                              *histogram_bin_edges);
  
      // create the tasks
 -    std::shared_ptr<Task> newTask1 = std::make_shared<ProcessBankCompressed>(
 +//  std::shared_ptr<Task> newTask1 = std::make_shared<ProcessBankCompressed>(
 +    ProcessBankCompressed(
-         m_loader, entry_name, prog, event_id_shrd, event_time_of_flight_shrd, startAt, event_index_shrd,
--        thisBankPulseTimes, m_min_id, mid_id, histogram_bin_edges, m_loader.alg->compressTolerance);
+         m_loader, entry_name, prog, event_id, event_time_of_flight, startAt, event_index, thisBankPulseTimes, m_min_id,
+-        mid_id, histogram_bin_edges, m_loader.alg->compressTolerance);
 -    scheduler.push(newTask1);
-+        thisBankPulseTimes, m_min_id, mid_id, histogram_bin_edges, m_loader.alg->compressTolerance).run();
++        mid_id, histogram_bin_edges, m_loader.alg->compressTolerance).run();
 +//  scheduler.push(newTask1);
      if (m_loader.splitProcessing && (mid_id < m_max_id)) {
 -      std::shared_ptr<Task> newTask2 = std::make_shared<ProcessBankCompressed>(
 +//    std::shared_ptr<Task> newTask2 = std::make_shared<ProcessBankCompressed>(
 +    ProcessBankCompressed(
-           m_loader, entry_name, prog, event_id_shrd, event_time_of_flight_shrd, startAt, event_index_shrd,
--          thisBankPulseTimes, (mid_id + 1), m_max_id, histogram_bin_edges, m_loader.alg->compressTolerance);
+           m_loader, entry_name, prog, event_id, event_time_of_flight, startAt, event_index, thisBankPulseTimes,
+-          (mid_id + 1), m_max_id, histogram_bin_edges, m_loader.alg->compressTolerance);
 -      scheduler.push(newTask2);
-+          thisBankPulseTimes, (mid_id + 1), m_max_id, histogram_bin_edges, m_loader.alg->compressTolerance).run();
++          (mid_id + 1), m_max_id, histogram_bin_edges, m_loader.alg->compressTolerance).run();
 +//    scheduler.push(newTask2);
      }
    } else {
@@ -544,57 +573,28 @@ index 134892bc2be..3922080e316 100644
 -    std::shared_ptr<Task> newTask1 = std::make_shared<ProcessBankData>(
 +//  std::shared_ptr<Task> newTask1 = std::make_shared<ProcessBankData>(
 +    ProcessBankData(
-         m_loader, entry_name, prog, event_id_shrd, event_time_of_flight_shrd, numEvents, startAt, event_index_shrd,
--        thisBankPulseTimes, m_have_weight, event_weight_shrd, m_min_id, mid_id);
+         m_loader, entry_name, prog, event_id, event_time_of_flight, numEvents, startAt, event_index, thisBankPulseTimes,
+-        m_have_weight, event_weight, m_min_id, mid_id);
 -    scheduler.push(newTask1);
-+        thisBankPulseTimes, m_have_weight, event_weight_shrd, m_min_id, mid_id).run();
++        m_have_weight, event_weight, m_min_id, mid_id).run();
 +//  scheduler.push(newTask1);
      if (m_loader.splitProcessing && (mid_id < m_max_id)) {
 -      std::shared_ptr<Task> newTask2 = std::make_shared<ProcessBankData>(
 +//    std::shared_ptr<Task> newTask2 = std::make_shared<ProcessBankData>(
 +    ProcessBankData(
-           m_loader, entry_name, prog, event_id_shrd, event_time_of_flight_shrd, numEvents, startAt, event_index_shrd,
--          thisBankPulseTimes, m_have_weight, event_weight_shrd, (mid_id + 1), m_max_id);
+           m_loader, entry_name, prog, event_id, event_time_of_flight, numEvents, startAt, event_index,
+-          thisBankPulseTimes, m_have_weight, event_weight, (mid_id + 1), m_max_id);
 -      scheduler.push(newTask2);
-+          thisBankPulseTimes, m_have_weight, event_weight_shrd, (mid_id + 1), m_max_id).run();
++          thisBankPulseTimes, m_have_weight, event_weight, (mid_id + 1), m_max_id).run();
 +//    scheduler.push(newTask2);
      }
    }
  
-diff --git a/Framework/DataHandling/src/LoadEventNexus.cpp b/Framework/DataHandling/src/LoadEventNexus.cpp
-index d9bb6549a65..35dae8782ec 100644
---- a/Framework/DataHandling/src/LoadEventNexus.cpp
-+++ b/Framework/DataHandling/src/LoadEventNexus.cpp
-@@ -17,7 +17,7 @@
- #include "MantidDataHandling/EventWorkspaceCollection.h"
- #include "MantidDataHandling/LoadEventNexusIndexSetup.h"
- #include "MantidDataHandling/LoadHelper.h"
--#include "MantidDataHandling/ParallelEventLoader.h"
-+//#include "MantidDataHandling/ParallelEventLoader.h"
- #include "MantidDataObjects/EventWorkspace.h"
- #include "MantidGeometry/Instrument.h"
- #include "MantidGeometry/Instrument/Goniometer.h"
-@@ -1189,6 +1189,7 @@ void LoadEventNexus::loadEvents(API::Progress *const prog, const bool monitors)
- 
-   bool loaded{false};
-   auto loaderType = defineLoaderType(haveWeights, oldNeXusFileNames, classType);
-+/*
-   if (loaderType == LoaderType::MULTIPROCESS) {
-     auto ws = m_ws->getSingleHeldWorkspace();
-     m_file->close();
-@@ -1220,6 +1221,7 @@ void LoadEventNexus::loadEvents(API::Progress *const prog, const bool monitors)
- 
-     safeOpenFile(m_filename);
-   }
-+*/
-   if (!loaded) {
-     loaderType = LoaderType::DEFAULT; // to be used later
-     bool precount = getProperty("Precount");
 diff --git a/Framework/DataHandling/src/LoadNexus.cpp b/Framework/DataHandling/src/LoadNexus.cpp
-index 3c0dcfce6c3..e10f7d34734 100644
+index 4bce3c096ce..55ba6ad571d 100644
 --- a/Framework/DataHandling/src/LoadNexus.cpp
 +++ b/Framework/DataHandling/src/LoadNexus.cpp
-@@ -93,7 +93,9 @@ void LoadNexus::exec() {
+@@ -94,7 +94,9 @@ void LoadNexus::exec() {
      throw Exception::FileError("Error no entries found in ", m_filename);
    }
    if (definition[0] == muonTD || definition[0] == pulsedTD) {
@@ -605,7 +605,7 @@ index 3c0dcfce6c3..e10f7d34734 100644
    } else if (entryName[0] == "mantid_workspace_1") {
      runLoadNexusProcessed();
    } else if (entryName[0] == "raw_data_1") {
-@@ -110,7 +112,7 @@ void LoadNexus::exec() {
+@@ -111,7 +113,7 @@ void LoadNexus::exec() {
      runLoadTOFRawNexus();
    }
  }
@@ -614,7 +614,7 @@ index 3c0dcfce6c3..e10f7d34734 100644
  void LoadNexus::runLoadMuonNexus() {
    // The Load algorithm will choose the correct LoadMuonNexus algorithm
    auto loadMuonNexus = createChildAlgorithm("Load", 0., 1.);
-@@ -151,7 +153,7 @@ void LoadNexus::runLoadMuonNexus() {
+@@ -152,7 +154,7 @@ void LoadNexus::runLoadMuonNexus() {
  
    setOutputWorkspace(loadMuonNexus);
  }

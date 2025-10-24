@@ -138,7 +138,6 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::Algorithms::register_alg_RemoveSpectra();
   Mantid::Algorithms::register_alg_SumNeighbours();
   Mantid::Algorithms::register_alg_UnwrapMonitor();
-  Mantid::Algorithms::register_alg_AlignDetectors();
   Mantid::Algorithms::register_alg_AverageLogData();
   Mantid::Algorithms::register_alg_ChangeTimeZero();
   Mantid::Algorithms::register_alg_CloneWorkspace();
@@ -328,7 +327,6 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::Algorithms::register_alg_ConvertTableToMatrixWorkspace();
   Mantid::Algorithms::register_alg_EstimateResolutionDiffraction();
   Mantid::Algorithms::register_alg_CalculatePlaczekSelfScattering();
-  Mantid::Algorithms::register_alg_ConvertUnitsUsingDetectorTable();
   Mantid::Algorithms::register_alg_PolarizationEfficienciesWildes();
   Mantid::Algorithms::register_alg_CalculatePlaczekSelfScattering2();
   Mantid::Algorithms::register_alg_DepolarizedAnalyserTransmission();
@@ -365,7 +363,6 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::DataHandling::register_alg_SaveSPE();
   Mantid::DataHandling::register_alg_SetBeam();
   Mantid::DataHandling::register_alg_LoadMask();
-  Mantid::DataHandling::register_alg_LoadSpec();
   Mantid::DataHandling::register_alg_SaveMask();
   Mantid::DataHandling::register_alg_LoadNexus();
   Mantid::DataHandling::register_alg_RenameLog();
@@ -377,14 +374,12 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::DataHandling::register_alg_LoadCalFile();
   Mantid::DataHandling::register_alg_LoadRawBin0();
   Mantid::DataHandling::register_alg_MaskSpectra();
-  Mantid::DataHandling::register_alg_NexusTester();
   Mantid::DataHandling::register_alg_RawFileInfo();
   Mantid::DataHandling::register_alg_SaveCalFile();
   Mantid::DataHandling::register_alg_ApplyDiffCal();
   Mantid::DataHandling::register_alg_RotateSource();
   Mantid::DataHandling::register_alg_LoadNexusLogs();
   Mantid::DataHandling::register_alg_MaskDetectors();
-  Mantid::DataHandling::register_alg_SaveISISNexus();
   Mantid::DataHandling::register_alg_CompressEvents();
   Mantid::DataHandling::register_alg_GroupDetectors();
   Mantid::DataHandling::register_alg_LoadInstrument();
@@ -399,7 +394,6 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::DataHandling::register_alg_CreateSampleShape();
   Mantid::DataHandling::register_alg_DefineGaugeVolume();
   Mantid::DataHandling::register_alg_DetermineChunking();
-  Mantid::DataHandling::register_alg_LoadNexusMonitors();
   Mantid::DataHandling::register_alg_LoadParameterFile();
   Mantid::DataHandling::register_alg_RotateSampleShape();
   Mantid::DataHandling::register_alg_SaveParameterFile();
@@ -418,7 +412,6 @@ BOOST_PYTHON_MODULE(_micromantid)
   Mantid::DataHandling::register_alg_LoadEventAsWorkspace2D();
   Mantid::DataHandling::register_alg_ExtractMonitorWorkspace();
   Mantid::DataHandling::register_alg_GenerateGroupingPowder2();
-  Mantid::DataHandling::register_alg_LoadInstrumentFromNexus();
   Mantid::DataHandling::register_alg_MoveInstrumentComponent();
   Mantid::DataHandling::register_alg_LoadSampleDetailsFromRaw();
   Mantid::DataHandling::register_alg_ModifyDetectorDotDatFile();
