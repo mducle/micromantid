@@ -15,7 +15,18 @@ defaults:
     shell: bash -l {0}
 
 jobs:
+  build_container:
+    name: Creates the build container with emsdk
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - name: Setup tmate
+        uses: mxschmitt/action-tmate@v3
+
   build_and_test:
+    if: ${{ github.repository == 'octo-org/octo-repo-prod' }}
     name: Builds and test Pyodide wheel
     runs-on: ubuntu-latest
     steps:
