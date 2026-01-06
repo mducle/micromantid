@@ -15,25 +15,18 @@ defaults:
     shell: bash -l {0}
 
 jobs:
-  build_container:
-    name: Creates the build container with emsdk
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          submodules: true
-      - name: Setup tmate
-        uses: mxschmitt/action-tmate@v3
-
   build_and_test:
-    if: ${{ github.repository == 'octo-org/octo-repo-prod' }}
     name: Builds and test Pyodide wheel
     runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/mducle/micromantid_build:latest
+      credentials:
+        username: mducle
+        password: ${{  secrets.GH_PACKAGE_TOKEN }}
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
-      - uses: mamba-org/setup-micromamba@v1
       - name: Patch mantid
         run: |
           cd mantid
@@ -41,33 +34,17 @@ jobs:
             patch -p1 < $dd
           done
           cd ..
-      - name: Cache environment
-        id: cache-build-env
-        uses: actions/cache@v4
-        with:
-          path: build_env
-          key: build_env_cache
-      - name: Set up environment
-        if: ${{ steps.cache-build-env.outputs.cache-hit != 'true' }}
-        run: |
-          ./setup_emsdk_env.sh
       - name: Build
         run: |
-          if [[ $($MAMBA_EXE env list | grep ems) -eq "" ]]; then
-            $MAMBA_EXE create -n ems -c conda-forge python=3.12 pybind11 cmake eigen pyodide-build gtest
-          fi
-          eval "$($MAMBA_EXE shell activate ems)"
           export PYODIDE_EMSCRIPTEN_VERSION=$(pyodide config get emscripten_version)
           export SIDE_MODULE_CXXFLAGS=$(pyodide config get cxxflags)
           export SIDE_MODULE_CFLAGS=$(pyodide config get cflags)
           export SIDE_MODULE_LDFLAGS=$(pyodide config get ldflags)
           export PLATFORM_TRIPLET=wasm32-emscripten
-          source build_env/emsdk/emsdk_env.sh
+          source /tmp/build_env/emsdk/emsdk_env.sh
           pyodide build
       - name: Test
         run: |
-          eval "$($MAMBA_EXE shell activate ems)"
-          source build_env/emsdk/emsdk_env.sh
           wd=`pwd`
           cd tests && mkdir build && cd build && cmake .. && make TestWheel
           cd $wd/instrument && mkdir build && cd build && cmake .. && make InstrumentWheel
