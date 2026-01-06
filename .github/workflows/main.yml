@@ -22,7 +22,8 @@ jobs:
       - uses: actions/checkout@v4
       - name: Get container digest
         run: |
-          curl -H "Authorization: Bearer ${{ secrets.GH_PACKAGE_TOKEN }}" "https://ghcr.io/v2/mducle/micromantid_build/manifests/latest"
+          #curl -H "Authorization: Bearer ${{ secrets.GH_PACKAGE_TOKEN }}" "https://ghcr.io/v2/mducle/micromantid_build/manifests/latest"
+          echo "GH_PACKAGE_TOKEN=${{  secrets.GH_PACKAGE_TOKEN }}" >> $GITHUB_ENV
       - name: Setup tmate
         uses: mxschmitt/action-tmate@v3
 
@@ -47,6 +48,7 @@ jobs:
           cd ..
       - name: Build
         run: |
+          eval "$($MAMBA_EXE shell activate base --shell=bash)"
           export PYODIDE_EMSCRIPTEN_VERSION=$(pyodide config get emscripten_version)
           export SIDE_MODULE_CXXFLAGS=$(pyodide config get cxxflags)
           export SIDE_MODULE_CFLAGS=$(pyodide config get cflags)
