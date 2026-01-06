@@ -22,10 +22,19 @@ jobs:
       - uses: actions/checkout@v4
       - name: Get container digest
         run: |
-          #curl -H "Authorization: Bearer ${{ secrets.GH_PACKAGE_TOKEN }}" "https://ghcr.io/v2/mducle/micromantid_build/manifests/latest"
-          echo "GH_PACKAGE_TOKEN=${{  secrets.GH_PACKAGE_TOKEN }}" >> $GITHUB_ENV
-      - name: Setup tmate
-        uses: mxschmitt/action-tmate@v3
+          B64TOKEN=$(echo "mducle:${{  secrets.GH_PACKAGE_TOKEN }}" | base64)
+          TOKURL="https://ghcr.io/token?service=ghcr.io&scope=repository:mducle/micromantid_build:pull"
+          MANURL="https://ghcr.io/v2/mducle/micromantid_build/manifests/latest"
+          APPID="Accept: application/vnd.oci.image.manifest.v1+json"
+          AUTHTOK=$(curl -H "Authorization: Basic $B64TOKEN" $TOKURL | awk -F'"' '$0=$4')
+          MD5SUM=$(curl -H "Authorization: Bearer $AUTHTOK" -H "$APPID" "$MANURL" | md5sum | awk '{print $1}')
+      - name: Build and push container
+        run: |
+          echo ${{  secrets.GH_PACKAGE_TOKEN }}| docker login ghcr.io -u mducle --password-stdin
+          docker build -t ghcr.io/mducle/micromantid_build:latest .
+          docker image push ghcr.io/mducle/micromantid_build:latest
+      #- name: Setup tmate
+      #  uses: mxschmitt/action-tmate@v3
 
   build_and_test:
     name: Builds and test Pyodide wheel
